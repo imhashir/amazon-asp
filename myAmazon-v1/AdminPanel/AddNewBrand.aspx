@@ -17,11 +17,9 @@
                             <h3><b>Insert Brand Info</b></h3><br />
                             Name:  <asp:TextBox ID="id_brand_name" CssClass="form-control" runat="server"></asp:TextBox>
                             <br />
-                            Category:<br />
-                            <asp:DropDownList ID="id_category_name" CssClass="form-control" runat="server" DataSourceID="brand_category_db" DataTextField="Name" DataValueField="id">
-                            </asp:DropDownList>
-                            <asp:SqlDataSource ID="brand_category_db" runat="server" ConnectionString="<%$ ConnectionStrings:myAmazonConnectionString %>" SelectCommand="SELECT [id], [Name] FROM [Category]"></asp:SqlDataSource>
-                            <br />
+                            Category:
+                            <asp:DropDownList ID="id_category_name" CssClass="form-control" runat="server" AutoPostBack="True" DataTextField="Name" DataValueField="id">
+                            </asp:DropDownList><br />
                             Description:<br/>
                             <asp:TextBox ID="id_brand_desc" runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox><br />
                             <asp:Button ID="id_submit_brand" runat="server" CssClass="btn btn-primary" Text="Submit" OnClick="Press_Submit" />

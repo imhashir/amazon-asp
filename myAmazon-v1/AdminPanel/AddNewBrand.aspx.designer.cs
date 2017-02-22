@@ -40,15 +40,6 @@ namespace myAmazon_v1.AdminPanel {
         protected global::System.Web.UI.WebControls.DropDownList id_category_name;
         
         /// <summary>
-        /// brand_category_db control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource brand_category_db;
-        
-        /// <summary>
         /// id_brand_desc control.
         /// </summary>
         /// <remarks>

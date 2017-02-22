@@ -21,7 +21,6 @@
                             Category: <br />
                             <asp:DropDownList ID="id_category_name" runat="server" CssClass="form-control" DataTextField="Name" DataValueField="id" OnSelectedIndexChanged="id_category_name_SelectedIndexChanged" AutoPostBack="True" >
                             </asp:DropDownList>
-                            <asp:SqlDataSource ID="product_category_db" runat="server" ConnectionString="<%$ ConnectionStrings:myAmazonConnectionString %>" SelectCommand="SELECT [Name], [id] FROM [Category]"></asp:SqlDataSource>
                             <br />
                             Brand: <br />
                             <asp:DropDownList ID="id_brand_name" runat="server" CssClass="form-control" DataTextField="Name" DataValueField="id">
