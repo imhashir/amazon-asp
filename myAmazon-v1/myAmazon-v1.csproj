@@ -139,6 +139,7 @@
     <Content Include="AdminPanel\AdminHome.html" />
     <Content Include="AdminPanel\ManageBrands.aspx" />
     <Content Include="AdminPanel\ManageCategories.aspx" />
+    <Content Include="AdminPanel\ManageProducts.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -303,6 +304,13 @@
     </Compile>
     <Compile Include="AdminPanel\ManageCategories.aspx.designer.cs">
       <DependentUpon>ManageCategories.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminPanel\ManageProducts.aspx.cs">
+      <DependentUpon>ManageProducts.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminPanel\ManageProducts.aspx.designer.cs">
+      <DependentUpon>ManageProducts.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\AuthConfig.cs" />

@@ -9,14 +9,14 @@ using System.Web.UI.WebControls;
 
 namespace myAmazon_v1.AdminPanel
 {
-    public partial class ManageBrands : System.Web.UI.Page
+    public partial class ManageProducts : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!this.IsPostBack)
             {
                 SqlConnection conn = new SqlConnection(@"Data Source=DESKTOP-HO7NA1P;Initial Catalog=myAmazon;User ID=sa;Password=root");
-                string cmd = "SELECT b.[id], b.[Name], b.[Desc], cat.[Name] AS CategoryId FROM Brand b JOIN Category cat ON b.[CategoryId]=cat.[id]";
+                string cmd = "SELECT p.[id], p.[Name], p.[Desc], p.[Price], cat.[Name] AS Category, b.[Name] AS Brand FROM Product p JOIN Category cat ON p.[CategoryId]=cat.[id] JOIN Brand b ON p.[BrandId]=b.[id]";
                 SqlCommand sqlCmd = new SqlCommand(cmd, conn);
                 DataSet ds = new DataSet();
 
@@ -29,12 +29,12 @@ namespace myAmazon_v1.AdminPanel
                 }
                 catch (Exception ex)
                 {
-                    log_manage_brand.Text += ex.ToString();
+                    log_manage_product.Text += ex.ToString();
                     conn.Close();
                 }
 
-                brandListView.DataSource = ds;
-                brandListView.DataBind();
+                productListView.DataSource = ds;
+                productListView.DataBind();
             }
 
             if (Request.HttpMethod.ToString() == "POST")
@@ -56,7 +56,7 @@ namespace myAmazon_v1.AdminPanel
                             }
                             catch (Exception ex)
                             {
-                                log_manage_brand.Text += ex.ToString();
+                                log_manage_product.Text += ex.ToString();
                                 conn.Close();
                             }
                             break;
