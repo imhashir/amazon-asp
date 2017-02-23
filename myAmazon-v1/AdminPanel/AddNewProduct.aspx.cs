@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data.SqlClient;
 using System.Data;
+using System.IO;
 
 namespace myAmazon_v1.AdminPanel
 {
@@ -44,20 +45,19 @@ namespace myAmazon_v1.AdminPanel
         protected void Press_Submit(object sender, EventArgs e)
         {
             SqlConnection conn = new SqlConnection(@"Data Source=DESKTOP-HO7NA1P;Initial Catalog=myAmazon;User ID=sa;Password=root");
-            SqlCommand insert = new SqlCommand("INSERT INTO Product(Name, [Desc], [BrandId], [CategoryId], [Price]) VALUES(@name, @desc, @brand, @category, @price)", conn);
+            SqlCommand insert = new SqlCommand("INSERT INTO Product(Name, [BrandId], [CategoryId], [Price]) OUTPUT inserted.id VALUES(@name, @brand, @category, @price)", conn);
             insert.Parameters.AddWithValue("@name", id_product_name.Text);
-            insert.Parameters.AddWithValue("@desc", id_product_desc.Text);
             insert.Parameters.AddWithValue("@brand", id_brand_name.Text);
             insert.Parameters.AddWithValue("@category", id_category_name.Text);
             insert.Parameters.AddWithValue("@price", id_product_price.Text);
+            int id = 0;
             try
             {
                 conn.Open();
-                insert.ExecuteNonQuery();
+                id = (int) insert.ExecuteScalar();
                 id_log_product.Text = "Successfully Inserted";
                 conn.Close();
                 id_product_name.Text = "";
-                id_product_desc.Text = "";
                 id_product_price.Text = "";
             }
             catch (Exception ex)
@@ -65,7 +65,29 @@ namespace myAmazon_v1.AdminPanel
                 id_log_product.Text = "Error! Unable to Insert: \n" + ex.ToString();
                 conn.Close();
             }
-
+            try
+            {
+                try
+                {
+                    if (!Directory.Exists(Server.MapPath("~/ProductsData/")))
+                        Directory.CreateDirectory(Server.MapPath("~/ProductsData/"));
+                }
+                catch (Exception ex)
+                {
+                    id_log_product.Text += ex.ToString();
+                }
+                File.Create(Server.MapPath("~/ProductsData/" + id.ToString() + ".txt")).Close();
+                File.WriteAllText(Server.MapPath("~/ProductsData/" + id.ToString() + ".txt"), id_product_desc.Text);
+                id_product_desc.Text = "";
+                conn.Open();
+                SqlCommand query = new SqlCommand("UPDATE Product SET [Desc] ='" + "~/ProductsData/" + id.ToString() + ".txt" + "' WHERE id=@cid", conn);
+                query.Parameters.AddWithValue("@cid", id);
+                query.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                id_log_product.Text += ex.ToString();
+            }
         }
 
         protected void id_category_name_SelectedIndexChanged(object sender, EventArgs e)

@@ -243,3 +243,6 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+/myAmazon-v1/BrandsData
+/myAmazon-v1/CategoriesData
+/myAmazon-v1/ProductsData

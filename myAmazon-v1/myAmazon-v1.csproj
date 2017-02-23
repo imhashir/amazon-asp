@@ -136,7 +136,7 @@
     <Content Include="AdminPanel\AddNewCategory.aspx" />
     <Content Include="AdminPanel\AddNewBrand.aspx" />
     <Content Include="AdminPanel\AddNewProduct.aspx" />
-    <Content Include="AdminPanel\AdminHome.html" />
+    <Content Include="AdminPanel\index.html" />
     <Content Include="AdminPanel\ManageBrands.aspx" />
     <Content Include="AdminPanel\ManageCategories.aspx" />
     <Content Include="AdminPanel\ManageProducts.aspx" />
