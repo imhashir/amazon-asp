@@ -14,7 +14,7 @@
                 <div class="row">
                     <div class="col-md-1"></div>
                         <div class="col-md-10">
-                            <h3><b>Insert New Product</b></h3>
+                            <h3><b><asp:Label ID="id_page_title" runat="server" Text="Add New Product"></asp:Label></b></h3>
                             Name:  <asp:TextBox ID="id_product_name" runat="server" CssClass="form-control"></asp:TextBox><br />
                             Description:<br/>
                             <asp:TextBox ID="id_product_desc" runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox><br />

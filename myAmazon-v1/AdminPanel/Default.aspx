@@ -1,13 +1,16 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="myAmazon_v1.AdminPanel.Index" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
     <link href="../Content/bootstrap.css" rel="stylesheet" />
     <title>Admin Panel</title>
-	<meta charset="utf-8" />
 </head>
-
 <body>
-    <div class="container">
+    <form id="form1" runat="server">
+    <div>
+        <div class="container">
         <div class="row">
         </div>
         <div class="row">
@@ -16,7 +19,7 @@
                 <div class="jumbotron">
                     <b>Admin Home</b><br />
                     <h3><b>Add New data</b></h3>
-                    <button type="button" class="btn btn-primary btn-lg" onclick="location.href = 'AddNewCategory.aspx';">Add New Category</button>
+                    <asp:Button runat="server" type="button" CssClass="btn btn-primary btn-lg" Text="Add New Category" OnClick="Visit_Products"/>
                     <button type="button" class="btn btn-primary btn-lg" onclick="location.href = 'AddNewBrand.aspx';">Add New Brand</button>
                     <button type="button" class="btn btn-primary btn-lg" onclick="location.href = 'AddNewProduct.aspx';">Add New Product</button>
                     <h3><b>View Data</b></h3>
@@ -28,5 +31,7 @@
             <div class="col-md-1"></div>
         </div>
     </div>
+    </div>
+    </form>
 </body>
 </html>

@@ -61,6 +61,13 @@ namespace myAmazon_v1.AdminPanel
                             }
                             break;
                         }
+                    case "Edit":
+                        {
+                            Session["isEdit"] = "1";
+                            Session["ProductId"] = HttpContext.Current.Request["id"];
+                            Response.Redirect(@"..\AdminPanel\AddNewProduct.aspx");
+                        }
+                        break;
                     default:
                         break;
                 }
