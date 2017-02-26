@@ -8,6 +8,8 @@ Platforms Used:
 
 Things Working Right Now:
 
+--Admin Panel
 * Admin can add a Brand.
 * Admin can add a Category.
-* Admin can add a new product.
+* Admin can add a new Product.
+* View/Delete/Edit All Brands, Categories and Product.
