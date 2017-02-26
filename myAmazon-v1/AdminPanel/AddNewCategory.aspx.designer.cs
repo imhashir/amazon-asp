@@ -22,6 +22,15 @@ namespace myAmazon_v1.AdminPanel {
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
+        /// id_category_title control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label id_category_title;
+        
+        /// <summary>
         /// id_category_name control.
         /// </summary>
         /// <remarks>

@@ -13,27 +13,84 @@ namespace myAmazon_v1.AdminPanel
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!Page.IsPostBack)
+            {
+                if (Session["isEdit"] != null && Session["isEdit"].Equals("1"))
+                {
+                    id_category_title.Text = "Edit Category";
+                    this.Title = "Edit Category";
+                    id_submit_category.Text = "Update";
 
+                    SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
+                        .ConnectionStrings["myAmazonConnectionString"].ConnectionString);
+                    string cmd = @"SELECT Name, [Desc] FROM Category WHERE id=" + Session["CatId"];
+                    SqlCommand sqlCmd = new SqlCommand(cmd, conn);
+                    SqlDataReader reader = null;
+                    try
+                    {
+                        conn.Open();
+                        reader = sqlCmd.ExecuteReader();
+                        reader.Read();
+                        id_category_name.Text = reader["Name"].ToString();
+
+                        StreamReader stream = new StreamReader(Server.MapPath(reader["Desc"].ToString()));
+                        id_category_desc.Text = stream.ReadToEnd();
+                        stream.Close();
+
+                        conn.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        id_log_category.Text += ex.ToString();
+                        conn.Close();
+                    }
+
+                }
+            }
         }
 
         protected void On_Click(object sender, EventArgs e)
         {
             SqlConnection conn = new SqlConnection(@"Data Source=DESKTOP-HO7NA1P;Initial Catalog=myAmazon;User ID=sa;Password=root");
-            SqlCommand insert = new SqlCommand("INSERT INTO Category(Name) OUTPUT inserted.id VALUES(@name)", conn);
-            insert.Parameters.AddWithValue("@name", id_category_name.Text);
+            string cmd;
+            bool isEdit = false;
+            SqlCommand sqlCmd = null;
+
+            if(Session["isEdit"] != null && Session["isEdit"].Equals("1"))
+            {
+                isEdit = true;
+            }
+
+            if (isEdit)
+                cmd = "UPDATE Category SET Name=@name WHERE id=@cid";
+            else
+                cmd = "INSERT INTO Category(Name) OUTPUT inserted.id VALUES(@name)";
+
+            sqlCmd = new SqlCommand(cmd, conn);
+            sqlCmd.Parameters.AddWithValue("@name", id_category_name.Text);
             
             int id = 0;
             try
             {
                 conn.Open();
-                id = (int) insert.ExecuteScalar();
-                id_log_category.Text = "Successfully Inserted";
+                if(isEdit)
+                {
+                    sqlCmd.Parameters.AddWithValue("@cid", Session["CatId"]);
+                    sqlCmd.ExecuteNonQuery();
+                    id = Convert.ToInt32(Session["CatId"]);
+                    id_log_category.Text = "Successfully Updated";
+                }
+                else
+                {
+                    id = (int)sqlCmd.ExecuteScalar();
+                    id_log_category.Text = "Successfully Inserted";
+                    id_category_name.Text = "";
+                }
                 conn.Close();
-                id_category_name.Text = "";
             }
             catch (Exception ex)
             {
-                id_log_category.Text = "Error! Unable to Insert: \n" + ex.ToString();
+                id_log_category.Text += "Error! Unable to Insert: \n" + ex.ToString();
                 conn.Close();
             }
 
@@ -46,13 +103,23 @@ namespace myAmazon_v1.AdminPanel
                 } catch (Exception ex) {
                     id_log_category.Text += ex.ToString();
                 }
-                File.Create(Server.MapPath("~/CategoriesData/" + id.ToString() + ".txt")).Close();
+                if(!File.Exists(Server.MapPath("~/CategoriesData/" + id.ToString() + ".txt")))
+                    File.Create(Server.MapPath("~/CategoriesData/" + id.ToString() + ".txt")).Close();
                 File.WriteAllText(Server.MapPath("~/CategoriesData/" + id.ToString() + ".txt"), id_category_desc.Text);
-                id_category_desc.Text = "";
-                conn.Open();
-                SqlCommand query = new SqlCommand("UPDATE Category SET [Desc] ='" + "~/CategoriesData/" + id.ToString() + ".txt" + "' WHERE id=@cid", conn);
-                query.Parameters.AddWithValue("@cid", id);
-                query.ExecuteNonQuery();
+                if (!isEdit)
+                { 
+                    id_category_desc.Text = "";
+                    conn.Open();
+                    SqlCommand query = new SqlCommand("UPDATE Category SET [Desc] ='" + "~/CategoriesData/" + id.ToString() + ".txt" + "' WHERE id=@cid", conn);
+                    query.Parameters.AddWithValue("@cid", id);
+                    query.ExecuteNonQuery();
+                    conn.Close();
+                } 
+                else
+                {
+                    Session["isEdit"] = "0";
+                    Response.Redirect(@"..\AdminPanel\ManageCategories.aspx");
+                }
             }
             catch (Exception ex) {
                 id_log_category.Text += ex.ToString();

@@ -14,7 +14,7 @@
                 <div class="row">
                     <div class="col-md-1"></div>
                         <div class="col-md-10">
-                            <h3><b>Add New Category</b></h3><br />
+                            <h3><b></b><asp:Label ID="id_category_title" runat="server" Text="Add New Category"></asp:Label></h3>
                             Name: <asp:TextBox ID="id_category_name" CssClass="form-control" runat="server"></asp:TextBox><br />
                             Description:<br/>
                             <asp:TextBox ID="id_category_desc" runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox><br />

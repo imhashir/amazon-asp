@@ -39,25 +39,33 @@ namespace myAmazon_v1.AdminPanel
 
             if (Request.HttpMethod.ToString() == "POST") {
                 switch (HttpContext.Current.Request.Form["Action"]) {
-                    case "Delete": {
-                        SqlConnection conn = new SqlConnection(@"Data Source=DESKTOP-HO7NA1P;Initial Catalog=myAmazon;User ID=sa;Password=root");
-                        string cmd = "DELETE FROM Category WHERE id=@catId";
-                        SqlCommand sqlCmd = new SqlCommand(cmd, conn);
-                        sqlCmd.Parameters.AddWithValue("catId", HttpContext.Current.Request["id"]);
+                    case "Delete":
+                        {
+                            SqlConnection conn = new SqlConnection(@"Data Source=DESKTOP-HO7NA1P;Initial Catalog=myAmazon;User ID=sa;Password=root");
+                            string cmd = "DELETE FROM Category WHERE id=@catId";
+                            SqlCommand sqlCmd = new SqlCommand(cmd, conn);
+                            sqlCmd.Parameters.AddWithValue("catId", HttpContext.Current.Request["id"]);
 
-                        try
-                        {
-                            conn.Open();
-                            sqlCmd.ExecuteNonQuery();
-                            conn.Close();
+                            try
+                            {
+                                conn.Open();
+                                sqlCmd.ExecuteNonQuery();
+                                conn.Close();
+                            }
+                            catch (Exception ex)
+                            {
+                                log_manage_cat.Text += ex.ToString();
+                                conn.Close();
+                            }
+                            break;
                         }
-                        catch (Exception ex)
+                    case "Edit":
                         {
-                            log_manage_cat.Text += ex.ToString();
-                            conn.Close();
+                            Session["isEdit"] = "1";
+                            Session["CatId"] = HttpContext.Current.Request["id"];
+                            Response.Redirect(@"..\AdminPanel\AddNewCategory.aspx");
+                            break;
                         }
-                        break;
-                    }
                     default:
                         break;
                 }
