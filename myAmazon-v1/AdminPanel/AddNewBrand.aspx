@@ -14,7 +14,7 @@
                 <div class="row">
                     <div class="col-md-1"></div>
                         <div class="col-md-10">
-                            <h3><b>Insert Brand Info</b></h3><br />
+                            <h3><b><asp:Label ID="id_brand_title" runat="server" Text="Insert Brand Info"></asp:Label></b></h3>
                             Name:  <asp:TextBox ID="id_brand_name" CssClass="form-control" runat="server"></asp:TextBox>
                             <br />
                             Category:

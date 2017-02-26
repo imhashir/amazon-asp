@@ -61,6 +61,13 @@ namespace myAmazon_v1.AdminPanel
                             }
                             break;
                         }
+                    case "Edit":
+                        {
+                            Session["isEdit"] = "1";
+                            Session["BrandId"] = HttpContext.Current.Request["id"];
+                            Response.Redirect(@"..\AdminPanel\AddNewBrand.aspx");
+                            break;
+                        }
                     default:
                         break;
                 }
