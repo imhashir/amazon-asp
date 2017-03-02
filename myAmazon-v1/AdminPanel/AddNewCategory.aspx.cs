@@ -33,10 +33,12 @@ namespace myAmazon_v1.AdminPanel
                         reader.Read();
                         id_category_name.Text = reader["Name"].ToString();
 
-                        StreamReader stream = new StreamReader(Server.MapPath(reader["Desc"].ToString()));
-                        id_category_desc.Text = stream.ReadToEnd();
-                        stream.Close();
-
+                        if (!reader["Desc"].ToString().Equals(""))
+                        {
+                            StreamReader stream = new StreamReader(Server.MapPath(reader["Desc"].ToString()));
+                            id_category_desc.Text = stream.ReadToEnd();
+                            stream.Close();
+                        }
                         conn.Close();
                     }
                     catch (Exception ex)

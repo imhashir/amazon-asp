@@ -60,10 +60,12 @@ namespace myAmazon_v1.AdminPanel
 
                         //File handling for Description
                         string path = reader["Desc"].ToString();
-                        StreamReader file = new StreamReader(Server.MapPath(path));
-                        id_product_desc.Text = file.ReadToEnd();
-                        file.Close();
-
+                        if(!path.Equals(""))
+                        {
+                            StreamReader file = new StreamReader(Server.MapPath(path));
+                            id_product_desc.Text = file.ReadToEnd();
+                            file.Close();
+                        }
                         conn.Close();
                     }
                     catch (Exception ex)

@@ -56,9 +56,12 @@ namespace myAmazon_v1.AdminPanel
                         reader.Read();
                         id_brand_name.Text = reader["name"].ToString();
                         id_category_name.SelectedValue = reader["catId"].ToString();
-                        StreamReader stream = new StreamReader(Server.MapPath(reader["desc"].ToString()));
-                        id_brand_desc.Text = stream.ReadToEnd();
-                        stream.Close();
+                        if(!reader["desc"].ToString().Equals(""))
+                        {
+                            StreamReader stream = new StreamReader(Server.MapPath(reader["desc"].ToString()));
+                            id_brand_desc.Text = stream.ReadToEnd();
+                            stream.Close();
+                        }
                         conn.Close();
                     }
                     catch (Exception ex)
