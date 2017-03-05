@@ -116,6 +116,7 @@ namespace myAmazon_v1.AdminPanel
 
             try
             {
+                bool newDesc = false;
                 try
                 {
                     if (!Directory.Exists(Server.MapPath("~/BrandsData/")))
@@ -125,22 +126,26 @@ namespace myAmazon_v1.AdminPanel
                 {
                     id_log_brand.Text += ex.ToString();
                 }
-                if(!File.Exists(Server.MapPath("~/BrandsData/" + id.ToString() + ".txt")))
+                if (!File.Exists(Server.MapPath("~/BrandsData/" + id.ToString() + ".txt")))
+                {
                     File.Create(Server.MapPath("~/BrandsData/" + id.ToString() + ".txt")).Close();
-                File.WriteAllText(Server.MapPath("~/BrandsData/" + id.ToString() + ".txt"), id_brand_desc.Text);
-                if (isEdit)
-                {
-                    Session["isEdit"] = "0";
-                    Response.Redirect(@"..\AdminPanel\ManageBrands.aspx");
+                    newDesc = true;
                 }
-                else
+                File.WriteAllText(Server.MapPath("~/BrandsData/" + id.ToString() + ".txt"), id_brand_desc.Text);
+                if (!isEdit || newDesc)
                 {
-                    id_brand_desc.Text = "";
+                    if(!newDesc)
+                        id_brand_desc.Text = "";
                     conn.Open();
                     SqlCommand query = new SqlCommand("UPDATE Brand SET [Desc] ='" + "~/BrandsData/" + id.ToString() + ".txt" + "' WHERE id=@cid", conn);
                     query.Parameters.AddWithValue("@cid", id);
                     query.ExecuteNonQuery();
                     conn.Close();
+                }
+                else
+                {
+                    Session["isEdit"] = "0";
+                    Response.Redirect(@"..\AdminPanel\ManageBrands.aspx");
                 }
             }
             catch (Exception ex)

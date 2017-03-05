@@ -98,6 +98,7 @@ namespace myAmazon_v1.AdminPanel
 
             try
             {
+                bool newDesc = false;
                 try
                 {
                     if (!Directory.Exists(Server.MapPath("~/CategoriesData/")))
@@ -105,12 +106,16 @@ namespace myAmazon_v1.AdminPanel
                 } catch (Exception ex) {
                     id_log_category.Text += ex.ToString();
                 }
-                if(!File.Exists(Server.MapPath("~/CategoriesData/" + id.ToString() + ".txt")))
+                if (!File.Exists(Server.MapPath("~/CategoriesData/" + id.ToString() + ".txt")))
+                {
                     File.Create(Server.MapPath("~/CategoriesData/" + id.ToString() + ".txt")).Close();
+                    newDesc = true;
+                }
                 File.WriteAllText(Server.MapPath("~/CategoriesData/" + id.ToString() + ".txt"), id_category_desc.Text);
-                if (!isEdit)
+                if (!isEdit || newDesc)
                 { 
-                    id_category_desc.Text = "";
+                    if(!newDesc)
+                        id_category_desc.Text = "";
                     conn.Open();
                     SqlCommand query = new SqlCommand("UPDATE Category SET [Desc] ='" + "~/CategoriesData/" + id.ToString() + ".txt" + "' WHERE id=@cid", conn);
                     query.Parameters.AddWithValue("@cid", id);
@@ -126,8 +131,6 @@ namespace myAmazon_v1.AdminPanel
             catch (Exception ex) {
                 id_log_category.Text += ex.ToString();
             }
-            
-
         }
     }
 }

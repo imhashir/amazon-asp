@@ -123,6 +123,7 @@ namespace myAmazon_v1.AdminPanel
             }
             try
             {
+                bool newDesc = false;
                 try
                 {
                     if (!Directory.Exists(Server.MapPath("~/ProductsData/")))
@@ -132,13 +133,16 @@ namespace myAmazon_v1.AdminPanel
                 {
                     id_log_product.Text += ex.ToString();
                 }
-                if(!File.Exists(Server.MapPath("~/ProductsData/" + id.ToString() + ".txt")))
+                if (!File.Exists(Server.MapPath("~/ProductsData/" + id.ToString() + ".txt"))) { 
                     File.Create(Server.MapPath("~/ProductsData/" + id.ToString() + ".txt")).Close();
+                    newDesc = true;
+                }
                 
                 File.WriteAllText(Server.MapPath("~/ProductsData/" + id.ToString() + ".txt"), id_product_desc.Text);
-                if(!isEdit)
+                if(!isEdit || newDesc)
                 {
-                    id_product_desc.Text = "";
+                    if(!newDesc)
+                        id_product_desc.Text = "";
                     conn.Open();
                     SqlCommand query = new SqlCommand("UPDATE Product SET [Desc] ='" + "~/ProductsData/" + (isEdit ? Session["ProductId"] : id.ToString()) + ".txt" + "' WHERE id=@cid", conn);
                     query.Parameters.AddWithValue("@cid", id);

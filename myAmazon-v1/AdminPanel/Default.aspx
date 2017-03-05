@@ -19,7 +19,7 @@
                 <div class="jumbotron">
                     <b>Admin Home</b><br />
                     <h3><b>Add New data</b></h3>
-                    <asp:Button runat="server" type="button" CssClass="btn btn-primary btn-lg" Text="Add New Category" OnClick="Visit_Products"/>
+                    <button type="button" class="btn btn-primary btn-lg" onclick="location.href = 'AddNewCategory.aspx';">Add New Category</button>
                     <button type="button" class="btn btn-primary btn-lg" onclick="location.href = 'AddNewBrand.aspx';">Add New Brand</button>
                     <button type="button" class="btn btn-primary btn-lg" onclick="location.href = 'AddNewProduct.aspx';">Add New Product</button>
                     <h3><b>View Data</b></h3>

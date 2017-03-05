@@ -11,14 +11,7 @@ namespace myAmazon_v1.AdminPanel
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
-        }
-
-        protected void Visit_Products(object sender, EventArgs e)
-        {
             Session["isEdit"] = "0";
-            Response.Redirect(@"..\AdminPanel\ManageProducts.aspx");
         }
-
     }
 }
