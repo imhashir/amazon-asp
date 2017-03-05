@@ -16,7 +16,7 @@ namespace myAmazon_v1.AdminPanel
             if(!this.IsPostBack)
             {
                 SqlConnection conn = new SqlConnection(@"Data Source=DESKTOP-HO7NA1P;Initial Catalog=myAmazon;User ID=sa;Password=root");
-                string cmd = "SELECT [id], [Name], [Desc] FROM Category";
+                string cmd = "SELECT * FROM CategoryDetails";
                 SqlCommand sqlCmd = new SqlCommand(cmd, conn);
                 DataSet ds = new DataSet();
 
