@@ -16,7 +16,7 @@ namespace myAmazon_v1.AdminPanel
             if (!this.IsPostBack)
             {
                 SqlConnection conn = new SqlConnection(@"Data Source=DESKTOP-HO7NA1P;Initial Catalog=myAmazon;User ID=sa;Password=root");
-                string cmd = "SELECT p.[id], p.[Name], p.[Desc], p.[Price], cat.[Name] AS Category, b.[Name] AS Brand FROM Product p JOIN Category cat ON p.[CategoryId]=cat.[id] JOIN Brand b ON p.[BrandId]=b.[id]";
+                string cmd = "SELECT * FROM ProductDetails";    //ProductDetails is a VIEW
                 SqlCommand sqlCmd = new SqlCommand(cmd, conn);
                 DataSet ds = new DataSet();
 
