@@ -74,6 +74,10 @@ namespace myAmazon_v1.AdminPanel
                         conn.Close();
                     }
                 }
+                else
+                {
+                    Session["ProductId"] = null;
+                }
                 
             }
         }
@@ -83,37 +87,50 @@ namespace myAmazon_v1.AdminPanel
             bool isEdit = false;
             SqlConnection conn = new SqlConnection(@"Data Source=DESKTOP-HO7NA1P;Initial Catalog=myAmazon;User ID=sa;Password=root");
             SqlCommand insert = null;
-            string command;
             if (Session["isEdit"] != null && Session["isEdit"].Equals("1"))
                 isEdit = true;
 
-            if (isEdit)
-                command = "UPDATE Product SET Name=@name, [BrandId]=@brand, [CategoryId]=@category, [Price]=@price WHERE id=" + Session["ProductId"];
-            else
-                command = "INSERT INTO Product(Name, [BrandId], [CategoryId], [Price]) OUTPUT inserted.id VALUES(@name, @brand, @category, @price)";
+            insert = new SqlCommand("UpdateProduct", conn);
+            insert.CommandType = CommandType.StoredProcedure;
 
-            insert = new SqlCommand(command, conn);
-
+            insert.Parameters.AddWithValue("@id", Session["ProductId"] ?? (object)DBNull.Value);
             insert.Parameters.AddWithValue("@name", id_product_name.Text);
-            insert.Parameters.AddWithValue("@brand", id_brand_name.Text);
-            insert.Parameters.AddWithValue("@category", id_category_name.Text);
+            insert.Parameters.AddWithValue("@brandId", id_brand_name.Text);
+            insert.Parameters.AddWithValue("@categoryId", id_category_name.Text);
             insert.Parameters.AddWithValue("@price", id_product_price.Text);
-            int id = 0;
+            insert.Parameters.AddWithValue("@updateType", isEdit);
+            SqlParameter outputId = insert.Parameters.Add("@productId", SqlDbType.Int);
+            outputId.Direction = ParameterDirection.Output;
+            SqlParameter outputFlag = insert.Parameters.Add("@flag", SqlDbType.Int);
+            outputFlag.Direction = ParameterDirection.Output;
+
+            int id = 0, flag = 0;
             try
             {
                 conn.Open();
+                insert.ExecuteNonQuery();
                 if (!isEdit)
-                {
-                    id = (int)insert.ExecuteScalar();
-                    id_log_product.Text = "Successfully Inserted";
-                    id_product_name.Text = "";
-                    id_product_price.Text = "";
-                }
-                else {
+                    id = (int) insert.Parameters["@productId"].Value;
+                else
                     id = Convert.ToInt32(Session["ProductId"]);
-                    insert.ExecuteNonQuery();
-                    id_log_product.Text = "Successfully Updated";
-                }
+                flag = (int) insert.Parameters["@flag"].Value;
+
+                if(flag == 0)
+                {
+                    if (!isEdit)
+                    {
+                        id_log_product.Text = "Successfully Inserted";
+                        id_product_name.Text = "";
+                        id_product_price.Text = "";
+                        id_category_name.SelectedIndex = 0;
+                        id_brand_name.SelectedIndex = 0;
+                    }
+                    else
+                        id_log_product.Text = "Successfully Updated";
+                } 
+                else
+                    id_log_product.Text = "Error in insertion. Price must be greater than 0.";
+
                 conn.Close();
             }
             catch (Exception ex)
@@ -141,7 +158,7 @@ namespace myAmazon_v1.AdminPanel
                 File.WriteAllText(Server.MapPath("~/ProductsData/" + id.ToString() + ".txt"), id_product_desc.Text);
                 if(!isEdit || newDesc)
                 {
-                    if(!newDesc)
+                    if(!isEdit)
                         id_product_desc.Text = "";
                     conn.Open();
                     SqlCommand query = new SqlCommand("UPDATE Product SET [Desc] ='" + "~/ProductsData/" + (isEdit ? Session["ProductId"] : id.ToString()) + ".txt" + "' WHERE id=@cid", conn);
