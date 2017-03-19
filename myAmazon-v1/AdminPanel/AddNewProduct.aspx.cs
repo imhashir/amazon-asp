@@ -46,7 +46,7 @@ namespace myAmazon_v1.AdminPanel
                     id_page_title.Text = "Edit Product";
                     id_submit_product.Text = "Update";
 
-                    cmd = "SELECT p.Name, p.Price, p.[Desc], p.CategoryId, p.BrandId FROM Product AS p WHERE p.id=" + Session["ProductId"];
+                    cmd = "SELECT p.Name, p.Price, p.[Desc], p.[Image], p.CategoryId, p.BrandId FROM Product AS p WHERE p.id=" + Session["ProductId"];
                     sqlCmd = new SqlCommand(cmd, conn);
                     SqlDataReader reader = null;
                     try {
@@ -58,6 +58,7 @@ namespace myAmazon_v1.AdminPanel
                         id_category_name.SelectedValue = reader["CategoryId"].ToString();
                         populateBrandDropDown();
                         id_brand_name.SelectedValue = reader["BrandId"].ToString();
+                        id_product_image.ImageUrl = reader["Image"].ToString();
 
                         //File handling for Description
                         string path = reader["Desc"].ToString();
@@ -139,6 +140,22 @@ namespace myAmazon_v1.AdminPanel
                 id_log_product.Text = "Error! Unable to Insert: \n" + ex.ToString();
                 conn.Close();
             }
+
+            if (id_image_uploader.HasFile) {
+                try
+                {
+                    id_image_uploader.SaveAs(Server.MapPath("~/ProductsData/Images/" + id + ".jpg"));
+                    conn.Open();
+                    SqlCommand query = new SqlCommand("UPDATE Product SET [Image] ='" + "~/ProductsData/Images/" + (isEdit ? Session["ProductId"] : id.ToString()) + ".jpg' WHERE id=@cid", conn);
+                    query.Parameters.AddWithValue("@cid", id);
+                    query.ExecuteNonQuery();
+                    conn.Close();
+                } catch (Exception ex)
+                {
+                    id_log_product.Text += ex.ToString();
+                }
+            }
+
             try
             {
                 bool newDesc = false;

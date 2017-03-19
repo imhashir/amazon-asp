@@ -18,13 +18,22 @@
                             Name:  <asp:TextBox ID="id_product_name" runat="server" CssClass="form-control"></asp:TextBox><br />
                             Description:<br/>
                             <asp:TextBox ID="id_product_desc" runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox><br />
-                            Category: <br />
-                            <asp:DropDownList ID="id_category_name" runat="server" CssClass="form-control" DataTextField="Name" DataValueField="id" OnSelectedIndexChanged="id_category_name_SelectedIndexChanged" AutoPostBack="True" >
-                            </asp:DropDownList>
-                            <br />
-                            Brand: <br />
-                            <asp:DropDownList ID="id_brand_name" runat="server" CssClass="form-control" DataTextField="Name" DataValueField="id">
-                            </asp:DropDownList>
+                            <div style="clear:both; height:200px; overflow:auto;">
+                                <div style="width:60%; float:left;">
+                                    Category: <br />
+                                    <asp:DropDownList ID="id_category_name" runat="server" CssClass="form-control" DataTextField="Name" DataValueField="id" OnSelectedIndexChanged="id_category_name_SelectedIndexChanged" AutoPostBack="True" >
+                                    </asp:DropDownList>
+                                    <br />
+                                    Brand: <br />
+                                    <asp:DropDownList ID="id_brand_name" runat="server" CssClass="form-control" DataTextField="Name" DataValueField="id">
+                                    </asp:DropDownList>
+                                    <br />
+                                </div>
+                                <div style="width:40%; float:right;">
+                                    <asp:Image ID="id_product_image" ImageUrl="~/ProductsData/Images/Default.jpg" Width="100%" runat="server" />
+                                    <asp:FileUpload ID="id_image_uploader" Height="20%" runat="server" />
+                                </div>
+                            </div>
                             <br />
                             Price:<br />
                             <asp:TextBox ID="id_product_price" runat="server" CssClass="form-control" TextMode="Number"></asp:TextBox><br />

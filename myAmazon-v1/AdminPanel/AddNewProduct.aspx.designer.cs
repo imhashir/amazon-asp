@@ -67,6 +67,24 @@ namespace myAmazon_v1.AdminPanel {
         protected global::System.Web.UI.WebControls.DropDownList id_brand_name;
         
         /// <summary>
+        /// id_product_image control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image id_product_image;
+        
+        /// <summary>
+        /// id_image_uploader control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload id_image_uploader;
+        
+        /// <summary>
         /// id_product_price control.
         /// </summary>
         /// <remarks>
