@@ -46,7 +46,7 @@ namespace myAmazon_v1.AdminPanel
                     id_brand_title.Text = "Edit Brand";
                     id_submit_brand.Text = "Update";
 
-                    cmd = "SELECT Name AS name, [Desc] AS [desc], CategoryId AS catId FROM Brand WHERE id=" + Session["BrandId"];
+                    cmd = "SELECT Name AS name, [Desc] AS [desc], [Image], CategoryId AS catId FROM Brand WHERE id=" + Session["BrandId"];
                     sqlCmd = new SqlCommand(cmd, conn);
                     SqlDataReader reader = null;
 
@@ -57,7 +57,11 @@ namespace myAmazon_v1.AdminPanel
                         reader.Read();
                         id_brand_name.Text = reader["name"].ToString();
                         id_category_name.SelectedValue = reader["catId"].ToString();
-                        if(!reader["desc"].ToString().Equals(""))
+
+                        if (!reader["Image"].ToString().Equals(""))
+                            id_brand_image.ImageUrl = reader["Image"].ToString();
+
+                        if (!reader["desc"].ToString().Equals(""))
                         {
                             StreamReader stream = new StreamReader(Server.MapPath(reader["desc"].ToString()));
                             id_brand_desc.Text = stream.ReadToEnd();
@@ -113,6 +117,22 @@ namespace myAmazon_v1.AdminPanel
             {
                 id_log_brand.Text = "Error! Unable to Insert: \n" + ex.ToString();
                 conn.Close();
+            }
+
+            if (id_image_uploader.HasFile) {
+                try
+                {
+                    id_image_uploader.SaveAs(Server.MapPath("~/BrandsData/Images/" + id + ".jpg"));
+                    conn.Open();
+                    SqlCommand query = new SqlCommand("UPDATE Brand SET [Image] ='" + "~/BrandsData/Images/" + (isEdit ? Session["BrandId"] : id.ToString()) + ".jpg' WHERE id=@cid", conn);
+                    query.Parameters.AddWithValue("@cid", id);
+                    query.ExecuteNonQuery();
+                    conn.Close();
+                }
+                catch (Exception ex)
+                {
+                    id_log_brand.Text += ex.ToString();
+                }
             }
 
             try
