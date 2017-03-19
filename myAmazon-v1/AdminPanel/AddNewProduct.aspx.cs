@@ -58,7 +58,8 @@ namespace myAmazon_v1.AdminPanel
                         id_category_name.SelectedValue = reader["CategoryId"].ToString();
                         populateBrandDropDown();
                         id_brand_name.SelectedValue = reader["BrandId"].ToString();
-                        id_product_image.ImageUrl = reader["Image"].ToString();
+                        if(reader["Image"].ToString() != "")
+                            id_product_image.ImageUrl = reader["Image"].ToString();
 
                         //File handling for Description
                         string path = reader["Desc"].ToString();

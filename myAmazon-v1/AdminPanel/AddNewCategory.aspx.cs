@@ -23,7 +23,7 @@ namespace myAmazon_v1.AdminPanel
 
                     SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
                         .ConnectionStrings["myAmazonConnectionString"].ConnectionString);
-                    string cmd = @"SELECT Name, [Desc] FROM Category WHERE id=" + Session["CatId"];
+                    string cmd = @"SELECT Name, [Desc], [Image] FROM Category WHERE id=" + Session["CatId"];
                     SqlCommand sqlCmd = new SqlCommand(cmd, conn);
                     SqlDataReader reader = null;
                     try
@@ -32,6 +32,8 @@ namespace myAmazon_v1.AdminPanel
                         reader = sqlCmd.ExecuteReader();
                         reader.Read();
                         id_category_name.Text = reader["Name"].ToString();
+                        if (reader["Image"].ToString() != "")
+                            id_category_image.ImageUrl = reader["Image"].ToString();
 
                         if (!reader["Desc"].ToString().Equals(""))
                         {
@@ -94,6 +96,23 @@ namespace myAmazon_v1.AdminPanel
             {
                 id_log_category.Text += "Error! Unable to Insert: \n" + ex.ToString();
                 conn.Close();
+            }
+
+            if (id_image_uploader.HasFile)
+            {
+                try
+                {
+                    id_image_uploader.SaveAs(Server.MapPath("~/CategoriesData/Images/" + id + ".jpg"));
+                    conn.Open();
+                    SqlCommand query = new SqlCommand("UPDATE Category SET [Image] ='" + "~/CategoriesData/Images/" + (isEdit ? Session["CatId"] : id.ToString()) + ".jpg' WHERE id=@cid", conn);
+                    query.Parameters.AddWithValue("@cid", id);
+                    query.ExecuteNonQuery();
+                    conn.Close();
+                }
+                catch (Exception ex)
+                {
+                    id_log_category.Text += ex.ToString();
+                }
             }
 
             try
