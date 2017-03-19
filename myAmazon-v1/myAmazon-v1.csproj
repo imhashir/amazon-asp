@@ -140,6 +140,7 @@
     <Content Include="AdminPanel\ManageBrands.aspx" />
     <Content Include="AdminPanel\ManageCategories.aspx" />
     <Content Include="AdminPanel\ManageProducts.aspx" />
+    <Content Include="BrowseProducts.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -253,8 +254,6 @@
     <Content Include="Scripts\WebForms\WebForms.js" />
     <Content Include="Scripts\WebForms\WebParts.js" />
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
-    <Content Include="Strings\brand_names.xml" />
-    <Content Include="Strings\category_name.xml" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -367,6 +366,13 @@
       <DependentUpon>RegisterExternalLogin.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="BrowseProducts.aspx.cs">
+      <DependentUpon>BrowseProducts.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BrowseProducts.aspx.designer.cs">
+      <DependentUpon>BrowseProducts.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Contact.aspx.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

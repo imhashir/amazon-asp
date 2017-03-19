@@ -15,7 +15,8 @@ namespace myAmazon_v1.AdminPanel
         {
             if (!this.IsPostBack)
             {
-                SqlConnection conn = new SqlConnection(@"Data Source=DESKTOP-HO7NA1P;Initial Catalog=myAmazon;User ID=sa;Password=root");
+                SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
+                        .ConnectionStrings["myAmazonConnectionString"].ConnectionString);
                 string cmd = "SELECT * FROM BrandDetails";
                 SqlCommand sqlCmd = new SqlCommand(cmd, conn);
                 DataSet ds = new DataSet();

@@ -40,7 +40,7 @@
         <div class="content-wrapper">
             <div class="float-left">
                 <p class="site-title">
-                    <a runat="server" href="~/">your logo here</a>
+                    <a runat="server" href="~/">Amazon</a>
                 </p>
             </div>
             <div class="float-right">
@@ -64,8 +64,9 @@
                 <nav>
                     <ul id="menu">
                         <li><a runat="server" href="~/">Home</a></li>
-                        <li><a runat="server" href="~/About">About</a></li>
-                        <li><a runat="server" href="~/Contact">Contact</a></li>
+                        <li><a runat="server" href="#">Browse Categories</a></li>
+                        <li><a runat="server" href="~/BrowseProducts.aspx">Browse Products</a></li>
+                        <li><a runat="server" href="#">Browse Brands</a></li>
                     </ul>
                 </nav>
             </div>

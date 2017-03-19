@@ -10,7 +10,7 @@
 namespace myAmazon_v1 {
     
     
-    public partial class _Default {
+    public partial class BrowseProducts {
         
         /// <summary>
         /// form1 control.
