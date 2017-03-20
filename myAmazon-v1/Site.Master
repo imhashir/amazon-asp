@@ -66,7 +66,7 @@
                         <li><a runat="server" href="~/">Home</a></li>
                         <li><a runat="server" href="#">Browse Categories</a></li>
                         <li><a runat="server" href="~/BrowseProducts.aspx">Browse Products</a></li>
-                        <li><a runat="server" href="#">Browse Brands</a></li>
+                        <li><a runat="server" href="~/BrowseBrands.aspx">Browse Brands</a></li>
                     </ul>
                 </nav>
             </div>

@@ -140,6 +140,7 @@
     <Content Include="AdminPanel\ManageBrands.aspx" />
     <Content Include="AdminPanel\ManageCategories.aspx" />
     <Content Include="AdminPanel\ManageProducts.aspx" />
+    <Content Include="BrowseBrands.aspx" />
     <Content Include="BrowseProducts.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -366,6 +367,13 @@
       <DependentUpon>RegisterExternalLogin.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="BrowseBrands.aspx.cs">
+      <DependentUpon>BrowseBrands.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BrowseBrands.aspx.designer.cs">
+      <DependentUpon>BrowseBrands.aspx</DependentUpon>
+    </Compile>
     <Compile Include="BrowseProducts.aspx.cs">
       <DependentUpon>BrowseProducts.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
