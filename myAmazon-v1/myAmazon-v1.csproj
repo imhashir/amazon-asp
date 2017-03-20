@@ -368,19 +368,19 @@
       <DependentUpon>RegisterExternalLogin.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="BrowseBrands.aspx.designer.cs">
+      <DependentUpon>BrowseBrands.aspx</DependentUpon>
+    </Compile>
     <Compile Include="BrowseCategories.aspx.cs">
       <DependentUpon>BrowseCategories.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="BrowseCategories.aspx.designer.cs">
-      <DependentUpon>BrowseCategories.aspx</DependentUpon>
     </Compile>
     <Compile Include="BrowseBrands.aspx.cs">
       <DependentUpon>BrowseBrands.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="BrowseBrands.aspx.designer.cs">
-      <DependentUpon>BrowseBrands.aspx</DependentUpon>
+    <Compile Include="BrowseCategories.aspx.designer.cs">
+      <DependentUpon>BrowseCategories.aspx</DependentUpon>
     </Compile>
     <Compile Include="BrowseProducts.aspx.cs">
       <DependentUpon>BrowseProducts.aspx</DependentUpon>

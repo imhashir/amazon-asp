@@ -1,25 +1,20 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="BrowseBrands.aspx.cs" Inherits="myAmazon_v1.BrowseBrands" %>
+﻿<%@ Page Language="C#" Title="Browse Brands" MasterPageFile="~/Site.Master" AutoEventWireup="True" CodeBehind="BrowseBrands.aspx.cs" Inherits="myAmazon_v1.BrowseBrands"  %>
 
-<!DOCTYPE html>
+<asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <link href="Content/bootstrap.css" rel="stylesheet" />
-    <title>Browse Brands</title>
-</head>
-<body>
-    <form id="form1" runat="server">
+</asp:Content>
+<asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <asp:Label runat="server" ID="log_browse_brand"></asp:Label>
     <div>
-        <asp:DataList ID="BrandDataList" runat="server" BackColor="#57d0ff" BorderColor="#0098d2"
-            BorderStyle="None" BorderWidth="3px" CellPadding="3" CellSpacing="2" Font-Bold="True"
+        <asp:DataList ID="BrandDataList" runat="server" BorderColor="#202020"
+            BorderStyle="Solid" BorderWidth="5px" CellPadding="3" CellSpacing="2" Font-Bold="True"
             Font-Names="Verdana" Font-Size="Small" GridLines="Both" RepeatColumns="4" RepeatDirection="Horizontal">
-            <HeaderStyle Font-Bold="True" Font-Size="Large" ForeColor="White"
+            <HeaderStyle Font-Bold="True" Font-Size="Large" ForeColor="202020"
                 HorizontalAlign="Center" VerticalAlign="Middle" />
             <HeaderTemplate>
                 Brands
             </HeaderTemplate>
-            <ItemStyle BackColor="#b7ebff" ForeColor="#8C4510" Height="250px" Width="150px" HorizontalAlign="Center"/>
+            <ItemStyle BackColor="#dbdbdb" ForeColor="#202020" Height="250px" Width="150px" HorizontalAlign="Center"/>
             <ItemTemplate>
                 <a href="?id=<%# Eval("id") %>">
                 <table>
@@ -30,7 +25,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <asp:Label ID="id_brand_label" runat="server" Text='<%# Eval("Name") %>' ForeColor="#000099" />
+                            <asp:Label ID="id_brand_label" runat="server" Text='<%# Eval("Name") %>' ForeColor="#202020" />
                         </td>
                     </tr>
                 </table>
@@ -39,6 +34,4 @@
             <SelectedItemStyle BackColor="#738A9C" Font-Bold="True" ForeColor="White" />
         </asp:DataList>
     </div>
-    </form>
-</body>
-</html>
+</asp:Content>
