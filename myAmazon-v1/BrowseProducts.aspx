@@ -14,7 +14,7 @@
             <HeaderTemplate>
                 Products
             </HeaderTemplate>
-            <ItemStyle BackColor="#dbdbdb" ForeColor="#202020" Height="250px" Width="150px" HorizontalAlign="Center"/>
+            <ItemStyle BackColor="#dbdbdb" ForeColor="#202020" Height="249px" Width="150px" HorizontalAlign="Center"/>
             <ItemTemplate>
                 <a href="?id=<%# Eval("id") %>">
                 <table>
