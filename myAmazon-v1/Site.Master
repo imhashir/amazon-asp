@@ -64,7 +64,7 @@
                 <nav>
                     <ul id="menu">
                         <li><a runat="server" href="~/">Home</a></li>
-                        <li><a runat="server" href="#">Browse Categories</a></li>
+                        <li><a runat="server" href="~/BrowseCategories.aspx">Browse Categories</a></li>
                         <li><a runat="server" href="~/BrowseProducts.aspx">Browse Products</a></li>
                         <li><a runat="server" href="~/BrowseBrands.aspx">Browse Brands</a></li>
                     </ul>

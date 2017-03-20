@@ -140,6 +140,7 @@
     <Content Include="AdminPanel\ManageBrands.aspx" />
     <Content Include="AdminPanel\ManageCategories.aspx" />
     <Content Include="AdminPanel\ManageProducts.aspx" />
+    <Content Include="BrowseCategories.aspx" />
     <Content Include="BrowseBrands.aspx" />
     <Content Include="BrowseProducts.aspx" />
     <Content Include="Contact.aspx" />
@@ -367,6 +368,13 @@
       <DependentUpon>RegisterExternalLogin.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="BrowseCategories.aspx.cs">
+      <DependentUpon>BrowseCategories.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BrowseCategories.aspx.designer.cs">
+      <DependentUpon>BrowseCategories.aspx</DependentUpon>
+    </Compile>
     <Compile Include="BrowseBrands.aspx.cs">
       <DependentUpon>BrowseBrands.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
