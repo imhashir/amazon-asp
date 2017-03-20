@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="BrowseProducts.aspx.cs" Inherits="myAmazon_v1.BrowseProducts" %>
+﻿<%@ Page Language="C#" Title="Browse Products" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="BrowseProducts.aspx.cs" Inherits="myAmazon_v1.BrowseProducts" %>
 
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
 
