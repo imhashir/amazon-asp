@@ -13,7 +13,7 @@ namespace myAmazon_v1 {
     public partial class BrowseBrands {
         
         /// <summary>
-        /// log_browse_brand control.
+        /// log_browse_product control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
@@ -22,7 +22,7 @@ namespace myAmazon_v1 {
         protected global::System.Web.UI.WebControls.Label log_browse_brand;
         
         /// <summary>
-        /// BrandDataList control.
+        /// ProductDataList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
