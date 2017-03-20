@@ -13,7 +13,7 @@ namespace myAmazon_v1 {
     public partial class BrowseCategories {
         
         /// <summary>
-        /// log_browse_category control.
+        /// log_browse_brand control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
@@ -22,7 +22,7 @@ namespace myAmazon_v1 {
         protected global::System.Web.UI.WebControls.Label log_browse_category;
         
         /// <summary>
-        /// CategoryDataList control.
+        /// BrandDataList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.

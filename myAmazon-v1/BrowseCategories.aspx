@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" Title="Browse Categories" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="BrowseCategories.aspx.cs" Inherits="myAmazon_v1.BrowseCategories"  %>
+﻿<%@ Page Language="C#" Title="Browse Categories" MasterPageFile="~/Site.Master" AutoEventWireup="True" CodeBehind="BrowseCategories.aspx.cs" Inherits="myAmazon_v1.BrowseCategories"  %>
 
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
 

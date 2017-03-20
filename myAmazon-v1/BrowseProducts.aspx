@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="BrowseProducts.aspx.cs" Inherits="myAmazon_v1.BrowseProducts" %>
+﻿<%@ Page Language="C#" AutoEventWireup="True" CodeBehind="BrowseProducts.aspx.cs" Inherits="myAmazon_v1.BrowseProducts" %>
 
 <!DOCTYPE html>
 
