@@ -13,6 +13,24 @@ namespace myAmazon_v1 {
     public partial class BrowseProducts {
         
         /// <summary>
+        /// CategoryDropdownList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList CategoryDropdownList;
+        
+        /// <summary>
+        /// BrandDropdownList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList BrandDropdownList;
+        
+        /// <summary>
         /// log_browse_product control.
         /// </summary>
         /// <remarks>

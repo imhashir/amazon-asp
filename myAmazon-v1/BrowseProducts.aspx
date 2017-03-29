@@ -4,6 +4,10 @@
 
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
+    <div>
+        <b>Filter By: </b> Category <asp:DropDownList ID="CategoryDropdownList" runat="server" OnSelectedIndexChanged="DropdownSelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
+        Brand <asp:DropDownList ID="BrandDropdownList" runat="server" OnSelectedIndexChanged="DropdownSelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
+    </div>
     <asp:Label runat="server" ID="log_browse_product"></asp:Label>
     <div>
         <asp:DataList ID="ProductDataList" runat="server" BorderColor="#202020"
