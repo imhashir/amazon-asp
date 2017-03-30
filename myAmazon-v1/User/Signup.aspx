@@ -14,7 +14,7 @@
                         Last Name:  <asp:TextBox ID="id_user_lname" runat="server" CssClass="form-control"></asp:TextBox><br />
                         Username:  <asp:TextBox ID="id_username" runat="server" CssClass="form-control"></asp:TextBox><br />
                         Email:  <asp:TextBox ID="id_email" runat="server" CssClass="form-control"></asp:TextBox><br />
-                        Password:  <asp:TextBox ID="id_password" runat="server" CssClass="form-control"></asp:TextBox><br />
+                        Password:  <asp:TextBox ID="id_password" TextMode="Password" runat="server" CssClass="form-control"></asp:TextBox><br />
                         Contact Number:  <asp:TextBox ID="id_cnumber" runat="server" CssClass="form-control"></asp:TextBox><br />
                         <div>
                             <asp:Image ID="id_cimage" Width="200px" ImageUrl="~/ProductsData/Images/Default.jpg" runat="server" />
