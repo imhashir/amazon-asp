@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Data.Sql;
 using System.Data.SqlClient;
 using System.Data;
 using System.IO;
@@ -50,11 +44,29 @@ namespace myAmazon_v1.User
                 conn.Open();
                 sqlCmd.ExecuteNonQuery();
                 flag = (int) sqlCmd.Parameters["@flag"].Value;
+                if (flag != 0)
+                    throw new Exception();
                 conn.Close();
                 id_log_signup.Text = "SignUp Successful!";
             } catch (Exception ex)
             {
-                id_log_signup.Text = ex.ToString();
+                if (flag != 0) {
+                    switch (flag)
+                    {
+                        case 1:
+                            id_log_signup.Text = "Username already exists";
+                            break;
+                        case 2:
+                            id_log_signup.Text = "Invalid Password";
+                            break;
+                        case 3:
+                            id_log_signup.Text = "Email already registered!";
+                            break;
+                    }
+                }
+                else {
+                    id_log_signup.Text = ex.ToString();
+                }
                 conn.Close();
             }
         }
