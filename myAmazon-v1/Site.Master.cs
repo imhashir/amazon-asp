@@ -16,6 +16,7 @@ namespace myAmazon_v1
 
         protected void Page_Init(object sender, EventArgs e)
         {
+            afLogin.Visible = false;
             // The code below helps to protect against XSRF attacks
             var requestCookie = Request.Cookies[AntiXsrfTokenKey];
             Guid requestCookieGuidValue;
@@ -67,7 +68,19 @@ namespace myAmazon_v1
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if(Session["SignedInUser"] != null)
+            {
+                befLogin.Visible = false;
+                afLogin.Visible = true;
+                login_uname.Text = Session["SignedInUser"].ToString();
+            }
+        }
+        
+        protected void onLogoutClick(object sender, EventArgs e)
+        {
+            befLogin.Visible = true;
+            afLogin.Visible = false;
+            Session["SignedInUser"] = null;
         }
     }
 }

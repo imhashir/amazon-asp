@@ -4,7 +4,7 @@
 <html lang="en">
 <head runat="server">
     <meta charset="utf-8" />
-    <title><%: Page.Title %> - My ASP.NET Application</title>
+    <title><%: Page.Title %> </title>
     <asp:PlaceHolder runat="server">     
           <%: Scripts.Render("~/bundles/modernizr") %>
     </asp:PlaceHolder>  
@@ -46,21 +46,19 @@
             </div>
             <div class="float-right">
                 <section id="login">
-                    <asp:LoginView runat="server" ViewStateMode="Disabled">
-                        <AnonymousTemplate>
-                            <ul>
-                                <li><a id="registerLink" runat="server" href="~/Account/Register">Register</a></li>
-                                <li><a id="loginLink" runat="server" href="~/Account/Login">Log in</a></li>
-                            </ul>
-                        </AnonymousTemplate>
-                        <LoggedInTemplate>
-                            <p>
-                                Hello, <a runat="server" class="username" href="~/Account/Manage" title="Manage your account">
-                                    <asp:LoginName runat="server" CssClass="username" /></a>!
-                                <asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="Log off" LogoutPageUrl="~/" />
-                            </p>
-                        </LoggedInTemplate>
-                    </asp:LoginView>
+                    <div id="befLogin" runat="server">
+                        <ul>
+                            <li><a id="registerLink" runat="server" href="~/User/Signup">Sign Up</a></li>
+                            <li><a id="loginLink" runat="server" href="~/User/Signin">Sign In</a></li>
+                        </ul>
+                    </div>
+                    <div id="afLogin" runat="server">
+                        <p>
+                            Hello, <a runat="server" class="username" href="~/Account/Manage" title="Manage your account">
+                                <asp:Label runat="server" ID="login_uname"></asp:Label></a>!
+                            <asp:LinkButton runat="server" ID="logoutLink" OnClick="onLogoutClick">Logout</asp:LinkButton>
+                        </p>
+                    </div>
                 </section>
                 <nav>
                     <ul id="menu">

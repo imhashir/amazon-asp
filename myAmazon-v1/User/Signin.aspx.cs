@@ -35,6 +35,7 @@ namespace myAmazon_v1.User
                 Session["SignedInUser"] = id_username.Text.ToString(); 
                 conn.Close();
                 id_log_signin.Text = "SignIn Successful!\nSignIn Id: " + Session["SignedInUser"];
+                Response.Redirect(@"..\");
             } catch (Exception ex)
             {
                 if (flag != 0) {
