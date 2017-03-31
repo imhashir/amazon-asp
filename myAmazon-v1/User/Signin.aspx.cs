@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Data.SqlClient;
 using System.Data;
+using myAmazon_v1.DAL;
+
 namespace myAmazon_v1.User
 {
     public partial class Signin : System.Web.UI.Page
@@ -12,47 +14,15 @@ namespace myAmazon_v1.User
 
         protected void id_submit_signin_Click(object sender, EventArgs e)
         {
-            SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
-                        .ConnectionStrings["myAmazonConnectionString"].ConnectionString);
-            SqlCommand sqlCmd = new SqlCommand("SignInUser", conn);
-            string imagePath = null;
-            
-            sqlCmd.CommandType = CommandType.StoredProcedure;
-
-            sqlCmd.Parameters.AddWithValue("@username", id_username.Text);
-            sqlCmd.Parameters.AddWithValue("@pass", id_password.Text);
-
-            SqlParameter outputFlag = sqlCmd.Parameters.Add("@flag", SqlDbType.Int);
-            outputFlag.Direction = ParameterDirection.Output;
-            int flag = 0;
-            try
+            string log = "";
+            SignInDAL signInDal = new SignInDAL();
+            if (signInDal.signInUser(id_username.Text, id_password.Text, ref (log)) != 0)
             {
-                conn.Open();
-                sqlCmd.ExecuteNonQuery();
-                flag = (int) sqlCmd.Parameters["@flag"].Value;
-                if (flag != 0)
-                    throw new Exception();
-                Session["SignedInUser"] = id_username.Text.ToString(); 
-                conn.Close();
-                id_log_signin.Text = "SignIn Successful!\nSignIn Id: " + Session["SignedInUser"];
+                id_log_signin.Text += log;
+            } else
+            {
+                Session["SignedInUser"] = id_username.Text.ToString();
                 Response.Redirect(@"..\");
-            } catch (Exception ex)
-            {
-                if (flag != 0) {
-                    switch (flag)
-                    {
-                        case 1:
-                            id_log_signin.Text = "Invalid Username.";
-                            break;
-                        case 2:
-                            id_log_signin.Text = "Invalid Password";
-                            break;
-                    }
-                }
-                else {
-                    id_log_signin.Text = ex.ToString();
-                }
-                conn.Close();
             }
         }
     }
