@@ -1,11 +1,39 @@
 ﻿using System;
 using System.Data.SqlClient;
 using myAmazon_v1.Model;
+using System.Data;
 
 namespace myAmazon_v1.DAL
 {
     public class BrandsDAL
     {
+        public DataTable getBrands(ref string log, string where, string whereCondition)
+        {
+            DataTable table = new DataTable();
+            SqlConnection conn = new SqlConnection(@"Data Source=DESKTOP-HO7NA1P;Initial Catalog=myAmazon;User ID=sa;Password=root");
+            string cmd = "SELECT id, Name FROM Brand";
+            if (where != null)
+                cmd += " WHERE " + where + " = " + whereCondition;
+            SqlCommand sqlCmd = new SqlCommand(cmd, conn);
+            SqlDataAdapter adapter = new SqlDataAdapter(sqlCmd);
+            try
+            {
+                conn.Open();
+                sqlCmd.ExecuteNonQuery();
+                adapter.Fill(table);
+            }
+            catch (Exception ex)
+            {
+                log += "Error opting Brand Names: " + ex.ToString();
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return table;
+        }
+
         public Brand getBrandDetails(ref bool flag, ref string log, string where, string whereCondition) {
             SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
                         .ConnectionStrings["myAmazonConnectionString"].ConnectionString);

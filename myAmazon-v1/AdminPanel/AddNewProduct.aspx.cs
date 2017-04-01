@@ -7,6 +7,8 @@ using System.Web.UI.WebControls;
 using System.Data.SqlClient;
 using System.Data;
 using System.IO;
+using myAmazon_v1.DAL;
+using myAmazon_v1.Model;
 
 namespace myAmazon_v1.AdminPanel
 {
@@ -16,23 +18,11 @@ namespace myAmazon_v1.AdminPanel
         {
             if (!Page.IsPostBack)
             {
-                SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
-                        .ConnectionStrings["myAmazonConnectionString"].ConnectionString);
-                string cmd = "SELECT id, Name FROM Category";
-                SqlCommand sqlCmd = new SqlCommand(cmd, conn);
-                DataTable table = new DataTable();
-                SqlDataAdapter adapter = new SqlDataAdapter(sqlCmd);
-                try
-                {
-                    conn.Open();
-                    adapter.Fill(table);
-                    conn.Close();
-                }
-                catch (Exception ex)
-                {
-                    id_log_product.Text += "Error opting Brand Names: " + ex.ToString();
-                    conn.Close();
-                }
+                string log = "";
+                CategoriesDAL catDal = new CategoriesDAL();
+                DataTable table = catDal.getCategories(ref(log), null, null);
+                id_log_product.Text += log;
+                log = "";
                 id_category_name.DataSource = table;
                 id_category_name.DataTextField = "Name";
                 id_category_name.DataValueField = "id";
@@ -42,40 +32,29 @@ namespace myAmazon_v1.AdminPanel
 
                 if (Session["isEdit"] != null && Session["isEdit"].Equals("1"))
                 {
+					bool flag = true;
                     Page.Title = "Edit Product";
                     id_page_title.Text = "Edit Product";
                     id_submit_product.Text = "Update";
+					ProductDAL productDal = new ProductDAL();
+					Product product = productDal.getProductDetails(ref(flag), ref(log), "p.id", Session["ProductId"].ToString());
+					id_product_name.Text = product.name;
+					id_product_price.Text = product.price.ToString();
+					id_category_name.SelectedValue = product.catId.ToString();
+                    populateBrandDropDown();
+                    id_brand_name.SelectedValue = product.brandId.ToString();
+                    if(product.image != "")
+                        id_product_image.ImageUrl = product.image;
 
-                    cmd = "SELECT p.Name, p.Price, p.[Desc], p.[Image], p.CategoryId, p.BrandId FROM Product AS p WHERE p.id=" + Session["ProductId"];
-                    sqlCmd = new SqlCommand(cmd, conn);
-                    SqlDataReader reader = null;
-                    try {
-                        conn.Open();
-                        reader = sqlCmd.ExecuteReader();
-                        reader.Read();
-                        id_product_name.Text = reader["Name"].ToString();
-                        id_product_price.Text = reader["Price"].ToString();
-                        id_category_name.SelectedValue = reader["CategoryId"].ToString();
-                        populateBrandDropDown();
-                        id_brand_name.SelectedValue = reader["BrandId"].ToString();
-                        if(reader["Image"].ToString() != "")
-                            id_product_image.ImageUrl = reader["Image"].ToString();
-
-                        //File handling for Description
-                        string path = reader["Desc"].ToString();
-                        if(!path.Equals(""))
-                        {
-                            StreamReader file = new StreamReader(Server.MapPath(path));
-                            id_product_desc.Text = file.ReadToEnd();
-                            file.Close();
-                        }
-                        conn.Close();
-                    }
-                    catch (Exception ex)
+                    //File handling for Description
+                    string path = product.desc;
+                    if(!path.Equals(""))
                     {
-                        id_log_product.Text = ex.ToString();
-                        conn.Close();
+                        StreamReader file = new StreamReader(Server.MapPath(path));
+                        id_product_desc.Text = file.ReadToEnd();
+                        file.Close();
                     }
+                    id_log_product.Text += log;
                 }
                 else
                 {
@@ -88,112 +67,88 @@ namespace myAmazon_v1.AdminPanel
         protected void Press_Submit(object sender, EventArgs e)
         {
             bool isEdit = false;
-            SqlConnection conn = new SqlConnection(@"Data Source=DESKTOP-HO7NA1P;Initial Catalog=myAmazon;User ID=sa;Password=root");
-            SqlCommand insert = null;
-            if (Session["isEdit"] != null && Session["isEdit"].Equals("1"))
+			int id = 0;
+			string log = "";
+			if (Session["isEdit"] != null && Session["isEdit"].Equals("1"))
                 isEdit = true;
-
-            insert = new SqlCommand("UpdateProduct", conn);
-            insert.CommandType = CommandType.StoredProcedure;
-
-            insert.Parameters.AddWithValue("@id", Session["ProductId"] ?? (object)DBNull.Value);
-            insert.Parameters.AddWithValue("@name", id_product_name.Text);
-            insert.Parameters.AddWithValue("@brandId", id_brand_name.Text);
-            insert.Parameters.AddWithValue("@categoryId", id_category_name.Text);
-            insert.Parameters.AddWithValue("@price", id_product_price.Text);
-            insert.Parameters.AddWithValue("@updateType", isEdit);
-            SqlParameter outputId = insert.Parameters.Add("@productId", SqlDbType.Int);
-            outputId.Direction = ParameterDirection.Output;
-            SqlParameter outputFlag = insert.Parameters.Add("@flag", SqlDbType.Int);
-            outputFlag.Direction = ParameterDirection.Output;
-
-            int id = 0, flag = 0;
-            try
+			ProductDAL productDal = new ProductDAL();
+			if (isEdit)
+				id = Convert.ToInt32(Session["ProductId"]);
+			if(productDal.updateProductInfo(ref (id), id_product_name.Text, id_brand_name.SelectedValue, id_category_name.SelectedValue, id_product_price.Text, isEdit, ref (log)))
             {
-                conn.Open();
-                insert.ExecuteNonQuery();
                 if (!isEdit)
-                    id = (int) insert.Parameters["@productId"].Value;
-                else
-                    id = Convert.ToInt32(Session["ProductId"]);
-                flag = (int) insert.Parameters["@flag"].Value;
-
-                if(flag == 0)
                 {
-                    if (!isEdit)
-                    {
-                        id_log_product.Text = "Successfully Inserted";
-                        id_product_name.Text = "";
-                        id_product_price.Text = "";
-                        id_category_name.SelectedIndex = 0;
-                        id_brand_name.SelectedIndex = 0;
-                    }
-                    else
-                        id_log_product.Text = "Successfully Updated";
-                } 
+                    id_log_product.Text = "Successfully Inserted";
+                    id_product_name.Text = "";
+                    id_product_price.Text = "";
+                    id_category_name.SelectedIndex = 0;
+                    id_brand_name.SelectedIndex = 0;
+                }
                 else
-                    id_log_product.Text = "Error in insertion. Price must be greater than 0.";
+                    id_log_product.Text = "Successfully Updated";
+            } 
+            else
+                id_log_product.Text = "Error in insertion";
 
-                conn.Close();
-            }
-            catch (Exception ex)
-            {
-                id_log_product.Text = "Error! Unable to Insert: \n" + ex.ToString();
-                conn.Close();
-            }
+			string imagePath = null;
+			string descPath = null;
 
-            if (id_image_uploader.HasFile) {
+			if (id_image_uploader.HasFile) {
                 try
                 {
-                    id_image_uploader.SaveAs(Server.MapPath("~/ProductsData/Images/" + id + ".jpg"));
-                    conn.Open();
-                    SqlCommand query = new SqlCommand("UPDATE Product SET [Image] ='" + "~/ProductsData/Images/" + (isEdit ? Session["ProductId"] : id.ToString()) + ".jpg' WHERE id=@cid", conn);
-                    query.Parameters.AddWithValue("@cid", id);
-                    query.ExecuteNonQuery();
-                    conn.Close();
-                } catch (Exception ex)
+					id_image_uploader.SaveAs(Server.MapPath(imagePath));
+					imagePath = "~/ProductsData/Images/" + id + ".jpg";
+				}
+				catch (Exception ex)
                 {
-                    id_log_product.Text += ex.ToString();
+                    log += ex.ToString();
                 }
             }
+			bool enterFile = false;
 
-            try
-            {
-                bool newDesc = false;
-                try
-                {
-                    if (!Directory.Exists(Server.MapPath("~/ProductsData/")))
-                        Directory.CreateDirectory(Server.MapPath("~/ProductsData/"));
-                }
-                catch (Exception ex)
-                {
-                    id_log_product.Text += ex.ToString();
-                }
-                if (!File.Exists(Server.MapPath("~/ProductsData/" + id.ToString() + ".txt"))) { 
-                    File.Create(Server.MapPath("~/ProductsData/" + id.ToString() + ".txt")).Close();
-                    newDesc = true;
-                }
-                
-                File.WriteAllText(Server.MapPath("~/ProductsData/" + id.ToString() + ".txt"), id_product_desc.Text);
-                if(!isEdit || newDesc)
-                {
-                    if(!isEdit)
-                        id_product_desc.Text = "";
-                    conn.Open();
-                    SqlCommand query = new SqlCommand("UPDATE Product SET [Desc] ='" + "~/ProductsData/" + (isEdit ? Session["ProductId"] : id.ToString()) + ".txt" + "' WHERE id=@cid", conn);
-                    query.Parameters.AddWithValue("@cid", id);
-                    query.ExecuteNonQuery();
-                    conn.Close();
-                } else
-                {
-                    Session["isEdit"] = "0";
-                    Response.Redirect(@"..\AdminPanel\ManageProducts.aspx");
-                }
-            }
-            catch (Exception ex)
-            {
-                id_log_product.Text += ex.ToString();
-            }
+			if ((id_product_desc.Text != null && !isEdit) || isEdit)
+				enterFile = true;
+
+			if (enterFile)
+			{
+				descPath = "~/ProductsData/" + id + ".txt";
+				try
+				{
+					bool newDesc = false;
+					try
+					{
+						if (!Directory.Exists(Server.MapPath("~/ProductsData/")))
+							Directory.CreateDirectory(Server.MapPath("~/ProductsData/"));
+					}
+					catch (Exception ex)
+					{
+						log += ex.ToString();
+					}
+					if (!File.Exists(Server.MapPath(descPath)))
+					{
+						File.Create(Server.MapPath(descPath)).Close();
+						newDesc = true;
+					}
+
+					File.WriteAllText(Server.MapPath(descPath), id_product_desc.Text);
+					if (!isEdit || newDesc)
+					{
+						if (!newDesc)
+							id_product_desc.Text = "";
+					}
+					else
+					{
+						Session["isEdit"] = "0";
+						Response.Redirect(@"..\AdminPanel\ManageProducts.aspx");
+					}
+				}
+				catch (Exception ex)
+				{
+					id_log_product.Text += ex.ToString();
+				}
+			}
+			productDal.updateImageAndDesc(id, imagePath, descPath, isEdit, ref (log));
+			id_log_product.Text += log;
         }
 
         protected void id_category_name_SelectedIndexChanged(object sender, EventArgs e)
@@ -202,24 +157,9 @@ namespace myAmazon_v1.AdminPanel
         }
 
         private void populateBrandDropDown() {
-            SqlConnection conn = new SqlConnection(@"Data Source=DESKTOP-HO7NA1P;Initial Catalog=myAmazon;User ID=sa;Password=root");
-            string cmd = "SELECT id, Name FROM Brand WHERE CategoryId = @id";
-            SqlCommand sqlCmd = new SqlCommand(cmd, conn);
-            sqlCmd.Parameters.AddWithValue("@id", id_category_name.SelectedValue);
-            DataTable table = new DataTable();
-            SqlDataAdapter adapter = new SqlDataAdapter(sqlCmd);
-            try
-            {
-                conn.Open();
-                sqlCmd.ExecuteNonQuery();
-                conn.Close();
-            }
-            catch (Exception ex)
-            {
-                id_log_product.Text += "Error opting Brand Names: " + ex.ToString();
-                conn.Close();
-            }
-            adapter.Fill(table);
+            BrandsDAL brandDal = new BrandsDAL();
+            string log = "";
+            DataTable table = brandDal.getBrands(ref(log), "CategoryId", id_category_name.SelectedValue);
             id_brand_name.DataSource = table;
             id_brand_name.DataTextField = "Name";
             id_brand_name.DataValueField = "id";

@@ -101,7 +101,6 @@ namespace myAmazon_v1.AdminPanel
                     Response.Redirect(@"..\AdminPanel\ManageCategories.aspx");
                 }
             }
-            
             catch (Exception ex) {
                 log += ex.ToString();
             }

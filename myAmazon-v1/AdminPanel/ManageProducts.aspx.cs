@@ -45,9 +45,9 @@ namespace myAmazon_v1.AdminPanel
                     case "Delete":
                         {
                             SqlConnection conn = new SqlConnection(@"Data Source=DESKTOP-HO7NA1P;Initial Catalog=myAmazon;User ID=sa;Password=root");
-                            string cmd = "DELETE FROM Brand WHERE id=@brandId";
+                            string cmd = "DELETE FROM Product WHERE id=@productId";
                             SqlCommand sqlCmd = new SqlCommand(cmd, conn);
-                            sqlCmd.Parameters.AddWithValue("brandId", HttpContext.Current.Request["id"]);
+                            sqlCmd.Parameters.AddWithValue("productId", HttpContext.Current.Request["id"]);
 
                             try
                             {
