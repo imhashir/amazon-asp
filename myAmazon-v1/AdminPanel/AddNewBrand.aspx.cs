@@ -102,7 +102,6 @@ namespace myAmazon_v1.AdminPanel
                 {
                     if(!newDesc)
                         id_brand_desc.Text = "";
-                    brandDal.updateImageAndDesc(id, imagePath, descPath, isEdit, ref(log));
                 }
                 else
                 {
@@ -115,6 +114,7 @@ namespace myAmazon_v1.AdminPanel
                 log += ex.ToString();
             }
 
+            brandDal.updateImageAndDesc(id, imagePath, descPath, isEdit, ref (log));
             id_log_brand.Text += log;
         }
 

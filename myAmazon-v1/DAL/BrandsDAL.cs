@@ -35,7 +35,8 @@ namespace myAmazon_v1.DAL
 
         public bool updateBrandInfo(string name, ref int id, string catId, bool isEdit, ref string log) {
             bool flag = true;
-            SqlConnection conn = new SqlConnection(@"Data Source=DESKTOP-HO7NA1P;Initial Catalog=myAmazon;User ID=sa;Password=root");
+            SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
+                        .ConnectionStrings["myAmazonConnectionString"].ConnectionString);
             string cmd = "";
             
             if (isEdit)
@@ -74,7 +75,8 @@ namespace myAmazon_v1.DAL
         }
 
         public bool updateImageAndDesc(int id, string image, string desc, bool isEdit, ref string log) {
-            SqlConnection conn = new SqlConnection(@"Data Source=DESKTOP-HO7NA1P;Initial Catalog=myAmazon;User ID=sa;Password=root");
+            SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
+                        .ConnectionStrings["myAmazonConnectionString"].ConnectionString);
 
             bool flag = true;
             if (image != null)

@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using System.Data.SqlClient;
 using System.IO;
+using myAmazon_v1.Model;
+using myAmazon_v1.DAL;
 
 namespace myAmazon_v1.AdminPanel
 {
@@ -17,97 +15,58 @@ namespace myAmazon_v1.AdminPanel
             {
                 if (Session["isEdit"] != null && Session["isEdit"].Equals("1"))
                 {
+                    string log = "";
+                    bool flag = true;
                     id_category_title.Text = "Edit Category";
                     this.Title = "Edit Category";
                     id_submit_category.Text = "Update";
-
-                    SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
-                        .ConnectionStrings["myAmazonConnectionString"].ConnectionString);
-                    string cmd = @"SELECT Name, [Desc], [Image] FROM Category WHERE id=" + Session["CatId"];
-                    SqlCommand sqlCmd = new SqlCommand(cmd, conn);
-                    SqlDataReader reader = null;
-                    try
+                    CategoriesDAL catDal = new CategoriesDAL();
+                    Category category = catDal.getCategoryDetails(ref(flag), ref(log), "id", Session["CatId"].ToString());
+                    if(flag)
                     {
-                        conn.Open();
-                        reader = sqlCmd.ExecuteReader();
-                        reader.Read();
-                        id_category_name.Text = reader["Name"].ToString();
-                        if (reader["Image"].ToString() != "")
-                            id_category_image.ImageUrl = reader["Image"].ToString();
+                        id_category_name.Text = category.name;
+                        if (category.image != "")
+                            id_category_image.ImageUrl = category.image;
 
-                        if (!reader["Desc"].ToString().Equals(""))
+                        if (!category.desc.Equals(""))
                         {
-                            StreamReader stream = new StreamReader(Server.MapPath(reader["Desc"].ToString()));
+                            StreamReader stream = new StreamReader(Server.MapPath(category.desc));
                             id_category_desc.Text = stream.ReadToEnd();
                             stream.Close();
                         }
-                        conn.Close();
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        id_log_category.Text += ex.ToString();
-                        conn.Close();
+                        id_log_category.Text += log;
                     }
-
+                    
                 }
             }
         }
 
         protected void On_Click(object sender, EventArgs e)
         {
-            SqlConnection conn = new SqlConnection(@"Data Source=DESKTOP-HO7NA1P;Initial Catalog=myAmazon;User ID=sa;Password=root");
-            string cmd;
             bool isEdit = false;
-            SqlCommand sqlCmd = null;
-
+            string log = "";
+            CategoriesDAL catDal = new CategoriesDAL();
             if(Session["isEdit"] != null && Session["isEdit"].Equals("1"))
             {
                 isEdit = true;
             }
-
-            if (isEdit)
-                cmd = "UPDATE Category SET Name=@name WHERE id=@cid";
-            else
-                cmd = "INSERT INTO Category(Name) OUTPUT inserted.id VALUES(@name)";
-
-            sqlCmd = new SqlCommand(cmd, conn);
-            sqlCmd.Parameters.AddWithValue("@name", id_category_name.Text);
             
             int id = 0;
-            try
-            {
-                conn.Open();
-                if(isEdit)
-                {
-                    sqlCmd.Parameters.AddWithValue("@cid", Session["CatId"]);
-                    sqlCmd.ExecuteNonQuery();
-                    id = Convert.ToInt32(Session["CatId"]);
-                    id_log_category.Text = "Successfully Updated";
-                }
-                else
-                {
-                    id = (int)sqlCmd.ExecuteScalar();
-                    id_log_category.Text = "Successfully Inserted";
-                    id_category_name.Text = "";
-                }
-                conn.Close();
-            }
-            catch (Exception ex)
-            {
-                id_log_category.Text += "Error! Unable to Insert: \n" + ex.ToString();
-                conn.Close();
-            }
 
+            if(isEdit)
+                id = Convert.ToInt32(Session["CatId"]);
+
+            catDal.updateCategoryInfo(id_category_name.Text, ref(id), isEdit, ref(log));
+            string imagePath = "~/CategoriesData/Images/" + id + ".jpg";
+            string descPath = "~/CategoriesData/" + id.ToString() + ".txt";
             if (id_image_uploader.HasFile)
             {
                 try
                 {
-                    id_image_uploader.SaveAs(Server.MapPath("~/CategoriesData/Images/" + id + ".jpg"));
-                    conn.Open();
-                    SqlCommand query = new SqlCommand("UPDATE Category SET [Image] ='" + "~/CategoriesData/Images/" + (isEdit ? Session["CatId"] : id.ToString()) + ".jpg' WHERE id=@cid", conn);
-                    query.Parameters.AddWithValue("@cid", id);
-                    query.ExecuteNonQuery();
-                    conn.Close();
+                    id_image_uploader.SaveAs(Server.MapPath(imagePath));
                 }
                 catch (Exception ex)
                 {
@@ -125,21 +84,16 @@ namespace myAmazon_v1.AdminPanel
                 } catch (Exception ex) {
                     id_log_category.Text += ex.ToString();
                 }
-                if (!File.Exists(Server.MapPath("~/CategoriesData/" + id.ToString() + ".txt")))
+                if (!File.Exists(Server.MapPath(descPath)))
                 {
-                    File.Create(Server.MapPath("~/CategoriesData/" + id.ToString() + ".txt")).Close();
+                    File.Create(Server.MapPath(descPath)).Close();
                     newDesc = true;
                 }
-                File.WriteAllText(Server.MapPath("~/CategoriesData/" + id.ToString() + ".txt"), id_category_desc.Text);
+                File.WriteAllText(Server.MapPath(descPath), id_category_desc.Text);
                 if (!isEdit || newDesc)
                 { 
                     if(!newDesc)
                         id_category_desc.Text = "";
-                    conn.Open();
-                    SqlCommand query = new SqlCommand("UPDATE Category SET [Desc] ='" + "~/CategoriesData/" + id.ToString() + ".txt" + "' WHERE id=@cid", conn);
-                    query.Parameters.AddWithValue("@cid", id);
-                    query.ExecuteNonQuery();
-                    conn.Close();
                 } 
                 else
                 {
@@ -147,9 +101,12 @@ namespace myAmazon_v1.AdminPanel
                     Response.Redirect(@"..\AdminPanel\ManageCategories.aspx");
                 }
             }
+            
             catch (Exception ex) {
-                id_log_category.Text += ex.ToString();
+                log += ex.ToString();
             }
+            catDal.updateCategoryImageAndDesc(id, imagePath, descPath, isEdit, ref (log));
+            id_log_category.Text += log;
         }
     }
 }
