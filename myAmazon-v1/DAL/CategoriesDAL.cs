@@ -2,6 +2,7 @@
 using System.Data;
 using System.Data.SqlClient;
 using myAmazon_v1.Model;
+using System.Web;
 
 namespace myAmazon_v1.DAL
 {
@@ -152,5 +153,51 @@ namespace myAmazon_v1.DAL
 
             return flag;
         }
-    }
+
+		public bool deleteCategory(string id, ref string log)
+		{
+			bool done = true;
+			SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
+						.ConnectionStrings["myAmazonConnectionString"].ConnectionString);
+			string cmd = "DELETE FROM Category WHERE id=@catId";
+			SqlCommand sqlCmd = new SqlCommand(cmd, conn);
+			sqlCmd.Parameters.AddWithValue("catId", HttpContext.Current.Request["id"]);
+
+			try
+			{
+				conn.Open();
+				sqlCmd.ExecuteNonQuery();
+				conn.Close();
+			}
+			catch (Exception ex)
+			{
+				done = false;
+				log += ex.ToString();
+				conn.Close();
+			}
+			return done;
+		}
+
+		public DataTable getCategoriesList(ref string log) {
+			SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
+						.ConnectionStrings["myAmazonConnectionString"].ConnectionString);
+			string cmd = "SELECT * FROM CategoryDetails";
+			SqlCommand sqlCmd = new SqlCommand(cmd, conn);
+			DataTable ds = new DataTable();
+
+			try
+			{
+				conn.Open();
+				SqlDataAdapter adapter = new SqlDataAdapter(sqlCmd);
+				adapter.Fill(ds);
+				conn.Close();
+			}
+			catch (Exception ex)
+			{
+				log += ex.ToString();
+				conn.Close();
+			}
+			return ds;
+		}
+	}
 }

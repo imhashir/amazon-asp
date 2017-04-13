@@ -4,8 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+using myAmazon_v1.DAL;
 
 namespace myAmazon_v1.AdminPanel
 {
@@ -15,26 +14,15 @@ namespace myAmazon_v1.AdminPanel
         {
             if(!this.IsPostBack)
             {
-                SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
-                        .ConnectionStrings["myAmazonConnectionString"].ConnectionString);
-                string cmd = "SELECT * FROM CategoryDetails";
-                SqlCommand sqlCmd = new SqlCommand(cmd, conn);
-                DataSet ds = new DataSet();
-
-                try
-                {
-                    conn.Open();
-                    SqlDataAdapter adapter = new SqlDataAdapter(sqlCmd);
-                    adapter.Fill(ds);
-                    conn.Close();
-                }
-                catch (Exception ex)
-                {
-                    log_manage_cat.Text += ex.ToString();
-                    conn.Close();
-                }
-
-                categoriesListView.DataSource = ds;
+				string log = "";
+				CategoriesDAL catDal = new CategoriesDAL();
+				DataTable table = catDal.getCategoriesList(ref (log));
+				if(log != "")
+				{
+					log_manage_cat.Text += log;
+					return;
+				}
+				categoriesListView.DataSource = table;
                 categoriesListView.DataBind();
             }
 
@@ -42,22 +30,10 @@ namespace myAmazon_v1.AdminPanel
                 switch (HttpContext.Current.Request.Form["Action"]) {
                     case "Delete":
                         {
-                            SqlConnection conn = new SqlConnection(@"Data Source=DESKTOP-HO7NA1P;Initial Catalog=myAmazon;User ID=sa;Password=root");
-                            string cmd = "DELETE FROM Category WHERE id=@catId";
-                            SqlCommand sqlCmd = new SqlCommand(cmd, conn);
-                            sqlCmd.Parameters.AddWithValue("catId", HttpContext.Current.Request["id"]);
-
-                            try
-                            {
-                                conn.Open();
-                                sqlCmd.ExecuteNonQuery();
-                                conn.Close();
-                            }
-                            catch (Exception ex)
-                            {
-                                log_manage_cat.Text += ex.ToString();
-                                conn.Close();
-                            }
+							string log = "";
+							CategoriesDAL catDal = new CategoriesDAL();
+							if (!catDal.deleteCategory(HttpContext.Current.Request["id"], ref (log)))
+								log_manage_cat.Text = log;
                             break;
                         }
                     case "Edit":
