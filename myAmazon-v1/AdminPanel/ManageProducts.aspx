@@ -23,6 +23,7 @@
                             <th>Category</th>
                             <th>Brand</th>
                             <th>Description</th>
+							<th>Image</th>
                             <th>Price</th>
                             <th>Edit</th>
                             <th>Delete</th>
@@ -39,6 +40,7 @@
                             <td><%#Eval("Category")%></td>
                             <td><%#Eval("Brand")%></td>
                             <td><%#Eval("Desc")%></td>
+                            <td><%#Eval("Image")%></td>
                             <td><%#Eval("Price")%></td>
                             <td><input type="submit" class="btn btn-warning" name="Action" value="Edit"></td>
                             <td><input type="submit" class="btn btn-danger" name="Action" value="Delete"></td>

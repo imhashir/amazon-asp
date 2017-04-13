@@ -13,7 +13,7 @@ namespace myAmazon_v1.AdminPanel
             {
 				BrandsDAL brandDal = new BrandsDAL();
 				string log = "";
-				DataTable table = brandDal.getBrandsList(ref(log));
+				DataTable table = brandDal.getBrandsList(ref(log), 2, null);
 				if(log != "")
 				{
 					log_manage_brand.Text = log;

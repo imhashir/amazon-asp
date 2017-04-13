@@ -180,11 +180,22 @@ namespace myAmazon_v1.DAL
 			return done;
 		}
 
-		public DataTable getProductList(ref string log)
+		public DataTable getProductList(ref string log, int flag, string where)
 		{
 			SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
 						.ConnectionStrings["myAmazonConnectionString"].ConnectionString);
-			string cmd = "SELECT * FROM ProductDetails";    //ProductDetails is a VIEW
+			string cmd = "";
+			string defaultImage = "~/BrandsData/Images/Default.jpg";
+			if (flag == 0)
+				cmd = "SELECT * FROM ProductDetails";    //ProductDetails is a VIEW
+			else if (flag == 1)
+				cmd = "SELECT [id], [Name], [Desc], ISNULL([Image], '" + defaultImage + "') AS [Image], [Price], [CatId], [Category], [BrandId], [Brand] FROM ProductDetails";
+			else if(flag == 2)
+				cmd = "SELECT [id], [Name], ISNULL([Desc], '[No Description]') AS [Desc], ISNULL([Image], '[No Image]') AS [Image], [Price], [CatId], [Category], [BrandId], [Brand] FROM ProductDetails";
+
+			if (where != null)
+				cmd += " " + where;
+
 			SqlCommand sqlCmd = new SqlCommand(cmd, conn);
 			DataTable ds = new DataTable();
 

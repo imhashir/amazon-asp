@@ -16,7 +16,7 @@ namespace myAmazon_v1.AdminPanel
             {
 				string log = "";
 				ProductDAL productDal = new ProductDAL();
-				DataTable table = productDal.getProductList(ref (log));
+				DataTable table = productDal.getProductList(ref (log), 2, null);
                 if(log != "")
 				{
 					log_manage_product.Text += log;

@@ -16,7 +16,7 @@ namespace myAmazon_v1.AdminPanel
             {
 				string log = "";
 				CategoriesDAL catDal = new CategoriesDAL();
-				DataTable table = catDal.getCategoriesList(ref (log));
+				DataTable table = catDal.getCategoriesList(ref (log), 2, null);
 				if(log != "")
 				{
 					log_manage_cat.Text += log;

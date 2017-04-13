@@ -178,10 +178,21 @@ namespace myAmazon_v1.DAL
 			return done;
 		}
 
-		public DataTable getCategoriesList(ref string log) {
+		public DataTable getCategoriesList(ref string log, int flag, string where) {
 			SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
 						.ConnectionStrings["myAmazonConnectionString"].ConnectionString);
-			string cmd = "SELECT * FROM CategoryDetails";
+			string cmd = "";
+			string defaultImage = "~/BrandsData/Images/Default.jpg";
+			if (flag == 0)
+				cmd = "SELECT * FROM CategoryDetails";
+			else if (flag == 1)
+				cmd = "SELECT [id], [Name], [Desc], ISNULL([Image], '" + defaultImage + "') AS [Image]  FROM CategoryDetails";
+			else if (flag == 2)
+				cmd = "SELECT [id], [Name], ISNULL([Desc], '[No Description]') AS [Desc], ISNULL([Image], '[No Image]') AS [Image] FROM CategoryDetails";
+
+			if (where != null)
+				cmd += " " + where;
+
 			SqlCommand sqlCmd = new SqlCommand(cmd, conn);
 			DataTable ds = new DataTable();
 

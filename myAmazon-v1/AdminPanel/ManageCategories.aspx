@@ -16,7 +16,7 @@
                     <h3>Categories List</h3>
                     <table class="table table-hover">
                         <tr>
-                            <th>ID</th><th>Name</th><th>Description</th><th>Edit</th><th>Delete</th>
+                            <th>ID</th><th>Name</th><th>Description</th><th>Image</th><th>Edit</th><th>Delete</th>
                         </tr>
                         <asp:PlaceHolder runat="server" ID="categoryPlaceHolder"></asp:PlaceHolder>
                     </table>
@@ -28,6 +28,7 @@
                             <td><%#Eval("id")%></td>
                             <td><%#Eval("Name")%></td>
                             <td><%#Eval("Desc")%></td>
+                            <td><%#Eval("Image")%></td>
                             <td><input type="submit" class="btn btn-warning" name="Action" value="Edit"></td>
                             <td><input type="submit" class="btn btn-danger" name="Action" value="Delete"></td>
                         </tr>
