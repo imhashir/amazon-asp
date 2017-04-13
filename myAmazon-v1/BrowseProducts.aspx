@@ -20,7 +20,7 @@
             </HeaderTemplate>
             <ItemStyle BackColor="#dbdbdb" ForeColor="#202020" Height="249px" Width="150px" HorizontalAlign="Center"/>
             <ItemTemplate>
-                <a href="?id=<%# Eval("id") %>">
+                <a href="productDetails.aspx?id=<%# Eval("id") %>">
                 <table>
                     <tr>
                         <td>

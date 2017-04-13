@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using myAmazon_v1.DAL;
 
 namespace myAmazon_v1.AdminPanel
 {
@@ -15,26 +16,15 @@ namespace myAmazon_v1.AdminPanel
         {
             if (!this.IsPostBack)
             {
-                SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
-                        .ConnectionStrings["myAmazonConnectionString"].ConnectionString);
-                string cmd = "SELECT * FROM BrandDetails";
-                SqlCommand sqlCmd = new SqlCommand(cmd, conn);
-                DataSet ds = new DataSet();
-
-                try
-                {
-                    conn.Open();
-                    SqlDataAdapter adapter = new SqlDataAdapter(sqlCmd);
-                    adapter.Fill(ds);
-                    conn.Close();
-                }
-                catch (Exception ex)
-                {
-                    log_manage_brand.Text += ex.ToString();
-                    conn.Close();
-                }
-
-                brandListView.DataSource = ds;
+				BrandsDAL brandDal = new BrandsDAL();
+				string log = "";
+				DataTable table = brandDal.getBrandsList(ref(log));
+				if(log != "")
+				{
+					log_manage_brand.Text = log;
+					return;
+				}
+                brandListView.DataSource = table;
                 brandListView.DataBind();
             }
 
@@ -44,22 +34,10 @@ namespace myAmazon_v1.AdminPanel
                 {
                     case "Delete":
                         {
-                            SqlConnection conn = new SqlConnection(@"Data Source=DESKTOP-HO7NA1P;Initial Catalog=myAmazon;User ID=sa;Password=root");
-                            string cmd = "DELETE FROM Brand WHERE id=@brandId";
-                            SqlCommand sqlCmd = new SqlCommand(cmd, conn);
-                            sqlCmd.Parameters.AddWithValue("brandId", HttpContext.Current.Request["id"]);
-
-                            try
-                            {
-                                conn.Open();
-                                sqlCmd.ExecuteNonQuery();
-                                conn.Close();
-                            }
-                            catch (Exception ex)
-                            {
-                                log_manage_brand.Text += ex.ToString();
-                                conn.Close();
-                            }
+							string log = "";
+							BrandsDAL brandDal = new BrandsDAL();
+							brandDal.deleteBrand(HttpContext.Current.Request["id"], ref(log));
+							log_manage_brand.Text += log;
                             break;
                         }
                     case "Edit":

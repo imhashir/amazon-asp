@@ -27,7 +27,7 @@
                         <tr>
                             <td><%#Eval("id")%></td>
                             <td><%#Eval("Name")%></td>
-                            <td><%#Eval("CategoryId")%></td>
+                            <td><%#Eval("Category")%></td>
                             <td><%#Eval("Desc")%></td>
                             <td><input type="submit" class="btn btn-warning" name="Action" value="Edit"></td>
                             <td><input type="submit" class="btn btn-danger" name="Action" value="Delete"></td>

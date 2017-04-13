@@ -2,6 +2,7 @@
 using System.Data.SqlClient;
 using myAmazon_v1.Model;
 using System.Data;
+using System.Web;
 
 namespace myAmazon_v1.DAL
 {
@@ -60,6 +61,28 @@ namespace myAmazon_v1.DAL
             }
             return brand;
         }
+
+		public DataTable getBrandsList(ref string log) {
+			SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
+						.ConnectionStrings["myAmazonConnectionString"].ConnectionString);
+			string cmd = "SELECT * FROM BrandDetails";
+			SqlCommand sqlCmd = new SqlCommand(cmd, conn);
+			DataTable ds = new DataTable();
+
+			try
+			{
+				conn.Open();
+				SqlDataAdapter adapter = new SqlDataAdapter(sqlCmd);
+				adapter.Fill(ds);
+				conn.Close();
+			}
+			catch (Exception ex)
+			{
+				log += ex.ToString();
+				conn.Close();
+			}
+			return ds;
+		}
 
         public bool updateBrandInfo(string name, ref int id, string catId, bool isEdit, ref string log) {
             bool flag = true;
@@ -145,5 +168,23 @@ namespace myAmazon_v1.DAL
             }
             return flag;
         }
+
+		public void deleteBrand(string id, ref string log) {
+			SqlConnection conn = new SqlConnection(@"Data Source=DESKTOP-HO7NA1P;Initial Catalog=myAmazon;User ID=sa;Password=root");
+			string cmd = "DELETE FROM Brand WHERE id=" + id.ToString();
+			SqlCommand sqlCmd = new SqlCommand(cmd, conn);
+			sqlCmd.Parameters.AddWithValue("brandId", HttpContext.Current.Request["id"]);
+			try
+			{
+				conn.Open();
+				sqlCmd.ExecuteNonQuery();
+				conn.Close();
+			}
+			catch (Exception ex)
+			{
+				log += ex.ToString();
+				conn.Close();
+			}
+		}
     }
 }
