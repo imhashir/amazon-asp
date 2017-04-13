@@ -135,7 +135,7 @@ namespace myAmazon_v1.DAL
                 try
                 {
                     conn.Open();
-                    SqlCommand query = new SqlCommand("UPDATE Brand SET [Image] ='" + "~/BrandsData/Images/" + (id.ToString()) + ".jpg' WHERE id=@cid", conn);
+                    SqlCommand query = new SqlCommand("UPDATE BrandInfo SET [Image] ='" + "~/BrandsData/Images/" + (id.ToString()) + ".jpg' WHERE BrandId=@cid", conn);
                     query.Parameters.AddWithValue("@cid", id);
                     query.ExecuteNonQuery();
                 }
@@ -155,7 +155,7 @@ namespace myAmazon_v1.DAL
                 if (desc != null && !isEdit)
                 {
                     conn.Open();
-                    SqlCommand query = new SqlCommand("UPDATE Brand SET [Desc] ='" + "~/BrandsData/" + id.ToString() + ".txt" + "' WHERE id=@cid", conn);
+                    SqlCommand query = new SqlCommand("UPDATE BrandInfo SET [Desc] ='" + "~/BrandsData/" + id.ToString() + ".txt" + "' WHERE BrandId=@cid", conn);
                     query.Parameters.AddWithValue("@cid", id);
                     query.ExecuteNonQuery();
                     conn.Close();
@@ -170,10 +170,11 @@ namespace myAmazon_v1.DAL
         }
 
 		public void deleteBrand(string id, ref string log) {
-			SqlConnection conn = new SqlConnection(@"Data Source=DESKTOP-HO7NA1P;Initial Catalog=myAmazon;User ID=sa;Password=root");
-			string cmd = "DELETE FROM Brand WHERE id=" + id.ToString();
+			SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
+						.ConnectionStrings["myAmazonConnectionString"].ConnectionString);
+			string cmd = "DELETE FROM Brand WHERE id=@brandId";
 			SqlCommand sqlCmd = new SqlCommand(cmd, conn);
-			sqlCmd.Parameters.AddWithValue("brandId", HttpContext.Current.Request["id"]);
+			sqlCmd.Parameters.AddWithValue("brandId", id);
 			try
 			{
 				conn.Open();

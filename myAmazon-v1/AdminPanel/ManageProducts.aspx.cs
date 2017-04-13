@@ -4,8 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+using myAmazon_v1.DAL;
 
 namespace myAmazon_v1.AdminPanel
 {
@@ -15,26 +14,15 @@ namespace myAmazon_v1.AdminPanel
         {
             if (!this.IsPostBack)
             {
-                SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
-                        .ConnectionStrings["myAmazonConnectionString"].ConnectionString);
-                string cmd = "SELECT * FROM ProductDetails";    //ProductDetails is a VIEW
-                SqlCommand sqlCmd = new SqlCommand(cmd, conn);
-                DataSet ds = new DataSet();
-
-                try
-                {
-                    conn.Open();
-                    SqlDataAdapter adapter = new SqlDataAdapter(sqlCmd);
-                    adapter.Fill(ds);
-                    conn.Close();
-                }
-                catch (Exception ex)
-                {
-                    log_manage_product.Text += ex.ToString();
-                    conn.Close();
-                }
-
-                productListView.DataSource = ds;
+				string log = "";
+				ProductDAL productDal = new ProductDAL();
+				DataTable table = productDal.getProductList(ref (log));
+                if(log != "")
+				{
+					log_manage_product.Text += log;
+					return;
+				}
+                productListView.DataSource = table;
                 productListView.DataBind();
             }
 
@@ -44,22 +32,11 @@ namespace myAmazon_v1.AdminPanel
                 {
                     case "Delete":
                         {
-                            SqlConnection conn = new SqlConnection(@"Data Source=DESKTOP-HO7NA1P;Initial Catalog=myAmazon;User ID=sa;Password=root");
-                            string cmd = "DELETE FROM Product WHERE id=@productId";
-                            SqlCommand sqlCmd = new SqlCommand(cmd, conn);
-                            sqlCmd.Parameters.AddWithValue("productId", HttpContext.Current.Request["id"]);
-
-                            try
-                            {
-                                conn.Open();
-                                sqlCmd.ExecuteNonQuery();
-                                conn.Close();
-                            }
-                            catch (Exception ex)
-                            {
-                                log_manage_product.Text += ex.ToString();
-                                conn.Close();
-                            }
+							string log = "";
+							ProductDAL productDal = new ProductDAL();
+							if (!productDal.deleteProduct(HttpContext.Current.Request["id"], ref (log))) {
+								log_manage_product.Text += log;
+							}
                             break;
                         }
                     case "Edit":

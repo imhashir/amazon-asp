@@ -48,7 +48,7 @@ namespace myAmazon_v1.AdminPanel
 
                     //File handling for Description
                     string path = product.desc;
-                    if(!path.Equals(""))
+                    if(!path.Equals("[No Description]"))
                     {
                         StreamReader file = new StreamReader(Server.MapPath(path));
                         id_product_desc.Text = file.ReadToEnd();
@@ -95,9 +95,9 @@ namespace myAmazon_v1.AdminPanel
 
 			if (id_image_uploader.HasFile) {
                 try
-                {
-					id_image_uploader.SaveAs(Server.MapPath(imagePath));
+				{
 					imagePath = "~/ProductsData/Images/" + id + ".jpg";
+					id_image_uploader.SaveAs(Server.MapPath(imagePath));
 				}
 				catch (Exception ex)
                 {
@@ -129,6 +129,8 @@ namespace myAmazon_v1.AdminPanel
 						File.Create(Server.MapPath(descPath)).Close();
 						newDesc = true;
 					}
+					else if (isEdit)
+						newDesc = true;
 
 					File.WriteAllText(Server.MapPath(descPath), id_product_desc.Text);
 					if (!isEdit || newDesc)

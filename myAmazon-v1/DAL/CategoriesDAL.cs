@@ -161,7 +161,7 @@ namespace myAmazon_v1.DAL
 						.ConnectionStrings["myAmazonConnectionString"].ConnectionString);
 			string cmd = "DELETE FROM Category WHERE id=@catId";
 			SqlCommand sqlCmd = new SqlCommand(cmd, conn);
-			sqlCmd.Parameters.AddWithValue("catId", HttpContext.Current.Request["id"]);
+			sqlCmd.Parameters.AddWithValue("catId", id);
 
 			try
 			{

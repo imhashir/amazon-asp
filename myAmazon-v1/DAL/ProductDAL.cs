@@ -2,6 +2,7 @@
 using System.Data;
 using System.Data.SqlClient;
 using myAmazon_v1.Model;
+using System.Web;
 
 namespace myAmazon_v1.DAL
 {
@@ -12,7 +13,7 @@ namespace myAmazon_v1.DAL
 			Product product = new Product();
 			SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
 						.ConnectionStrings["myAmazonConnectionString"].ConnectionString);
-			string cmd = "SELECT p.Name, p.Price, p.[Desc], p.[Image], p.CategoryId, p.BrandId FROM Product AS p WHERE p.id=" + whereCondition;
+			string cmd = "SELECT * FROM ProductDetails WHERE id=" + whereCondition;
 			SqlCommand sqlCmd = new SqlCommand(cmd, conn);
 			SqlDataReader reader = null;
 			try
@@ -22,7 +23,7 @@ namespace myAmazon_v1.DAL
 				reader.Read();
 				product.name = reader["Name"].ToString();
 				product.price = (int)reader["Price"];
-				product.catId = (int)reader["CategoryId"];
+				product.catId = (int)reader["CatId"];
 				product.brandId = (int)reader["BrandId"];
 				if (reader["Image"].ToString() != "")
 					product.image = reader["Image"].ToString();
@@ -102,13 +103,32 @@ namespace myAmazon_v1.DAL
 			SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
 						.ConnectionStrings["myAmazonConnectionString"].ConnectionString);
 			bool flag = true;
+			string str = "SELECT COUNT(*) FROM ProductInfo WHERE ProductId = " + id.ToString();
+			try
+			{
+				conn.Open();
+				SqlCommand sqlcmd = new SqlCommand(str, conn);
+				if ((int) sqlcmd.ExecuteScalar() < 1) {
+					str = "INSERT INTO ProductInfo([ProductId]) VALUES(" + id.ToString() + ")";
+					SqlCommand sqlCmd = new SqlCommand(str, conn);
+					sqlCmd.ExecuteNonQuery();
+				}
+			}
+			catch (Exception ex)
+			{
+				log += ex.ToString();
+			}
+			finally
+			{
+				conn.Close();
+			}
 			if (image != null)
 			{
 				try
 				{
 					conn.Open();
-					SqlCommand query = new SqlCommand("UPDATE Product SET [Image] ='" + "~/ProductsData/Images/" + id.ToString() + ".jpg' WHERE id=@cid", conn);
-					query.Parameters.AddWithValue("@cid", id);
+					SqlCommand query = new SqlCommand("UPDATE ProductInfo SET [Image] ='" + "~/ProductsData/Images/" + id.ToString() + ".jpg' WHERE [ProductId]=@cid", conn);
+					query.Parameters.AddWithValue("@cid", id.ToString());
 					query.ExecuteNonQuery();
 					conn.Close();
 				}
@@ -123,9 +143,10 @@ namespace myAmazon_v1.DAL
 				if (!isEdit || desc != null)
 				{
 					conn.Open();
-					SqlCommand query = new SqlCommand("UPDATE Product SET [Desc] ='" + "~/ProductsData/" + id.ToString() + ".txt" + "' WHERE id=@cid", conn);
-					query.Parameters.AddWithValue("@cid", id);
-					query.ExecuteNonQuery();
+					string query = "UPDATE ProductInfo SET [Desc] = '" + "~/ProductsData/" + id.ToString() + ".txt" + "' WHERE [ProductId]=@cid";
+					SqlCommand sqlCmd = new SqlCommand(query, conn);
+					sqlCmd.Parameters.AddWithValue("@cid", id);
+					sqlCmd.ExecuteNonQuery();
 					conn.Close();
 				}
 			}
@@ -134,6 +155,52 @@ namespace myAmazon_v1.DAL
 				log += ex.ToString();
 			}
 			return flag;
+		}
+
+		public bool deleteProduct(string id, ref string log) {
+			bool done = true;
+			SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
+						.ConnectionStrings["myAmazonConnectionString"].ConnectionString);
+			string cmd = "DELETE FROM Product WHERE id=@productId";
+			SqlCommand sqlCmd = new SqlCommand(cmd, conn);
+			sqlCmd.Parameters.AddWithValue("productId", id);
+
+			try
+			{
+				conn.Open();
+				sqlCmd.ExecuteNonQuery();
+				conn.Close();
+			}
+			catch (Exception ex)
+			{
+				log += ex.ToString();
+				conn.Close();
+				done = false;
+			}
+			return done;
+		}
+
+		public DataTable getProductList(ref string log)
+		{
+			SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
+						.ConnectionStrings["myAmazonConnectionString"].ConnectionString);
+			string cmd = "SELECT * FROM ProductDetails";    //ProductDetails is a VIEW
+			SqlCommand sqlCmd = new SqlCommand(cmd, conn);
+			DataTable ds = new DataTable();
+
+			try
+			{
+				conn.Open();
+				SqlDataAdapter adapter = new SqlDataAdapter(sqlCmd);
+				adapter.Fill(ds);
+				conn.Close();
+			}
+			catch (Exception ex)
+			{
+				log += ex.ToString();
+				conn.Close();
+			}
+			return ds;
 		}
 	}
 }
