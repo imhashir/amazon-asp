@@ -1,5 +1,8 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="myAmazon_v1.SiteMaster" %>
-
+<%
+	Response.AppendHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+	Response.AppendHeader("Pragma", "no-cache"); // HTTP 1.0.
+	Response.AppendHeader("Expires", "0"); // Proxies. %>
 <!DOCTYPE html>
 <html lang="en">
 <head runat="server">

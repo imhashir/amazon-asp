@@ -15,7 +15,7 @@ namespace myAmazon_v1
         DataTable dt = new DataTable();
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!Page.IsPostBack)
+			if (!Page.IsPostBack)
             {
 				string log = "";
                 getProductTable(null, null);

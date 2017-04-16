@@ -9,7 +9,7 @@ namespace myAmazon_v1.DAL
 {
 	public class ProductDAL
 	{
-		public Product getProductDetails(ref bool flag, ref string log, string where, string whereCondition)
+		public Product getProductDetails(ref bool flag, ref string log, string whereCondition)
 		{
 			Product product = new Product();
 			SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
@@ -22,14 +22,7 @@ namespace myAmazon_v1.DAL
 				conn.Open();
 				reader = sqlCmd.ExecuteReader();
 				reader.Read();
-				product.name = reader["Name"].ToString();
-				product.price = (int)reader["Price"];
-				product.catId = (int)reader["CatId"];
-				product.brandId = (int)reader["BrandId"];
-				if (reader["Image"].ToString() != "")
-					product.image = reader["Image"].ToString();
-
-				product.desc = reader["Desc"].ToString();
+				product.fillWithSqlReader(reader);
 			}
 			catch (Exception ex)
 			{

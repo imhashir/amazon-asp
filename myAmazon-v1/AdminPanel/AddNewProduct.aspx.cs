@@ -37,7 +37,7 @@ namespace myAmazon_v1.AdminPanel
                     id_page_title.Text = "Edit Product";
                     id_submit_product.Text = "Update";
 					ProductDAL productDal = new ProductDAL();
-					Product product = productDal.getProductDetails(ref(flag), ref(log), "p.id", Session["ProductId"].ToString());
+					Product product = productDal.getProductDetails(ref(flag), ref(log), Session["ProductId"].ToString());
 					id_product_name.Text = product.name;
 					id_product_price.Text = product.price.ToString();
 					id_category_name.SelectedValue = product.catId.ToString();

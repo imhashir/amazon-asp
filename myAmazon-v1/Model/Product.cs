@@ -9,18 +9,23 @@ namespace myAmazon_v1.Model
         public string desc { get; set; }
         public string image { get; set; }
         public int price { get; set; }
-        public int brandId { get; set; }
-        public int catId { get; set; }
+		public int brandId { get; set; }
+		public int catId { get; set; }
+		public string brand { get; set; }
+		public string category { get; set; }
 
-        public void fillWithSqlReader(SqlDataReader reader)
+		public void fillWithSqlReader(SqlDataReader reader)
         {
             id = (int)reader["id"];
             name = reader["Name"].ToString();
             desc = reader["Desc"].ToString();
-            image = reader["Image"].ToString();
-            price = (int) reader["Price"];
-            name = reader["CategoryId"].ToString();
-            desc = reader["BrandId"].ToString();
-        }
-    }
+			if (reader["Image"].ToString() != "")
+				image = reader["Image"].ToString();
+			price = (int) reader["Price"];
+            catId = (int) reader["CatId"];
+			category = reader["Category"].ToString();
+			desc = reader["BrandId"].ToString();
+			brand = reader["Brand"].ToString();
+		}
+	}
 }
