@@ -17,6 +17,9 @@
                             <h3><b>Manage Featured Product</b></h3>
 							Product Id: <asp:TextBox runat="server" ID="id_product" CssClass="form-control" TextMode="Number"/><br/>
 							Level: <asp:TextBox runat="server" ID="id_level" CssClass="form-control" TextMode="Number"/>
+							<div>
+								Cover Image: (Must be 800x300)<asp:FileUpload ID="id_image_uploader" Height="20%" runat="server"/>
+                            </div>
 							<asp:Button ID="id_submit_featured" runat="server" CssClass="btn btn-primary" Text="Submit" OnClick="Press_Submit"/><br />
                             <asp:Label ID="id_log_sponsor" runat="server" CssClass="alert-warning" Text=" "></asp:Label>
 							<br/><br/>

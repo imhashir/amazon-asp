@@ -2,7 +2,8 @@
 using System.Data;
 using System.Data.SqlClient;
 using myAmazon_v1.Model;
-using System.Web;
+using System.IO;
+using System.Collections.Generic;
 
 namespace myAmazon_v1.DAL
 {
@@ -214,16 +215,16 @@ namespace myAmazon_v1.DAL
 			return ds;
 		}
 
-		public bool addFeaturedProduct(string id, string level, ref string log) {
+		public bool addFeaturedProduct(string id, string level, string imagePath, ref string log) {
 			SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
 						.ConnectionStrings["myAmazonConnectionString"].ConnectionString);
 			SqlCommand insert = null;
 
 			insert = new SqlCommand("AddToFeatured", conn);
 			insert.CommandType = CommandType.StoredProcedure;
-
 			insert.Parameters.AddWithValue("@ProductId", id);
 			insert.Parameters.AddWithValue("@level", level);
+			insert.Parameters.AddWithValue("@image", imagePath);
 			SqlParameter outputId = insert.Parameters.Add("@flag", SqlDbType.Int);
 			outputId.Direction = ParameterDirection.Output;
 			int flagOut = -1;
@@ -288,19 +289,55 @@ namespace myAmazon_v1.DAL
 			return ds;
 		}
 
-		public bool deleteFromFeaturedFeatured(string id, ref string log)
+		public List<string> getFeaturedImagePath(int level, ref string log)
 		{
-			bool done = true;
 			SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
 						.ConnectionStrings["myAmazonConnectionString"].ConnectionString);
-			string cmd = "DELETE FROM Featured WHERE id=@productId";
+			string cmd = "SELECT CoverImage FROM FeaturedDetails WHERE Level = " + level.ToString();    //FeaturedDetails is a VIEW
+
 			SqlCommand sqlCmd = new SqlCommand(cmd, conn);
-			sqlCmd.Parameters.AddWithValue("productId", id);
+			DataTable ds = new DataTable();
+			SqlDataReader reader;
+			List<string> paths = new List<string>();
 
 			try
 			{
 				conn.Open();
-				sqlCmd.ExecuteNonQuery();
+				reader = sqlCmd.ExecuteReader();
+				while (reader.Read()) {
+					paths.Add(reader["CoverImage"].ToString());
+				}
+			}
+			catch (Exception ex)
+			{
+				log += ex.ToString();
+			}
+			finally {
+				conn.Close();
+			}
+
+			return paths;
+		}
+
+		public bool deleteFromFeaturedFeatured(string id, ref string imagePath, ref string log)
+		{
+			bool done = true;
+			SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
+						.ConnectionStrings["myAmazonConnectionString"].ConnectionString);
+
+			string cmd1 = "SELECT CoverImage FROM Featured WHERE id=@productId";
+			SqlCommand sqlCmd1 = new SqlCommand(cmd1, conn);
+			sqlCmd1.Parameters.AddWithValue("productId", id);
+
+			string cmd2 = "DELETE FROM Featured WHERE id=@productId";
+			SqlCommand sqlCmd2 = new SqlCommand(cmd2, conn);
+			sqlCmd2.Parameters.AddWithValue("productId", id);
+
+			try
+			{
+				conn.Open();
+				imagePath = sqlCmd1.ExecuteScalar().ToString();
+				sqlCmd2.ExecuteNonQuery();
 			}
 			catch (Exception ex)
 			{

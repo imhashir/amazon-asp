@@ -13,30 +13,57 @@ namespace myAmazon_v1 {
     public partial class _Default {
         
         /// <summary>
-        /// form1 control.
+        /// feature_p1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.WebControls.Image feature_p1;
         
         /// <summary>
-        /// log_browse_product control.
+        /// feature_g1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label log_browse_product;
+        protected global::System.Web.UI.WebControls.Image feature_g1;
         
         /// <summary>
-        /// ProductDataList control.
+        /// feature_g2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DataList ProductDataList;
+        protected global::System.Web.UI.WebControls.Image feature_g2;
+        
+        /// <summary>
+        /// feature_s1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image feature_s1;
+        
+        /// <summary>
+        /// feature_s2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image feature_s2;
+        
+        /// <summary>
+        /// feature_s3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image feature_s3;
     }
 }

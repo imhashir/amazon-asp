@@ -11,8 +11,9 @@ namespace myAmazon_v1.DAL
         public DataTable getBrands(ref string log, string where, string whereCondition)
         {
             DataTable table = new DataTable();
-            SqlConnection conn = new SqlConnection(@"Data Source=DESKTOP-HO7NA1P;Initial Catalog=myAmazon;User ID=sa;Password=root");
-            string cmd = "SELECT id, Name FROM Brand";
+			SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
+						.ConnectionStrings["myAmazonConnectionString"].ConnectionString);
+			string cmd = "SELECT id, Name FROM Brand";
             if (where != null)
                 cmd += " WHERE " + where + " = " + whereCondition;
             SqlCommand sqlCmd = new SqlCommand(cmd, conn);
