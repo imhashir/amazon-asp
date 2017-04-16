@@ -135,6 +135,7 @@
     <Content Include="Account\RegisterExternalLogin.aspx" />
     <Content Include="AdminPanel\AddNewCategory.aspx" />
     <Content Include="AdminPanel\AddNewBrand.aspx" />
+    <Content Include="AdminPanel\ManageFeaturedProduct.aspx" />
     <Content Include="AdminPanel\AddNewProduct.aspx" />
     <Content Include="AdminPanel\Default.aspx" />
     <Content Include="AdminPanel\ManageBrands.aspx" />
@@ -289,6 +290,13 @@
     </Compile>
     <Compile Include="AdminPanel\AddNewBrand.aspx.designer.cs">
       <DependentUpon>AddNewBrand.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminPanel\ManageFeaturedProduct.aspx.cs">
+      <DependentUpon>ManageFeaturedProduct.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminPanel\ManageFeaturedProduct.aspx.designer.cs">
+      <DependentUpon>ManageFeaturedProduct.aspx</DependentUpon>
     </Compile>
     <Compile Include="AdminPanel\AddNewProduct.aspx.cs">
       <DependentUpon>AddNewProduct.aspx</DependentUpon>

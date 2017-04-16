@@ -19,14 +19,15 @@
                 <div class="jumbotron">
                     <b>Admin Home</b><br />
                     <h3><b>Add New data</b></h3>
-                    <button type="button" class="btn btn-primary btn-lg" onclick="location.href = 'AddNewCategory.aspx';">Add New Category</button>
-                    <button type="button" class="btn btn-primary btn-lg" onclick="location.href = 'AddNewBrand.aspx';">Add New Brand</button>
-                    <button type="button" class="btn btn-primary btn-lg" onclick="location.href = 'AddNewProduct.aspx';">Add New Product</button>
+                    <button type="button" class="btn btn-primary btn-lg" onclick="location.href = 'AddNewCategory';">Add New Category</button>
+                    <button type="button" class="btn btn-primary btn-lg" onclick="location.href = 'AddNewBrand';">Add New Brand</button>
+                    <button type="button" class="btn btn-primary btn-lg" onclick="location.href = 'AddNewProduct';">Add New Product</button>
                     <h3><b>View Data</b></h3>
-                    <button type="button" class="btn btn-info btn-lg" onclick="location.href = 'ManageCategories.aspx';">View Categories</button>
-                    <button type="button" class="btn btn-info btn-lg" onclick="location.href = 'ManageBrands.aspx';">View Brands</button>
-                    <button type="button" class="btn btn-info btn-lg" onclick="location.href = 'ManageProducts.aspx';">View Products</button>
-                </div>
+                    <button type="button" class="btn btn-info btn-lg" onclick="location.href = 'ManageCategories';">View Categories</button>
+                    <button type="button" class="btn btn-info btn-lg" onclick="location.href = 'ManageBrands';">View Brands</button>
+                    <button type="button" class="btn btn-info btn-lg" onclick="location.href = 'ManageProducts';">View Products</button>
+                    <button type="button" class="btn btn-info btn-lg" onclick="location.href = 'ManageFeaturedProduct';">Manage Featured Products</button>
+				</div>
             </div>
             <div class="col-md-1"></div>
         </div>

@@ -213,5 +213,106 @@ namespace myAmazon_v1.DAL
 			}
 			return ds;
 		}
+
+		public bool addFeaturedProduct(string id, string level, ref string log) {
+			SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
+						.ConnectionStrings["myAmazonConnectionString"].ConnectionString);
+			SqlCommand insert = null;
+
+			insert = new SqlCommand("AddToFeatured", conn);
+			insert.CommandType = CommandType.StoredProcedure;
+
+			insert.Parameters.AddWithValue("@ProductId", id);
+			insert.Parameters.AddWithValue("@level", level);
+			SqlParameter outputId = insert.Parameters.Add("@flag", SqlDbType.Int);
+			outputId.Direction = ParameterDirection.Output;
+			int flagOut = -1;
+			try
+			{
+				conn.Open();
+				insert.ExecuteNonQuery();
+				flagOut = (int)insert.Parameters["@flag"].Value;
+
+				if (flagOut == 0)
+				{
+					log += "Successfully Updated";
+				}
+				else
+				{
+					switch(flagOut)
+					{
+						case 1:
+							log += "No Space for Platinum Sponsor";
+							break;
+						case 2:
+							log += "No Space for Gold Sponsor";
+							break;
+						case 3:
+							log += "No Space for Silver Sponsor";
+							break;
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				log += "Error! Unable to Insert: \n" + ex.ToString();
+			}
+			finally
+			{
+				conn.Close();
+			}
+			return (flagOut == 0);
+		}
+
+		public DataTable getFeaturedList(ref string log)
+		{
+			SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
+						.ConnectionStrings["myAmazonConnectionString"].ConnectionString);
+			string cmd = "SELECT * FROM FeaturedDetails ORDER BY Level ASC";    //FeaturedDetails is a VIEW
+
+			SqlCommand sqlCmd = new SqlCommand(cmd, conn);
+			DataTable ds = new DataTable();
+
+			try
+			{
+				conn.Open();
+				SqlDataAdapter adapter = new SqlDataAdapter(sqlCmd);
+				adapter.Fill(ds);
+				conn.Close();
+			}
+			catch (Exception ex)
+			{
+				log += ex.ToString();
+				conn.Close();
+			}
+			return ds;
+		}
+
+		public bool deleteFromFeaturedFeatured(string id, ref string log)
+		{
+			bool done = true;
+			SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
+						.ConnectionStrings["myAmazonConnectionString"].ConnectionString);
+			string cmd = "DELETE FROM Featured WHERE id=@productId";
+			SqlCommand sqlCmd = new SqlCommand(cmd, conn);
+			sqlCmd.Parameters.AddWithValue("productId", id);
+
+			try
+			{
+				conn.Open();
+				sqlCmd.ExecuteNonQuery();
+			}
+			catch (Exception ex)
+			{
+				log += ex.ToString();
+				done = false;
+			}
+			finally
+			{
+				conn.Close();
+			}
+
+			return done;
+		}
 	}
 }
