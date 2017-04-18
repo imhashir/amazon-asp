@@ -121,7 +121,7 @@ namespace myAmazon_v1.DAL
 				try
 				{
 					conn.Open();
-					SqlCommand query = new SqlCommand("UPDATE ProductInfo SET [Image] ='" + "~/ProductsData/Images/" + id.ToString() + ".jpg' WHERE [ProductId]=@cid", conn);
+					SqlCommand query = new SqlCommand("UPDATE ProductInfo SET [Image] ='" + image + "' WHERE [ProductId]=@cid", conn);
 					query.Parameters.AddWithValue("@cid", id.ToString());
 					query.ExecuteNonQuery();
 					conn.Close();
@@ -137,7 +137,7 @@ namespace myAmazon_v1.DAL
 				if (!isEdit || desc != null)
 				{
 					conn.Open();
-					string query = "UPDATE ProductInfo SET [Desc] = '" + "~/ProductsData/" + id.ToString() + ".txt" + "' WHERE [ProductId]=@cid";
+					string query = "UPDATE ProductInfo SET [Desc] = '" + desc + "' WHERE [ProductId]=@cid";
 					SqlCommand sqlCmd = new SqlCommand(query, conn);
 					sqlCmd.Parameters.AddWithValue("@cid", id);
 					sqlCmd.ExecuteNonQuery();

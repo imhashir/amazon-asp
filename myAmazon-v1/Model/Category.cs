@@ -13,9 +13,10 @@ namespace myAmazon_v1.Model
         public void fillWithSqlReader(SqlDataReader reader)
         {
             id = (int) reader["id"];
-            name = reader["name"].ToString();
-            desc = reader["desc"].ToString();
-            image = reader["Image"].ToString();
-        }
+			name = reader["Name"].ToString();
+			if (reader["Image"].ToString() != "")
+				image = reader["Image"].ToString();
+			desc = reader["Desc"].ToString();
+		}
     }
 }

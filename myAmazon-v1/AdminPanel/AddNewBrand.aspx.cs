@@ -66,7 +66,7 @@ namespace myAmazon_v1.AdminPanel
 
             brandDal.updateBrandInfo(id_brand_name.Text, ref (id), id_category_name.SelectedValue, isEdit, ref(log));
 
-            string imagePath = "~/BrandsData/Images/" + id + ".jpg";
+            string imagePath = "~/BrandsData/Images/" + id + DateTime.Now.Second.ToString() + ".jpg";
             string descPath = "~/BrandsData/" + id.ToString() + ".txt";
 
             if (id_image_uploader.HasFile) {

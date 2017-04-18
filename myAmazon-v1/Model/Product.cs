@@ -24,7 +24,7 @@ namespace myAmazon_v1.Model
 			price = (int) reader["Price"];
             catId = (int) reader["CatId"];
 			category = reader["Category"].ToString();
-			desc = reader["BrandId"].ToString();
+			brandId = (int) reader["BrandId"];
 			brand = reader["Brand"].ToString();
 		}
 	}

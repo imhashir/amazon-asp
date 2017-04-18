@@ -48,10 +48,7 @@ namespace myAmazon_v1.DAL
                 conn.Open();
                 reader = sqlCmd.ExecuteReader();
                 reader.Read();
-                cat.name = reader["Name"].ToString();
-                if (reader["Image"].ToString() != "")
-                    cat.image = reader["Image"].ToString();
-                cat.desc = reader["Desc"].ToString();
+                cat.fillWithSqlReader(reader);
             }
             catch (Exception ex)
             {
@@ -120,7 +117,7 @@ namespace myAmazon_v1.DAL
                 try
                 {
                     conn.Open();
-                    SqlCommand query = new SqlCommand("UPDATE Category SET [Image] ='" + "~/CategoriesData/Images/" + id.ToString() + ".jpg' WHERE id=@cid", conn);
+                    SqlCommand query = new SqlCommand("UPDATE Category SET [Image] ='" + image + "' WHERE id=@cid", conn);
                     query.Parameters.AddWithValue("@cid", id);
                     query.ExecuteNonQuery();
                     conn.Close();
@@ -136,7 +133,7 @@ namespace myAmazon_v1.DAL
                 if (!isEdit || desc != null)
                 {
                     conn.Open();
-                    SqlCommand query = new SqlCommand("UPDATE Category SET [Desc] ='" + "~/CategoriesData/" + id.ToString() + ".txt" + "' WHERE id=@cid", conn);
+                    SqlCommand query = new SqlCommand("UPDATE Category SET [Desc] ='" + desc + "' WHERE id=@cid", conn);
                     query.Parameters.AddWithValue("@cid", id);
                     query.ExecuteNonQuery();
                 }

@@ -48,7 +48,7 @@ namespace myAmazon_v1.AdminPanel
 
                     //File handling for Description
                     string path = product.desc;
-                    if(!path.Equals("[No Description]"))
+                    if(path != null && !path.Equals("[No Description]"))
                     {
                         StreamReader file = new StreamReader(Server.MapPath(path));
                         id_product_desc.Text = file.ReadToEnd();
@@ -96,7 +96,7 @@ namespace myAmazon_v1.AdminPanel
 			if (id_image_uploader.HasFile) {
                 try
 				{
-					imagePath = "~/ProductsData/Images/" + id + ".jpg";
+					imagePath = "~/ProductsData/Images/" + id + DateTime.Now.Second.ToString() + ".jpg";
 					id_image_uploader.SaveAs(Server.MapPath(imagePath));
 				}
 				catch (Exception ex)

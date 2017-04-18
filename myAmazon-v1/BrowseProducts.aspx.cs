@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.UI;
+using System.Web;
 using System.Web.UI.WebControls;
 using System.Data;
 using System.Data.SqlClient;
@@ -28,7 +29,12 @@ namespace myAmazon_v1
                 CategoryDropdownList.Items.Insert(0, new ListItem("--Select--", "NA"));
 				populateBrandDropDown();
             }
-        }
+			foreach (System.Collections.DictionaryEntry entry in HttpContext.Current.Cache)
+			{
+				string s = entry.Key.ToString();
+				//HttpContext.Current.Cache.Remove(entry.Key.ToString());
+			}
+		}
 
         private void getProductTable(Nullable<int> categoryId, Nullable<int> brandId) {
 			string where = null;

@@ -51,15 +51,17 @@ namespace myAmazon_v1.DAL
                 reader = sqlCmd.ExecuteReader();
                 reader.Read();
                 brand.fillWithSqlReader(reader);
-                conn.Close();
                 flag = true;
             }
             catch (Exception ex)
             {
                 log += ex.ToString();
-                conn.Close();
                 flag = false;
             }
+			finally
+			{
+				conn.Close();
+			}
             return brand;
         }
 
@@ -147,7 +149,7 @@ namespace myAmazon_v1.DAL
                 try
                 {
                     conn.Open();
-                    SqlCommand query = new SqlCommand("UPDATE BrandInfo SET [Image] ='" + "~/BrandsData/Images/" + (id.ToString()) + ".jpg' WHERE BrandId=@cid", conn);
+                    SqlCommand query = new SqlCommand("UPDATE BrandInfo SET [Image] ='" + image + "' WHERE BrandId=@cid", conn);
                     query.Parameters.AddWithValue("@cid", id);
                     query.ExecuteNonQuery();
                 }
@@ -167,7 +169,7 @@ namespace myAmazon_v1.DAL
                 if (desc != null && !isEdit)
                 {
                     conn.Open();
-                    SqlCommand query = new SqlCommand("UPDATE BrandInfo SET [Desc] ='" + "~/BrandsData/" + id.ToString() + ".txt" + "' WHERE BrandId=@cid", conn);
+                    SqlCommand query = new SqlCommand("UPDATE BrandInfo SET [Desc] ='" + desc + "' WHERE BrandId=@cid", conn);
                     query.Parameters.AddWithValue("@cid", id);
                     query.ExecuteNonQuery();
                     conn.Close();

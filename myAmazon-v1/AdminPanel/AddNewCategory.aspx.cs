@@ -60,7 +60,7 @@ namespace myAmazon_v1.AdminPanel
                 id = Convert.ToInt32(Session["CatId"]);
 
             catDal.updateCategoryInfo(id_category_name.Text, ref(id), isEdit, ref(log));
-            string imagePath = "~/CategoriesData/Images/" + id + ".jpg";
+            string imagePath = "~/CategoriesData/Images/" + DateTime.Now.Second.ToString() + id + ".jpg";
             string descPath = "~/CategoriesData/" + id.ToString() + ".txt";
             if (id_image_uploader.HasFile)
             {
