@@ -15,7 +15,8 @@
 	<link href="Content/star-rating.css" rel="stylesheet" />
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>  
 	<script src="Scripts/star-rating.js"></script>
-	<asp:Label runat="server" ID="id_log_productinfo" />
+	<div class="" runat="server" id="id_log_div">
+	</div>
 	<div class="row" style="height:auto; width:100%;">
 		<div class="col-md-4">
 			<asp:Image runat="server" ID="id_product_image" CssClass="img-rounded" Width="250px" ImageUrl="~/ProductsData/Images/Default.jpg"/>
