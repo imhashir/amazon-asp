@@ -19,8 +19,14 @@ namespace myAmazon_v1.User
         {
             if(File.Exists(Server.MapPath(@"~\UserData\Images\" + "_temp" + ".jpg")))
             {
-                File.Copy(Server.MapPath(@"~\UserData\Images\" + "_temp" + ".jpg"), Server.MapPath(@"~\UserData\Images\" + id_username.Text + ".jpg"));
-                File.Delete(Server.MapPath(@"~\UserData\Images\" + "_temp" + ".jpg"));
+				try
+				{
+					File.Copy(Server.MapPath(@"~\UserData\Images\" + "_temp" + ".jpg"), Server.MapPath(@"~\UserData\Images\" + id_username.Text + ".jpg"), true);
+					File.Delete(Server.MapPath(@"~\UserData\Images\" + "_temp" + ".jpg"));
+				} catch (Exception ex)
+				{
+					id_log_signup.Text += ex.ToString();
+				}
             }
             string log = "";
             SignUpDAL signUpDal = new SignUpDAL();

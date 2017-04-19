@@ -13,6 +13,15 @@ namespace myAmazon_v1 {
     public partial class ProductDetails {
         
         /// <summary>
+        /// id_log_productinfo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label id_log_productinfo;
+        
+        /// <summary>
         /// id_product_image control.
         /// </summary>
         /// <remarks>
@@ -58,12 +67,48 @@ namespace myAmazon_v1 {
         protected global::System.Web.UI.WebControls.Label id_product_price;
         
         /// <summary>
-        /// id_desc_text control.
+        /// id_product control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label id_desc_text;
+        protected global::System.Web.UI.WebControls.HiddenField id_product;
+        
+        /// <summary>
+        /// id_product_desc control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label id_product_desc;
+        
+        /// <summary>
+        /// id_rating_input control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField id_rating_input;
+        
+        /// <summary>
+        /// id_product_comment control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox id_product_comment;
+        
+        /// <summary>
+        /// id_product_review control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button id_product_review;
     }
 }

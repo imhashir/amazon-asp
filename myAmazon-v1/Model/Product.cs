@@ -18,7 +18,8 @@ namespace myAmazon_v1.Model
         {
             id = (int)reader["id"];
             name = reader["Name"].ToString();
-            desc = reader["Desc"].ToString();
+			if(reader["Desc"].ToString() != "")
+			desc = reader["Desc"].ToString();
 			if (reader["Image"].ToString() != "")
 				image = reader["Image"].ToString();
 			price = (int) reader["Price"];

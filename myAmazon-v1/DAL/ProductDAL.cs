@@ -325,7 +325,6 @@ namespace myAmazon_v1.DAL
 			string cmd2 = "DELETE FROM Featured WHERE id=@productId";
 			SqlCommand sqlCmd2 = new SqlCommand(cmd2, conn);
 			sqlCmd2.Parameters.AddWithValue("productId", id);
-
 			try
 			{
 				conn.Open();
@@ -344,5 +343,52 @@ namespace myAmazon_v1.DAL
 
 			return done;
 		}
+
+		public bool addReviewToProduct(string customerId, string productId, Nullable<int> rate, string comment, ref string log)
+		{
+			bool done = true;
+
+			SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
+							.ConnectionStrings["myAmazonConnectionString"].ConnectionString);
+			string[] cmd = {"AddRating", "AddComment"};
+			string[] inputs = {rate.ToString(), comment};
+			for (int i = 0; i < 2; i++)
+			{
+				if ((rate != 0 && i == 0) || (comment != null && i == 1))
+				{
+					SqlCommand sqlcmd = new SqlCommand(cmd[i], conn);
+					sqlcmd.CommandType = CommandType.StoredProcedure;
+					sqlcmd.Parameters.AddWithValue("@Cid", customerId);
+					sqlcmd.Parameters.AddWithValue("@Pid", productId);
+					sqlcmd.Parameters.AddWithValue("@input", inputs[i]);
+
+					SqlParameter param = sqlcmd.Parameters.Add("@flag", SqlDbType.Int);
+					param.Direction = ParameterDirection.Output;
+					int flag = 0;
+
+					try
+					{
+						conn.Open();
+						sqlcmd.ExecuteNonQuery();
+						flag = (int) sqlcmd.Parameters["@flag"].Value;
+						
+						if (flag == 0) 
+							throw new Exception("User must buy the product before giving review.");
+					}
+					catch (Exception ex)
+					{
+						log += ex.ToString();
+						done = false;
+						break;
+					}
+					finally
+					{
+						conn.Close();
+					}
+				}
+			}
+			return done;
+		}
 	}
+	
 }

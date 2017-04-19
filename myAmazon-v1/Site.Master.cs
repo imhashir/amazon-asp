@@ -73,7 +73,10 @@ namespace myAmazon_v1
                 befLogin.Visible = false;
                 afLogin.Visible = true;
                 login_uname.Text = Session["SignedInUser"].ToString();
-            }
+            } else
+			{
+				Session["SignedInUser"] = null;
+			}
         }
         
         protected void onLogoutClick(object sender, EventArgs e)
