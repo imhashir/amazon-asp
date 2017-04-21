@@ -31,7 +31,7 @@
 		<div class="col-md-2">
 			Quantity <asp:TextBox runat="server" TextMode="Number" ID="id_product_quantity"/>
 			<asp:Button runat="server" ID="button_buy_product" CssClass="form-control btn btn-primary" OnClick="onBuyProduct" Text="Buy this Product"/><br/><br/>
-			<asp:Button runat="server" ID="button_addto_wishlist" CssClass="form-control btn btn-primary" Text="Add to Wishlist"/> <br/>
+			<asp:Button runat="server" ID="button_addto_wishlist" CssClass="form-control btn btn-primary" OnClick="onAddToWishlist" Text="Add to Wishlist"/> <br/>
 		</div>
 	</div><br/>
 	<div class="row" style="width:100%;">

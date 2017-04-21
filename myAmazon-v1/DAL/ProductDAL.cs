@@ -425,6 +425,34 @@ namespace myAmazon_v1.DAL
 			}
 			return flag;
 		}
+
+		public bool addToWishlist(string username, string productId, ref string log)
+		{
+			bool done = true;
+			SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
+							.ConnectionStrings["myAmazonConnectionString"].ConnectionString);
+			SqlCommand sqlCmd = new SqlCommand("AddToWishlist", conn);
+			sqlCmd.CommandType = CommandType.StoredProcedure;
+
+			sqlCmd.Parameters.AddWithValue("@customerId", username);
+			sqlCmd.Parameters.AddWithValue("@productId", productId);
+
+			try
+			{
+				conn.Open();
+				sqlCmd.ExecuteNonQuery();
+			}
+			catch (Exception ex)
+			{
+				log += ex.ToString();
+				done = false;
+			}
+			finally
+			{
+				conn.Close();
+			}
+			return done;
+		}
 	}
 	
 }

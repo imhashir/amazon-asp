@@ -96,6 +96,38 @@ namespace myAmazon_v1
 					id_log_div.Attributes["class"] = "alert alert-success";
 				}
 			}
+			else
+			{
+				id_log_div.InnerHtml = @"<strong>Error! </strong>";
+				id_log_div.Attributes["class"] = "alert alert-danger";
+				id_log_div.InnerHtml += "User must sign in to to buy a product.";
+			}
+		}
+
+		protected void onAddToWishlist(object sender, EventArgs e)
+		{
+			ProductDAL pDal = new ProductDAL();
+			string log = "";
+			if (Session["SignedInUser"] != null)
+			{
+				if(!pDal.addToWishlist(Session["SignedInUser"].ToString(), id_product.Value, ref (log)))
+				{
+					id_log_div.InnerHtml = @"<strong>Error! </strong>";
+					id_log_div.Attributes["class"] = "alert alert-danger";
+					id_log_div.InnerHtml += log;
+				}
+				else
+				{
+					id_log_div.InnerHtml = @"<strong>Success! </strong> Successfully added to Wishlist!";
+					id_log_div.Attributes["class"] = "alert alert-success";
+				}
+			}
+			else
+			{
+				id_log_div.InnerHtml = @"<strong>Error! </strong>";
+				id_log_div.Attributes["class"] = "alert alert-danger";
+				id_log_div.InnerHtml += "User must sign in to add a product to wishlist.";
+			}
 		}
 	}
 }
