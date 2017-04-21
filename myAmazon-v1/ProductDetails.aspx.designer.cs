@@ -76,6 +76,33 @@ namespace myAmazon_v1 {
         protected global::System.Web.UI.WebControls.HiddenField id_product;
         
         /// <summary>
+        /// id_product_quantity control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox id_product_quantity;
+        
+        /// <summary>
+        /// button_buy_product control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button button_buy_product;
+        
+        /// <summary>
+        /// button_addto_wishlist control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button button_addto_wishlist;
+        
+        /// <summary>
         /// id_product_desc control.
         /// </summary>
         /// <remarks>

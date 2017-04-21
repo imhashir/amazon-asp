@@ -21,12 +21,17 @@
 		<div class="col-md-4">
 			<asp:Image runat="server" ID="id_product_image" CssClass="img-rounded" Width="250px" ImageUrl="~/ProductsData/Images/Default.jpg"/>
 		</div>
-		<div class="col-md-8">
+		<div class="col-md-6">
 			<h2><asp:Label runat="server" ID="id_product_name"/></h2><br/>
 			<h4>Category: <asp:Label runat="server" ID="id_product_category"/></h4>
 			<h4>Brand: <asp:Label runat="server" ID="id_product_brand"/></h4>
 			<h3>Price: Rs. <asp:Label runat="server" ID="id_product_price"/></h3>
 			<asp:HiddenField ID="id_product" runat="server" />
+		</div>
+		<div class="col-md-2">
+			Quantity <asp:TextBox runat="server" TextMode="Number" ID="id_product_quantity"/>
+			<asp:Button runat="server" ID="button_buy_product" CssClass="form-control btn btn-primary" OnClick="onBuyProduct" Text="Buy this Product"/><br/><br/>
+			<asp:Button runat="server" ID="button_addto_wishlist" CssClass="form-control btn btn-primary" Text="Add to Wishlist"/> <br/>
 		</div>
 	</div><br/>
 	<div class="row" style="width:100%;">

@@ -63,5 +63,39 @@ namespace myAmazon_v1
 				id_log_div.InnerHtml += "User must sign in to give a product review.";
 			}
 		}
+
+		protected void onBuyProduct(object sender, EventArgs e)
+		{
+			ProductDAL pDal = new ProductDAL();
+			int orderId = 0, flag = 0;
+			string log = "";
+			if (Session["SignedInUser"] != null) {
+				flag = pDal.buyProduct(Session["SignedInUser"].ToString(), id_product.Value, Convert.ToInt32(id_product_quantity.Text), ref (orderId), ref (log));
+
+				if (flag != 1)
+				{
+					switch (flag)
+					{
+						case 2:
+							log += "User doesn't have enough credit.";
+							break;
+						case 3:
+							log += "Quantity in stock is lesser than your ordered one.";
+							break;
+						case 4:
+							log += "Qunatity must be greater than or equal to one.";
+							break;
+					}
+					id_log_div.InnerHtml = @"<strong>Error! </strong>";
+					id_log_div.Attributes["class"] = "alert alert-danger";
+					id_log_div.InnerHtml += log;
+				}
+				else
+				{
+					id_log_div.InnerHtml = @"<strong>Success! </strong> Successfully bought Product!";
+					id_log_div.Attributes["class"] = "alert alert-success";
+				}
+			}
+		}
 	}
 }

@@ -389,6 +389,42 @@ namespace myAmazon_v1.DAL
 			}
 			return done;
 		}
+
+		public int buyProduct(string username, string productId, int quantity, ref int orderId, ref string log)
+		{
+			SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
+							.ConnectionStrings["myAmazonConnectionString"].ConnectionString);
+			SqlCommand sqlCmd = new SqlCommand("BuyProduct", conn);
+			sqlCmd.CommandType = CommandType.StoredProcedure;
+
+			sqlCmd.Parameters.AddWithValue("@username", username);
+			sqlCmd.Parameters.AddWithValue("@productId", productId);
+			sqlCmd.Parameters.AddWithValue("@quantity", quantity);
+
+			SqlParameter flagParam = sqlCmd.Parameters.Add("@flag", SqlDbType.Int);
+			flagParam.Direction = ParameterDirection.Output;
+			SqlParameter flagOrderId = sqlCmd.Parameters.Add("@orderId", SqlDbType.Int);
+			flagOrderId.Direction = ParameterDirection.Output;
+
+			int flag = 0;
+
+			try
+			{
+				conn.Open();
+				sqlCmd.ExecuteNonQuery();
+				flag = (int) sqlCmd.Parameters["@flag"].Value;
+				orderId = (int) sqlCmd.Parameters["@orderId"].Value;
+			}
+			catch (Exception ex)
+			{
+				log += ex.ToString();
+			} 
+			finally
+			{
+				conn.Close();
+			}
+			return flag;
+		}
 	}
 	
 }
