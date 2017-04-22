@@ -25,6 +25,7 @@
 			<h2><asp:Label runat="server" ID="id_product_name"/></h2><br/>
 			<h4>Category: <asp:Label runat="server" ID="id_product_category"/></h4>
 			<h4>Brand: <asp:Label runat="server" ID="id_product_brand"/></h4>
+			<h4>Availability: <asp:Label runat="server" ID="id_product_available"/></h4>
 			<h3>Price: Rs. <asp:Label runat="server" ID="id_product_price"/></h3>
 			<asp:HiddenField ID="id_product" runat="server" />
 		</div>

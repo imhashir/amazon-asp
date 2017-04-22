@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
 using System.Web;
 using myAmazon_v1.DAL;
 
@@ -14,42 +11,66 @@ namespace myAmazon_v1.AdminPanel
         {
             if (!this.IsPostBack)
             {
-				string log = "";
-				ProductDAL productDal = new ProductDAL();
-				DataTable table = productDal.getProductList(ref (log), 2, null);
-                if(log != "")
-				{
-					log_manage_product.Text += log;
-					return;
-				}
-                productListView.DataSource = table;
-                productListView.DataBind();
+				populateTable();
             }
 
             if (Request.HttpMethod.ToString() == "POST")
-            {
-                switch (HttpContext.Current.Request.Form["Action"])
+			{
+				string log = "";
+				switch (HttpContext.Current.Request.Form["Action"])
                 {
                     case "Delete":
                         {
-							string log = "";
 							ProductDAL productDal = new ProductDAL();
-							if (!productDal.deleteProduct(HttpContext.Current.Request["id"], ref (log))) {
+							if (!productDal.deleteProduct(HttpContext.Current.Request["id"], ref (log)))
+							{
 								log_manage_product.Text += log;
 							}
-                            break;
+							else
+							{
+								populateTable();
+							}
+							break;
                         }
                     case "Edit":
                         {
                             Session["isEdit"] = "1";
                             Session["ProductId"] = HttpContext.Current.Request["id"];
                             Response.Redirect(@"..\AdminPanel\AddNewProduct.aspx");
-                        }
+						}
                         break;
+					case "Update":
+						{
+							
+							ProductDAL productDal = new ProductDAL();
+							if (!productDal.updateStock(HttpContext.Current.Request["id"], Convert.ToInt32(HttpContext.Current.Request["quantity"]), ref (log)))
+							{
+								log_manage_product.Text += log;
+							}
+							else
+							{
+								populateTable();
+							}
+						}
+						break;
                     default:
                         break;
                 }
             }
         }
+
+		private void populateTable()
+		{
+			string log = "";
+			ProductDAL productDal = new ProductDAL();
+			DataTable table = productDal.getProductList(ref (log), 2, null);
+			if (log != "")
+			{
+				log_manage_product.Text += log;
+				return;
+			}
+			productListView.DataSource = table;
+			productListView.DataBind();
+		}
     }
 }

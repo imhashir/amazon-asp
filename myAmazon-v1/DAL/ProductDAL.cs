@@ -185,7 +185,7 @@ namespace myAmazon_v1.DAL
 			else if (flag == 1)
 				cmd = "SELECT [id], [Name], [Desc], ISNULL([Image], '" + defaultImage + "') AS [Image], [Price], [CatId], [Category], [BrandId], [Brand] FROM ProductDetails";
 			else if(flag == 2)
-				cmd = "SELECT [id], [Name], ISNULL([Desc], '[No Description]') AS [Desc], ISNULL([Image], '[No Image]') AS [Image], [Price], [CatId], [Category], [BrandId], [Brand] FROM ProductDetails";
+				cmd = "SELECT [id], [Name], ISNULL([Desc], '[No Description]') AS [Desc], ISNULL([Image], '[No Image]') AS [Image], [Price], [CatId], [Category], [BrandId], [Brand], [Quantity] FROM ProductDetails";
 
 			if (where != null)
 				cmd += " " + where;
@@ -451,6 +451,36 @@ namespace myAmazon_v1.DAL
 			{
 				conn.Close();
 			}
+			return done;
+		}
+		
+		public bool updateStock(string productId, int quantity, ref string log)
+		{
+			bool done = true;
+
+			SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
+								.ConnectionStrings["myAmazonConnectionString"].ConnectionString);
+			SqlCommand sqlCmd = new SqlCommand("UpdateStock", conn);
+			sqlCmd.CommandType = CommandType.StoredProcedure;
+
+			sqlCmd.Parameters.AddWithValue("@Pid", productId);
+			sqlCmd.Parameters.AddWithValue("@amount", quantity.ToString());
+
+			try
+			{
+				conn.Open();
+				sqlCmd.ExecuteNonQuery();
+			}
+			catch (Exception ex)
+			{
+				log += ex.ToString();
+				done = false;
+			}
+			finally
+			{
+				conn.Close();
+			}
+
 			return done;
 		}
 	}

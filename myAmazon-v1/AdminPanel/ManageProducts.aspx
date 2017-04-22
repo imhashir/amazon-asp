@@ -16,7 +16,7 @@
             <asp:ListView ID="productListView" runat="server" ItemPlaceholderID="productPlaceHolder">
                 <LayoutTemplate>
                     <h3>Products List</h3>
-                    <table class="table table-hover">
+                    <table class="table table-hover" style="display:block">
                         <tr>
                             <th>ID</th>
                             <th>Name</th>
@@ -25,6 +25,7 @@
                             <th>Description</th>
 							<th>Image</th>
                             <th>Price</th>
+                            <th>Stock</th>
                             <th>Edit</th>
                             <th>Delete</th>
                         </tr>
@@ -42,6 +43,10 @@
                             <td><%#Eval("Desc")%></td>
                             <td><%#Eval("Image")%></td>
                             <td><%#Eval("Price")%></td>
+							<td>
+								<input type="text" size="4" name="quantity" value="<%#Eval("Quantity")%>">
+								<input type="submit" class="btn btn-primary" name="Action" value="Update">
+							</td>
                             <td><input type="submit" class="btn btn-warning" name="Action" value="Edit"></td>
                             <td><input type="submit" class="btn btn-danger" name="Action" value="Delete"></td>
                         </tr>
