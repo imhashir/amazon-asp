@@ -13,6 +13,7 @@ namespace myAmazon_v1.Model
 		public int catId { get; set; }
 		public string brand { get; set; }
 		public string category { get; set; }
+		public int quantity { get; set; }
 
 		public void fillWithSqlReader(SqlDataReader reader)
         {
@@ -27,6 +28,7 @@ namespace myAmazon_v1.Model
 			category = reader["Category"].ToString();
 			brandId = (int) reader["BrandId"];
 			brand = reader["Brand"].ToString();
+			quantity = (int) reader["Quantity"];
 		}
 	}
 }

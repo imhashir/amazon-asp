@@ -21,7 +21,10 @@ namespace myAmazon_v1
 				id_product_brand.Text = product.brand;
 				id_product_price.Text = product.price.ToString();
 				id_product.Value = product.id.ToString();
-
+				if (product.quantity > 0)
+					id_product_available.Text = "Available in Stock";
+				else
+					id_product_available.Text = "Out of stock. Available on order.";
 				if (product.desc != null)
 				{
 					StreamReader file = new StreamReader(Server.MapPath(product.desc));
