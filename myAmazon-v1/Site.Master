@@ -14,6 +14,7 @@
     <webopt:BundleReference runat="server" Path="~/Content/css" /> 
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <link href="Content/bootstrap.css" rel="stylesheet" />
+	<link href="Content/bootstrap.min.css" rel="stylesheet" />
 	<link href="Content/style-master.css" rel="stylesheet" />
     <meta name="viewport" content="width=device-width" />
     <asp:ContentPlaceHolder runat="server" ID="HeadContent" />
@@ -58,7 +59,7 @@
                     </div>
                     <div id="afLogin" runat="server">
                         <p>
-                            Hello, <a runat="server" class="username" href="~/Account/Manage" title="Manage your account">
+                            Hello, <a runat="server" class="username" href="~/User/Manage" title="Manage your account">
                                 <asp:Label runat="server" ID="login_uname"></asp:Label></a>!
                             <asp:LinkButton runat="server" ID="logoutLink" OnClick="onLogoutClick">Logout</asp:LinkButton>
                         </p>
@@ -67,9 +68,9 @@
                 <nav>
                     <ul id="menu">
                         <li><a runat="server" href="~/">Home</a></li>
-                        <li><a runat="server" href="~/BrowseCategories.aspx">Browse Categories</a></li>
-                        <li><a runat="server" href="~/BrowseProducts.aspx">Browse Products</a></li>
-                        <li><a runat="server" href="~/BrowseBrands.aspx">Browse Brands</a></li>
+                        <li><a runat="server" href="~/BrowseCategories">Browse Categories</a></li>
+                        <li><a runat="server" href="~/BrowseProducts">Browse Products</a></li>
+                        <li><a runat="server" href="~/BrowseBrands">Browse Brands</a></li>
                     </ul>
                 </nav>
             </div>

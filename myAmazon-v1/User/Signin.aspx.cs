@@ -15,7 +15,7 @@ namespace myAmazon_v1.User
         protected void id_submit_signin_Click(object sender, EventArgs e)
         {
             string log = "";
-            SignInDAL signInDal = new SignInDAL();
+            UserDAL signInDal = new UserDAL();
             if (signInDal.signInUser(id_username.Text, id_password.Text, ref (log)) != 0)
             {
                 id_log_signin.Text += log;

@@ -13,6 +13,7 @@
        });  
    </script> 
 	<link href="Content/star-rating.css" rel="stylesheet" />
+	<link href="Content/star-rating.min.css" rel="stylesheet" />
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>  
 	<script src="Scripts/star-rating.js"></script>
 	<div class="" runat="server" id="id_log_div">

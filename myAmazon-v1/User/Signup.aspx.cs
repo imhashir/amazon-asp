@@ -29,7 +29,7 @@ namespace myAmazon_v1.User
 				}
             }
             string log = "";
-            SignUpDAL signUpDal = new SignUpDAL();
+            UserDAL signUpDal = new UserDAL();
             signUpDal.signUpUser(
                 id_user_fname.Text,
                 id_user_lname.Text,
