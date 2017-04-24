@@ -29,11 +29,6 @@ namespace myAmazon_v1
                 CategoryDropdownList.Items.Insert(0, new ListItem("--Select--", "NA"));
 				populateBrandDropDown();
             }
-			foreach (System.Collections.DictionaryEntry entry in HttpContext.Current.Cache)
-			{
-				string s = entry.Key.ToString();
-				//HttpContext.Current.Cache.Remove(entry.Key.ToString());
-			}
 		}
 
         private void getProductTable(Nullable<int> categoryId, Nullable<int> brandId) {

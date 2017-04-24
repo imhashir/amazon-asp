@@ -121,7 +121,7 @@ namespace myAmazon_v1.DAL
 			Customer customer = new Customer();
 			SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
 						.ConnectionStrings["myAmazonConnectionString"].ConnectionString);
-			string cmd = "SELECT * FROM CustomerDetails WHERE [Username]='" + username + "'";
+			string cmd = "SELECT [Username], [Password], [FirstName], [LastName], [ContactNumber], [Email], [Image] FROM CustomerDetails WHERE [Username]='" + username + "'";
 			SqlCommand sqlCmd = new SqlCommand(cmd, conn);
 			SqlDataReader reader = null;
 			try
@@ -161,6 +161,40 @@ namespace myAmazon_v1.DAL
 			{
 				conn.Open();
 				sqlCmd.ExecuteNonQuery();
+			}
+			catch (Exception ex)
+			{
+				log += ex.ToString();
+				done = false;
+			}
+			finally
+			{
+				conn.Close();
+			}
+
+			return done;
+		}
+
+		public bool requestCredit(string username, string amount, ref string log) {
+			bool done = true;
+			SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
+						.ConnectionStrings["myAmazonConnectionString"].ConnectionString);
+			SqlCommand sqlCmd = new SqlCommand("RequestCredit", conn);
+
+			sqlCmd.CommandType = CommandType.StoredProcedure;
+
+			sqlCmd.Parameters.AddWithValue("@username", username);
+			sqlCmd.Parameters.AddWithValue("@amount", amount);
+			SqlParameter param = sqlCmd.Parameters.Add("@flag", SqlDbType.Int);
+			param.Direction = ParameterDirection.Output;
+			int flag = 0;
+			try
+			{
+				conn.Open();
+				sqlCmd.ExecuteNonQuery();
+				flag = (int) sqlCmd.Parameters["@flag"].Value;
+				if (flag == 2)
+					throw new Exception("A Request is already pending.");
 			}
 			catch (Exception ex)
 			{

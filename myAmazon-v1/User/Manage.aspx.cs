@@ -27,6 +27,7 @@ namespace myAmazon_v1.User
 					id_user_lname.Text = customer.lastName;
 					id_user_number.Text = customer.number;
 					id_user_pass.Text = customer.password;
+					id_user_image.ImageUrl = customer.image;
 				}
 			}
 		}
@@ -40,6 +41,23 @@ namespace myAmazon_v1.User
 				id_log_div.InnerHtml = @"<strong>Success! </strong> Successfully Updated Info!";
 				id_log_div.Attributes["class"] = "alert alert-success";
 			} 
+			else
+			{
+				id_log_div.InnerHtml = @"<strong>Error! </strong>";
+				id_log_div.Attributes["class"] = "alert alert-danger";
+				id_log_div.InnerHtml += log;
+			}
+		}
+
+		protected void onRequestCredit(object sender, EventArgs e)
+		{
+			UserDAL uDal = new UserDAL();
+			string log = "";
+			if (uDal.requestCredit(id_username.Text, id_credit_value.Text, ref (log)))
+			{
+				id_log_div.InnerHtml = @"<strong>Success! </strong> Request Sent!";
+				id_log_div.Attributes["class"] = "alert alert-success";
+			}
 			else
 			{
 				id_log_div.InnerHtml = @"<strong>Error! </strong>";
