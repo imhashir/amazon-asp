@@ -16,7 +16,7 @@
             </HeaderTemplate>
             <ItemStyle BackColor="#dbdbdb" ForeColor="#202020" Height="250px" Width="150px" HorizontalAlign="Center"/>
             <ItemTemplate>
-                <a href="?id=<%# Eval("id") %>">
+                <a href="BrowseProducts?CatId=<%# Eval("id") %>">
                 <table>
                     <tr>
                         <td>

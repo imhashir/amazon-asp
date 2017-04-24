@@ -17,18 +17,32 @@ namespace myAmazon_v1
         protected void Page_Load(object sender, EventArgs e)
         {
 			if (!Page.IsPostBack)
-            {
+			{
 				string log = "";
-                getProductTable(null, null);
+
 				CategoriesDAL cDal = new CategoriesDAL();
-				DataTable tableCat = cDal.getCategoriesList(ref(log), 0, null);
-                CategoryDropdownList.DataTextField = "Name";
-                CategoryDropdownList.DataValueField = "id";
-                CategoryDropdownList.DataSource = tableCat;
-                CategoryDropdownList.DataBind();
-                CategoryDropdownList.Items.Insert(0, new ListItem("--Select--", "NA"));
+				DataTable tableCat = cDal.getCategoriesList(ref (log), 0, null);
+				CategoryDropdownList.DataTextField = "Name";
+				CategoryDropdownList.DataValueField = "id";
+				CategoryDropdownList.DataSource = tableCat;
+				CategoryDropdownList.DataBind();
+				CategoryDropdownList.Items.Insert(0, new ListItem("--Select--", "NA"));
 				populateBrandDropDown();
-            }
+				if (Request.QueryString["CatId"] != null)
+				{
+					getProductTable(Convert.ToInt32(Request.QueryString["CatId"]), null);
+					CategoryDropdownList.SelectedValue = Request.QueryString["CatId"];
+				}
+				else if(Request.QueryString["BrandId"] != null)
+				{
+					getProductTable(null, Convert.ToInt32(Request.QueryString["BrandId"]));
+					BrandDropdownList.SelectedValue = Request.QueryString["BrandId"];
+				} 
+				else
+				{
+					getProductTable(null, null);
+				}
+			}
 		}
 
         private void getProductTable(Nullable<int> categoryId, Nullable<int> brandId) {

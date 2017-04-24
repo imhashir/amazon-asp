@@ -13,15 +13,6 @@ namespace myAmazon_v1 {
     public partial class BrowseBrands {
         
         /// <summary>
-        /// form1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
-        
-        /// <summary>
         /// log_browse_brand control.
         /// </summary>
         /// <remarks>
@@ -31,7 +22,7 @@ namespace myAmazon_v1 {
         protected global::System.Web.UI.WebControls.Label log_browse_brand;
         
         /// <summary>
-        /// ProductDataList control.
+        /// BrandDataList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
