@@ -6,13 +6,13 @@
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
 	<link href="Content/shop-homepage.css" rel="stylesheet" />
 
-    <div class="row">
+	<div class="row">
 		<h3>Our Platinum Sponsors Feature</h3>
 		<div class="col-md-12">
 			<asp:Image runat="server" ID="feature_p1" CssClass="slide-image" alt=""/>
 		</div>
 	</div>
-
+	
 	<div class="row">
 		<h3>Our Gold Sponsors Feature</h3>
 		<div class="col-md-6">

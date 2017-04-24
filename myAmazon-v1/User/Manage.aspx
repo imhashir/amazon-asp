@@ -22,6 +22,6 @@
 	</div><br/>
 	<h3><b>Request Credit</b></h3><br/>
 	<asp:TextBox runat="server" ID="id_credit_value" CssClass="form-control" TextMode="SingleLine" />
-	<asp:Button runat="server" ID="id_request_button" CssClass="btn btn-primary" Text="Update" OnClick="onRequestCredit"/>
+	<asp:Button runat="server" ID="id_request_button" CssClass="btn btn-primary" Text="Request" OnClick="onRequestCredit"/>
 
 </asp:Content>

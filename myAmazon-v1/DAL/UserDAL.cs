@@ -208,5 +208,61 @@ namespace myAmazon_v1.DAL
 
 			return done;
 		}
+
+		public bool handleCreditRequest(string username, int accept, ref string log)
+		{
+			bool done = true;
+			SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
+						.ConnectionStrings["myAmazonConnectionString"].ConnectionString);
+			SqlCommand sqlCmd = new SqlCommand("HandleCreditRequest", conn);
+
+			sqlCmd.CommandType = CommandType.StoredProcedure;
+
+			sqlCmd.Parameters.AddWithValue("@username", username);
+			sqlCmd.Parameters.AddWithValue("@handleType", accept);
+
+			try
+			{
+				conn.Open();
+				sqlCmd.ExecuteNonQuery();
+			}
+			catch (Exception ex)
+			{
+				log += ex.ToString();
+				done = false;
+			}
+			finally
+			{
+				conn.Close();
+			}
+
+			return done;
+		}
+
+		public DataTable getCreditRequestList (ref string log)
+		{
+			SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
+						.ConnectionStrings["myAmazonConnectionString"].ConnectionString);
+			string cmd = "SELECT * FROM CreditRequestsDetails";
+
+			SqlCommand sqlCmd = new SqlCommand(cmd, conn);
+			DataTable ds = new DataTable();
+
+			try
+			{
+				conn.Open();
+				SqlDataAdapter adapter = new SqlDataAdapter(sqlCmd);
+				adapter.Fill(ds);
+			}
+			catch (Exception ex)
+			{
+				log += ex.ToString();
+			}
+			finally
+			{
+				conn.Close();
+			}
+			return ds;
+		}
 	}
 }
