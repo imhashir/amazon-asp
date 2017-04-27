@@ -1,14 +1,8 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ManageCategories.aspx.cs" Inherits="myAmazon_v1.AdminPanel.WebForm1" %>
-
-<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <link href="../Content/bootstrap.css" rel="stylesheet" />
-    <title>Manage Categories</title>
-</head>
-<body>
-    <div class="container">
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/AdminPanel/MasterAdmin.Master" AutoEventWireup="true" CodeBehind="ManageCategories.aspx.cs" Inherits="myAmazon_v1.AdminPanel.ManageCategories" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+	<div class="container">
         <div class="col-md-1"></div>
         <div class="col-md-10">
             <asp:ListView ID="categoriesListView" runat="server" ItemPlaceholderID="categoryPlaceHolder">
@@ -40,5 +34,4 @@
             <asp:Label ID="log_manage_cat" runat="server" Text=""></asp:Label>
         </div>
     </div>
-</body>
-</html>
+</asp:Content>

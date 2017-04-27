@@ -10,7 +10,7 @@
 namespace myAmazon_v1.AdminPanel {
     
     
-    public partial class WebForm1 {
+    public partial class ManageCategories {
         
         /// <summary>
         /// categoriesListView control.

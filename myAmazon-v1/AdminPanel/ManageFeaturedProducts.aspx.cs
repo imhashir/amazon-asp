@@ -6,8 +6,8 @@ using System.IO;
 
 namespace myAmazon_v1.AdminPanel
 {
-    public partial class ManageFeaturedProduct : System.Web.UI.Page
-    {
+	public partial class ManageFeaturedProducts : System.Web.UI.Page
+	{
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			if (!this.IsPostBack)
@@ -24,7 +24,7 @@ namespace myAmazon_v1.AdminPanel
 							string log = "";
 							ProductDAL productDal = new ProductDAL();
 							string imagePath = "";
-							if (!productDal.deleteFromFeaturedFeatured(HttpContext.Current.Request["id"], ref(imagePath), ref (log)))
+							if (!productDal.deleteFromFeaturedFeatured(HttpContext.Current.Request["id"], ref (imagePath), ref (log)))
 							{
 								id_log_sponsor.Text += log;
 							}
@@ -39,7 +39,7 @@ namespace myAmazon_v1.AdminPanel
 		}
 
 		protected void Press_Submit(object sender, EventArgs e)
-        {
+		{
 			ProductDAL pDal = new ProductDAL();
 			string log = "";
 			string imagePath = "~/FeaturedData/Images/" + id_product.Text + ".jpg";
@@ -49,9 +49,10 @@ namespace myAmazon_v1.AdminPanel
 				populateTable();
 			}
 			id_log_sponsor.Text = log;
-        }
+		}
 
-		protected void populateTable() {
+		protected void populateTable()
+		{
 			string log = "";
 			ProductDAL productDal = new ProductDAL();
 			DataTable table = productDal.getFeaturedList(ref (log));
@@ -63,5 +64,5 @@ namespace myAmazon_v1.AdminPanel
 			featuredListView.DataSource = table;
 			featuredListView.DataBind();
 		}
-    }
+	}
 }

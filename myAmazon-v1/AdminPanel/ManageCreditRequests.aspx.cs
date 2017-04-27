@@ -9,7 +9,7 @@ namespace myAmazon_v1.AdminPanel
 	{
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			if(!IsPostBack)
+			if (!IsPostBack)
 			{
 				populateTable();
 			}

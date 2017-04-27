@@ -1,14 +1,8 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ManageCreditRequests.aspx.cs" Inherits="myAmazon_v1.AdminPanel.ManageCreditRequests" %>
-
-<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title>Handle Credit Requests</title>
-	<link href="../Content/bootstrap.css" rel="stylesheet" />
-</head>
-<body>
-    <div class="container">
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/AdminPanel/MasterAdmin.Master" AutoEventWireup="true" CodeBehind="ManageCreditRequests.aspx.cs" Inherits="myAmazon_v1.AdminPanel.ManageCreditRequests" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+	<div class="container">
 		<h2><b>Handle Credit Requests</b></h2>
         <div class="col-md-1"></div>
         <div class="col-md-10">
@@ -40,5 +34,4 @@
             <asp:Label ID="log_manage_requests" runat="server" Text=""></asp:Label>
         </div>
 	</div>
-</body>
-</html>
+</asp:Content>
