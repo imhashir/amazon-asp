@@ -40,7 +40,7 @@ namespace myAmazon_v1.DAL
 
             SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
                         .ConnectionStrings["myAmazonConnectionString"].ConnectionString);
-            string cmd = @"SELECT Name, [Desc], [Image] FROM Category WHERE " + where + " = " + whereCondition;
+            string cmd = @"SELECT id, Name, [Desc], [Image] FROM CategoryDetails WHERE " + where + " = " + whereCondition;
             SqlCommand sqlCmd = new SqlCommand(cmd, conn);
             SqlDataReader reader = null;
             try

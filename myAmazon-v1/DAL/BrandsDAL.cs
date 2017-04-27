@@ -39,7 +39,7 @@ namespace myAmazon_v1.DAL
         public Brand getBrandDetails(ref bool flag, ref string log, string where, string whereCondition) {
             SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
                         .ConnectionStrings["myAmazonConnectionString"].ConnectionString);
-            string cmd = "SELECT id AS id, Name AS name, [Desc] AS [desc], [Image], CategoryId AS catId FROM Brand";
+            string cmd = "SELECT id AS id, Name AS name, [Desc] AS [desc], [Image], CatId AS catId FROM BrandDetails";
             if (where != null)
                 cmd += " WHERE " + where + " = " + whereCondition;
             SqlCommand sqlCmd = new SqlCommand(cmd, conn);
