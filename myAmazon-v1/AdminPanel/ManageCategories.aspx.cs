@@ -11,16 +11,7 @@ namespace myAmazon_v1.AdminPanel
 		{
 			if (!this.IsPostBack)
 			{
-				string log = "";
-				CategoriesDAL catDal = new CategoriesDAL();
-				DataTable table = catDal.getCategoriesList(ref (log), 2, null);
-				if (log != "")
-				{
-					log_manage_cat.Text += log;
-					return;
-				}
-				categoriesListView.DataSource = table;
-				categoriesListView.DataBind();
+				populateTable();
 			}
 
 			if (Request.HttpMethod.ToString() == "POST")
@@ -32,7 +23,9 @@ namespace myAmazon_v1.AdminPanel
 							string log = "";
 							CategoriesDAL catDal = new CategoriesDAL();
 							if (!catDal.deleteCategory(HttpContext.Current.Request["id"], ref (log)))
-								log_manage_cat.Text = log;
+								log_manage_cat.Text += log;
+							else
+								populateTable();
 							break;
 						}
 					case "Edit":
@@ -46,6 +39,20 @@ namespace myAmazon_v1.AdminPanel
 						break;
 				}
 			}
+		}
+
+		private void populateTable ()
+		{
+			string log = "";
+			CategoriesDAL catDal = new CategoriesDAL();
+			DataTable table = catDal.getCategoriesList(ref (log), 2, null);
+			if (log != "")
+			{
+				log_manage_cat.Text += log;
+				return;
+			}
+			categoriesListView.DataSource = table;
+			categoriesListView.DataBind();
 		}
 	}
 }

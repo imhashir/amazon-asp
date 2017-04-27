@@ -11,16 +11,7 @@ namespace myAmazon_v1.AdminPanel
 		{
 			if (!this.IsPostBack)
 			{
-				BrandsDAL brandDal = new BrandsDAL();
-				string log = "";
-				DataTable table = brandDal.getBrandsList(ref (log), 2, null);
-				if (log != "")
-				{
-					log_manage_brand.Text = log;
-					return;
-				}
-				brandListView.DataSource = table;
-				brandListView.DataBind();
+				populateTable();
 			}
 
 			if (Request.HttpMethod.ToString() == "POST")
@@ -31,8 +22,10 @@ namespace myAmazon_v1.AdminPanel
 						{
 							string log = "";
 							BrandsDAL brandDal = new BrandsDAL();
-							brandDal.deleteBrand(HttpContext.Current.Request["id"], ref (log));
-							log_manage_brand.Text += log;
+							if (!brandDal.deleteBrand(HttpContext.Current.Request["id"], ref (log)))
+								log_manage_brand.Text += log;
+							else
+								populateTable();
 							break;
 						}
 					case "Edit":
@@ -46,6 +39,20 @@ namespace myAmazon_v1.AdminPanel
 						break;
 				}
 			}
+		}
+
+		private void populateTable()
+		{
+			BrandsDAL brandDal = new BrandsDAL();
+			string log = "";
+			DataTable table = brandDal.getBrandsList(ref (log), 2, null);
+			if (log != "")
+			{
+				log_manage_brand.Text = log;
+				return;
+			}
+			brandListView.DataSource = table;
+			brandListView.DataBind();
 		}
 	}
 }

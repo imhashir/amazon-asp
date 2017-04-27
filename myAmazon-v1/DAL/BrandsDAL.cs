@@ -207,7 +207,8 @@ namespace myAmazon_v1.DAL
             return flag;
         }
 
-		public void deleteBrand(string id, ref string log) {
+		public bool deleteBrand(string id, ref string log) {
+			bool done = true;
 			SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
 						.ConnectionStrings["myAmazonConnectionString"].ConnectionString);
 			string cmd = "DELETE FROM Brand WHERE id=@brandId";
@@ -217,13 +218,17 @@ namespace myAmazon_v1.DAL
 			{
 				conn.Open();
 				sqlCmd.ExecuteNonQuery();
-				conn.Close();
 			}
 			catch (Exception ex)
 			{
 				log += ex.ToString();
+				done = false;
+			}
+			finally
+			{
 				conn.Close();
 			}
+			return done;
 		}
     }
 }
