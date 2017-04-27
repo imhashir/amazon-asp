@@ -1,15 +1,8 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="myAmazon_v1.AdminPanel.Index" %>
-
-<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <link href="../Content/bootstrap.css" rel="stylesheet" />
-    <title>Admin Panel</title>
-</head>
-<body>
-    <form id="form1" runat="server">
-    <div>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/AdminPanel/MasterAdmin.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="myAmazon_v1.AdminPanel.Default" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+	<div>
         <div class="container">
         <div class="row">
         </div>
@@ -35,6 +28,4 @@
         </div>
     </div>
     </div>
-    </form>
-</body>
-</html>
+</asp:Content>

@@ -16,13 +16,19 @@ namespace myAmazon_v1.User
         {
             string log = "";
             UserDAL signInDal = new UserDAL();
-            if (signInDal.signInUser(id_username.Text, id_password.Text, ref (log)) != 0)
+			int flag = signInDal.signInUser(id_username.Text, id_password.Text, ref (log));
+
+			if (flag < 0)
             {
                 id_log_signin.Text += log;
             } else
             {
                 Session["SignedInUser"] = id_username.Text.ToString();
-                Response.Redirect(@"..\");
+				if (flag == 1)
+					Session["IsAdmin"] = true;
+				else
+					Session["IsAdmin"] = false;
+				Response.Redirect(@"..\");
             }
         }
     }

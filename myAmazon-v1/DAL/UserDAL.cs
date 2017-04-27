@@ -15,8 +15,8 @@ namespace myAmazon_v1.DAL
 
 			sqlCmd.CommandType = CommandType.StoredProcedure;
 
-			sqlCmd.Parameters.AddWithValue("@username", username);
-			sqlCmd.Parameters.AddWithValue("@pass", pwd);
+			sqlCmd.Parameters.AddWithValue("@Un", username);
+			sqlCmd.Parameters.AddWithValue("@Pass", pwd);
 
 			SqlParameter outputFlag = sqlCmd.Parameters.Add("@flag", SqlDbType.Int);
 			outputFlag.Direction = ParameterDirection.Output;
@@ -26,11 +26,8 @@ namespace myAmazon_v1.DAL
 				conn.Open();
 				sqlCmd.ExecuteNonQuery();
 				flag = (int)sqlCmd.Parameters["@flag"].Value;
-				if (flag != 0)
+				if (flag < 0)
 					throw new Exception();
-				//Session["SignedInUser"] = id_username.Text.ToString();
-				//id_log_signin.Text = "SignIn Successful!\nSignIn Id: " + Session["SignedInUser"];
-				//Response.Redirect(@"..\");
 			}
 			catch (Exception ex)
 			{
@@ -39,10 +36,10 @@ namespace myAmazon_v1.DAL
 				{
 					switch (flag)
 					{
-						case 1:
+						case -1:
 							log = "Invalid Username.";
 							break;
-						case 2:
+						case -2:
 							log = "Invalid Password";
 							break;
 					}
