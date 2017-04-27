@@ -63,6 +63,11 @@
                                 <asp:Label runat="server" ID="login_uname"></asp:Label></a>!
                             <asp:LinkButton runat="server" ID="logoutLink" OnClick="onLogoutClick">Logout</asp:LinkButton>
                         </p>
+						<div id="adminpanel" runat="server">
+							<p>
+								<a runat="server" href="~/AdminPanel/" title="Admin Panel">Admin Panel!</a>
+							</p>
+						</div>
                     </div>
                 </section>
                 <nav>
