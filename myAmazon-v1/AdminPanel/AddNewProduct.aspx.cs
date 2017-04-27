@@ -149,7 +149,8 @@ namespace myAmazon_v1.AdminPanel
 					id_log_product.Text += ex.ToString();
 				}
 			}
-			productDal.updateImageAndDesc(id, imagePath, descPath, isEdit, ref (log));
+			if (imagePath != null || descPath != null)
+				productDal.updateImageAndDesc(id, imagePath, descPath, isEdit, ref (log));
 			id_log_product.Text += log;
         }
 

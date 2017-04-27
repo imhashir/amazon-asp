@@ -129,7 +129,6 @@
   <ItemGroup>
     <Content Include="About.aspx" />
     <Content Include="AdminPanel\AddNewCategory.aspx" />
-    <Content Include="AdminPanel\AddNewBrand.aspx" />
     <Content Include="AdminPanel\ManageCreditRequests.aspx" />
     <Content Include="AdminPanel\ManageFeaturedProduct.aspx" />
     <Content Include="AdminPanel\AddNewProduct.aspx" />
@@ -137,6 +136,7 @@
     <Content Include="AdminPanel\ManageBrands.aspx" />
     <Content Include="AdminPanel\ManageCategories.aspx" />
     <Content Include="AdminPanel\ManageProducts.aspx" />
+    <Content Include="AdminPanel\AddNewBrand.aspx" />
     <Content Include="BrowseCategories.aspx" />
     <Content Include="BrowseBrands.aspx" />
     <Content Include="BrowseProducts.aspx" />
@@ -175,6 +175,7 @@
     <Content Include="app.manifest">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="AdminPanel\MasterAdmin.Master" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="ProductDetails.aspx" />
     <Content Include="Scripts\bootstrap.js" />
@@ -235,13 +236,6 @@
     <Compile Include="AdminPanel\AddNewCategory.aspx.designer.cs">
       <DependentUpon>AddNewCategory.aspx</DependentUpon>
     </Compile>
-    <Compile Include="AdminPanel\AddNewBrand.aspx.cs">
-      <DependentUpon>AddNewBrand.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="AdminPanel\AddNewBrand.aspx.designer.cs">
-      <DependentUpon>AddNewBrand.aspx</DependentUpon>
-    </Compile>
     <Compile Include="AdminPanel\ManageCreditRequests.aspx.cs">
       <DependentUpon>ManageCreditRequests.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -290,6 +284,20 @@
     </Compile>
     <Compile Include="AdminPanel\ManageProducts.aspx.designer.cs">
       <DependentUpon>ManageProducts.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminPanel\MasterAdmin.Master.cs">
+      <DependentUpon>MasterAdmin.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminPanel\MasterAdmin.Master.designer.cs">
+      <DependentUpon>MasterAdmin.Master</DependentUpon>
+    </Compile>
+    <Compile Include="AdminPanel\AddNewBrand.aspx.cs">
+      <DependentUpon>AddNewBrand.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminPanel\AddNewBrand.aspx.designer.cs">
+      <DependentUpon>AddNewBrand.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\AuthConfig.cs" />

@@ -112,12 +112,35 @@ namespace myAmazon_v1.DAL
                         .ConnectionStrings["myAmazonConnectionString"].ConnectionString);
 
             bool flag = true;
-            if (image != null && !isEdit)
+
+			string str = "SELECT COUNT(*) FROM CategoryInfo WHERE [CategoryId] = " + id.ToString();
+			try
+			{
+				conn.Open();
+				SqlCommand sqlcmd = new SqlCommand(str, conn);
+				if ((int)sqlcmd.ExecuteScalar() < 1)
+				{
+					str = "INSERT INTO CategoryInfo([CategoryId]) VALUES(" + id.ToString() + ")";
+					SqlCommand sqlCmd = new SqlCommand(str, conn);
+					sqlCmd.ExecuteNonQuery();
+				}
+			}
+			catch (Exception ex)
+			{
+				log += ex.ToString();
+				flag = false;
+			}
+			finally
+			{
+				conn.Close();
+			}
+
+			if (image != null && !isEdit)
             {
                 try
                 {
                     conn.Open();
-                    SqlCommand query = new SqlCommand("UPDATE Category SET [Image] ='" + image + "' WHERE id=@cid", conn);
+                    SqlCommand query = new SqlCommand("UPDATE CategoryInfo SET [Image] ='" + image + "' WHERE CategoryId=@cid", conn);
                     query.Parameters.AddWithValue("@cid", id);
                     query.ExecuteNonQuery();
                     conn.Close();
@@ -133,7 +156,7 @@ namespace myAmazon_v1.DAL
                 if (!isEdit || desc != null)
                 {
                     conn.Open();
-                    SqlCommand query = new SqlCommand("UPDATE Category SET [Desc] ='" + desc + "' WHERE id=@cid", conn);
+                    SqlCommand query = new SqlCommand("UPDATE CategoryInfo SET [Desc] ='" + desc + "' WHERE CategoryId=@cid", conn);
                     query.Parameters.AddWithValue("@cid", id);
                     query.ExecuteNonQuery();
                 }

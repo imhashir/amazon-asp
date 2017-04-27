@@ -104,13 +104,14 @@ namespace myAmazon_v1.DAL
 				SqlCommand sqlcmd = new SqlCommand(str, conn);
 				if ((int) sqlcmd.ExecuteScalar() < 1) {
 					str = "INSERT INTO ProductInfo([ProductId]) VALUES(" + id.ToString() + ")";
-					SqlCommand sqlCmd = new SqlCommand(str, conn);
-					sqlCmd.ExecuteNonQuery();
+					SqlCommand sqlCmd2 = new SqlCommand(str, conn);
+					sqlCmd2.ExecuteNonQuery();
 				}
 			}
 			catch (Exception ex)
 			{
 				log += ex.ToString();
+				flag = false;
 			}
 			finally
 			{
@@ -129,6 +130,7 @@ namespace myAmazon_v1.DAL
 				catch (Exception ex)
 				{
 					log += ex.ToString();
+					flag = false;
 				}
 			}
 
@@ -147,6 +149,7 @@ namespace myAmazon_v1.DAL
 			catch (Exception ex)
 			{
 				log += ex.ToString();
+				flag = false;
 			}
 			return flag;
 		}

@@ -102,7 +102,8 @@ namespace myAmazon_v1.DAL
             bool flag = true;
             SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
                         .ConnectionStrings["myAmazonConnectionString"].ConnectionString);
-            string cmd = "";
+
+			string cmd = "";
             
             if (isEdit)
                 cmd = "UPDATE Brand SET Name=@name, [CategoryId]=@category WHERE id=" + id.ToString();
@@ -144,7 +145,30 @@ namespace myAmazon_v1.DAL
                         .ConnectionStrings["myAmazonConnectionString"].ConnectionString);
 
             bool flag = true;
-            if (image != null)
+
+			string str = "SELECT COUNT(*) FROM BrandInfo WHERE BrandId = " + id.ToString();
+			try
+			{
+				conn.Open();
+				SqlCommand sqlcmd = new SqlCommand(str, conn);
+				if ((int)sqlcmd.ExecuteScalar() < 1)
+				{
+					str = "INSERT INTO BrandInfo([BrandId]) VALUES(" + id.ToString() + ")";
+					SqlCommand sqlCmd2 = new SqlCommand(str, conn);
+					sqlCmd2.ExecuteNonQuery();
+				}
+			}
+			catch (Exception ex)
+			{
+				log += ex.ToString();
+				flag = false;
+			}
+			finally
+			{
+				conn.Close();
+			}
+
+			if (image != null)
             {
                 try
                 {
