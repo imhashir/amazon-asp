@@ -129,9 +129,9 @@
   <ItemGroup>
     <Content Include="About.aspx" />
     <Content Include="AdminPanel\AddNewCategory.aspx" />
+    <Content Include="AdminPanel\AddNewProduct.aspx" />
     <Content Include="AdminPanel\ManageCreditRequests.aspx" />
     <Content Include="AdminPanel\ManageFeaturedProduct.aspx" />
-    <Content Include="AdminPanel\AddNewProduct.aspx" />
     <Content Include="AdminPanel\Default.aspx" />
     <Content Include="AdminPanel\ManageBrands.aspx" />
     <Content Include="AdminPanel\ManageCategories.aspx" />
@@ -236,6 +236,13 @@
     <Compile Include="AdminPanel\AddNewCategory.aspx.designer.cs">
       <DependentUpon>AddNewCategory.aspx</DependentUpon>
     </Compile>
+    <Compile Include="AdminPanel\AddNewProduct.aspx.cs">
+      <DependentUpon>AddNewProduct.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminPanel\AddNewProduct.aspx.designer.cs">
+      <DependentUpon>AddNewProduct.aspx</DependentUpon>
+    </Compile>
     <Compile Include="AdminPanel\ManageCreditRequests.aspx.cs">
       <DependentUpon>ManageCreditRequests.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -249,13 +256,6 @@
     </Compile>
     <Compile Include="AdminPanel\ManageFeaturedProduct.aspx.designer.cs">
       <DependentUpon>ManageFeaturedProduct.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="AdminPanel\AddNewProduct.aspx.cs">
-      <DependentUpon>AddNewProduct.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="AdminPanel\AddNewProduct.aspx.designer.cs">
-      <DependentUpon>AddNewProduct.aspx</DependentUpon>
     </Compile>
     <Compile Include="AdminPanel\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
