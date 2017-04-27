@@ -64,9 +64,13 @@
                             <asp:LinkButton runat="server" ID="logoutLink" OnClick="onLogoutClick">Logout</asp:LinkButton>
                         </p>
 						<div id="adminpanel" runat="server">
-							<p>
-								<a runat="server" href="~/AdminPanel/" title="Admin Panel">Admin Panel!</a>
-							</p>
+							<a runat="server" href="~/AdminPanel/" title="Admin Panel">Admin Panel!</a>
+						</div>
+						<div id="userpanel" runat="server">
+							<ul>
+								<li><a runat="server" href="~/AdminPanel/AddNewProduct" >Add Your Product</a></li>
+								<li><a runat="server" href="~/AdminPanel/ManageProducts" >View Your Products</a></li>
+							</ul>
 						</div>
                     </div>
                 </section>

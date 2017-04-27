@@ -37,7 +37,7 @@ namespace myAmazon_v1.AdminPanel
 					id_product_name.Text = product.name;
 					id_product_price.Text = product.price.ToString();
 					id_category_name.SelectedValue = product.catId.ToString();
-					populateBrandDropDown();
+					populateBrandDropDown(id_category_name.SelectedValue);
 					id_brand_name.SelectedValue = product.brandId.ToString();
 					if (product.image != "")
 						id_product_image.ImageUrl = product.image;
@@ -51,6 +51,14 @@ namespace myAmazon_v1.AdminPanel
 						file.Close();
 					}
 					id_log_product.Text += log;
+				}
+				else if(Session["SignedInUser"] != null)
+				{
+					id_category_name.SelectedValue = "42";
+					id_category_name.Enabled = false;
+					populateBrandDropDown(null);
+					id_brand_name.SelectedValue = "53";
+					id_brand_name.Enabled = false;
 				}
 				else
 				{
@@ -148,19 +156,30 @@ namespace myAmazon_v1.AdminPanel
 			}
 			if (imagePath != null || descPath != null)
 				productDal.updateImageAndDesc(id, imagePath, descPath, isEdit, ref (log));
+
+			if(Session["SignedInUser"] != null)
+			{
+				productDal.addUserProductInfo(id.ToString(), Session["SignedInUser"].ToString(), ref(log));
+			}
+
 			id_log_product.Text += log;
 		}
 
 		protected void id_category_name_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			populateBrandDropDown();
+			populateBrandDropDown(id_category_name.SelectedValue);
 		}
 
-		private void populateBrandDropDown()
+		private void populateBrandDropDown(string categoryId)
 		{
 			BrandsDAL brandDal = new BrandsDAL();
 			string log = "";
-			DataTable table = brandDal.getBrands(ref (log), "CategoryId", id_category_name.SelectedValue);
+			DataTable table;
+			if (categoryId != null)
+				table = brandDal.getBrands(ref (log), "CategoryId", categoryId);
+			else
+				table = brandDal.getBrands(ref(log), null, null);
+
 			id_brand_name.DataSource = table;
 			id_brand_name.DataTextField = "Name";
 			id_brand_name.DataValueField = "id";

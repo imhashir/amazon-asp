@@ -63,7 +63,11 @@ namespace myAmazon_v1.AdminPanel
 		{
 			string log = "";
 			ProductDAL productDal = new ProductDAL();
-			DataTable table = productDal.getProductList(ref (log), 2, null);
+			DataTable table;
+			if ((bool)Session["IsAdmin"])
+				table = productDal.getProductList(ref (log), 2, null);
+			else
+				table = productDal.getProductsByUser(ref (log), Session["SignedInUser"].ToString());
 			if (log != "")
 			{
 				log_manage_product.Text += log;

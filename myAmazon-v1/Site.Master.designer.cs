@@ -85,6 +85,15 @@ namespace myAmazon_v1 {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl adminpanel;
         
         /// <summary>
+        /// userpanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl userpanel;
+        
+        /// <summary>
         /// FeaturedContent control.
         /// </summary>
         /// <remarks>

@@ -74,6 +74,8 @@ namespace myAmazon_v1
                 afLogin.Visible = true;
 				if (!(bool)Session["IsAdmin"])
 					adminpanel.Visible = false;
+				else
+					userpanel.Visible = false;
 				login_uname.Text = Session["SignedInUser"].ToString();
             } else
 			{
