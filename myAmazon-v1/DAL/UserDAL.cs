@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Data.SqlClient;
 using System.Data;
+using System.IO;
+using System.Net;
+using System.Net.Mail;
 using myAmazon_v1.Model;
 
 namespace myAmazon_v1.DAL
@@ -260,6 +263,56 @@ namespace myAmazon_v1.DAL
 				conn.Close();
 			}
 			return ds;
+		}
+
+		public bool handleProductRequest(string requestId, string customerId, bool status, ref string log)
+		{
+			bool flag = true;
+			ProductDAL pDal = new ProductDAL();
+			Customer customer = getUserDetails(customerId, ref (log));
+			ProductRequest request = pDal.getProductRequestDetails(ref (flag), ref (log), requestId);
+			bool done = true;
+			string msgDone = "Dear " + customerId + ", \n" + "Your request for \"" + request.desc + "\" is completed. Please Visit our website again and look for your product.";
+			string msgCancel = "Dear " + customerId + ", \n" + "We couldn't complete your request for \"" + request.desc + "\". We are sorry for inconvenience.";
+			string subject = "Amazon Product Request";
+			if (status)
+				done = sendEmail(customer.email, subject, msgDone, ref (log));
+			else
+				done = sendEmail(customer.email, subject, msgCancel, ref (log));
+			if(done)
+			{
+				done = pDal.deleteProductRequest(requestId, ref (log));
+			}
+
+			return done;
+		}
+		
+		public bool sendEmail(string emailTo, string subject, string message, ref string log)
+		{
+			bool done = true;
+			using (MailMessage mm = new MailMessage(Credentials.email, emailTo))
+			{
+				mm.Body = message;
+				mm.IsBodyHtml = false;
+				mm.Subject = subject;
+				SmtpClient smtp = new SmtpClient();
+				smtp.Host = "smtp.gmail.com";
+				smtp.EnableSsl = true;
+				NetworkCredential NetworkCred = new NetworkCredential(Credentials.email, Credentials.password);
+				smtp.UseDefaultCredentials = true;
+				smtp.Credentials = NetworkCred;
+				smtp.Port = 587;
+				try
+				{
+					smtp.Send(mm);
+				}
+				catch (Exception ex)
+				{
+					log += ex.ToString();
+					done = false;
+				}
+			}
+			return done;
 		}
 	}
 }

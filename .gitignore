@@ -250,3 +250,4 @@ ModelManifest.xml
 /myAmazon-v1/FeaturedData
 /myAmazon-v1/UserData
 /myAmazon-v1/Reviews
+/myAmazon-v1/DAL/Credentials.cs

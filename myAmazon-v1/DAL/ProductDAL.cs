@@ -541,7 +541,8 @@ namespace myAmazon_v1.DAL
 			return done;
 		}
 
-		public bool requestProduct(string customerId, string desc, ref string log) {
+		public bool requestProduct(string customerId, string desc, ref string log)
+		{
 			bool done = true;
 			SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
 								.ConnectionStrings["myAmazonConnectionString"].ConnectionString);
@@ -565,6 +566,90 @@ namespace myAmazon_v1.DAL
 				conn.Close();
 			}
 			return done;
+		}
+
+		public bool deleteProductRequest(string reqId, ref string log)
+		{
+			bool done = true;
+			SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
+								.ConnectionStrings["myAmazonConnectionString"].ConnectionString);
+			SqlCommand sqlCmd = new SqlCommand("DeleteProductRequest", conn);
+			sqlCmd.CommandType = CommandType.StoredProcedure;
+			sqlCmd.Parameters.AddWithValue("@reqId", reqId);
+
+			try
+			{
+				conn.Open();
+				sqlCmd.ExecuteNonQuery();
+			}
+			catch (Exception ex)
+			{
+				log += ex.ToString();
+				done = false;
+			}
+			finally
+			{
+				conn.Close();
+			}
+			return done;
+		}
+
+		public DataTable getProductRequestList(ref string log, int flag, string where)
+		{
+			SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
+						.ConnectionStrings["myAmazonConnectionString"].ConnectionString);
+			string cmd = "SELECT * FROM ProductRequestDetails";
+			
+			if (where != null)
+				cmd += " " + where;
+
+			SqlCommand sqlCmd = new SqlCommand(cmd, conn);
+			DataTable ds = new DataTable();
+
+			try
+			{
+				conn.Open();
+				using (SqlDataAdapter adapter = new SqlDataAdapter(sqlCmd))
+				{
+					adapter.Fill(ds);
+				}
+			}
+			catch (Exception ex)
+			{
+				log += ex.ToString();
+			}
+			finally
+			{
+				conn.Close();
+			}
+			return ds;
+		}
+
+		public ProductRequest getProductRequestDetails(ref bool flag, ref string log, string whereCondition)
+		{
+			ProductRequest request = new ProductRequest();
+			SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
+						.ConnectionStrings["myAmazonConnectionString"].ConnectionString);
+			string cmd = "SELECT * FROM ProductRequestDetails WHERE id=" + whereCondition;
+			SqlCommand sqlCmd = new SqlCommand(cmd, conn);
+			SqlDataReader reader = null;
+			try
+			{
+				conn.Open();
+				reader = sqlCmd.ExecuteReader();
+				reader.Read();
+				request.fillWithSqlReader(reader);
+			}
+			catch (Exception ex)
+			{
+				log += ex.ToString();
+				flag = false;
+			}
+			finally
+			{
+				conn.Close();
+			}
+			return request;
 		}
 	}
 }

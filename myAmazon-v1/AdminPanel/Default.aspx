@@ -22,6 +22,7 @@
                     <button type="button" class="btn btn-info btn-lg" onclick="location.href = 'ManageFeaturedProduct';">Manage Featured Products</button>
 					<h3><b>Manage Users</b></h3>
                     <button type="button" class="btn btn-warning btn-lg" onclick="location.href = 'ManageCreditRequests';">Manage Credit Requests</button>
+					<button type="button" class="btn btn-warning btn-lg" onclick="location.href = 'ManageProductRequests';">Manage Product Requests</button>
 				</div>
             </div>
             <div class="col-md-1"></div>

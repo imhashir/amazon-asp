@@ -136,6 +136,7 @@
     <Content Include="AdminPanel\ManageCreditRequests.aspx" />
     <Content Include="AdminPanel\ManageFeaturedProducts.aspx" />
     <Content Include="AdminPanel\AddNewBrand.aspx" />
+    <Content Include="AdminPanel\ManageProductRequests.aspx" />
     <Content Include="AdminPanel\ManageProducts.aspx" />
     <Content Include="BrowseCategories.aspx" />
     <Content Include="BrowseBrands.aspx" />
@@ -280,6 +281,13 @@
     <Compile Include="AdminPanel\ManageFeaturedProducts.aspx.designer.cs">
       <DependentUpon>ManageFeaturedProducts.aspx</DependentUpon>
     </Compile>
+    <Compile Include="AdminPanel\ManageProductRequests.aspx.cs">
+      <DependentUpon>ManageProductRequests.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminPanel\ManageProductRequests.aspx.designer.cs">
+      <DependentUpon>ManageProductRequests.aspx</DependentUpon>
+    </Compile>
     <Compile Include="AdminPanel\ManageProducts.aspx.cs">
       <DependentUpon>ManageProducts.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -341,6 +349,7 @@
     </Compile>
     <Compile Include="DAL\BrandsDAL.cs" />
     <Compile Include="DAL\CategoriesDAL.cs" />
+    <Compile Include="DAL\Credentials.cs" />
     <Compile Include="DAL\ProductDAL.cs" />
     <Compile Include="DAL\UserDAL.cs" />
     <Compile Include="Default.aspx.cs">
@@ -357,6 +366,7 @@
     <Compile Include="Model\Category.cs" />
     <Compile Include="Model\Product.cs" />
     <Compile Include="Model\Customer.cs" />
+    <Compile Include="Model\ProductRequest.cs" />
     <Compile Include="ProductDetails.aspx.cs">
       <DependentUpon>ProductDetails.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
