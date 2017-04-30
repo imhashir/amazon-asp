@@ -48,6 +48,32 @@
 			<h3><u>Comment</u></h3>
 			<asp:Textbox runat="server" ID="id_product_comment" CssClass="form-control" TextMode="MultiLine"/>
 			<asp:Button runat="server" ID="id_product_review" Text="Submit" CssClass="form-control btn btn-primary" OnClick="onSubmitReview"/>
+			
+			<asp:DataList ID="CommentDataList" runat="server" BorderColor="#202020"
+				BorderStyle="Solid" BorderWidth="5px" CellPadding="3" CellSpacing="2" Font-Bold="True"
+				Font-Names="Verdana" Font-Size="Small" GridLines="Both" RepeatColumns="1" RepeatDirection="Horizontal">
+				<HeaderStyle Font-Bold="True" Font-Size="Large" ForeColor="202020"
+					HorizontalAlign="Center" VerticalAlign="Middle" />
+				<ItemStyle BackColor="#dbdbdb" ForeColor="#202020" Width="100%" HorizontalAlign="Center"/>
+				<ItemTemplate>
+					<a href="ProductDetails?id=<%# Eval("id") %>">
+					<asp:Image ID="id_product_image" runat="server" Width="60px" ImageUrl='<%# Eval("Image") %>'/>
+					<table>
+						<tr>
+							<td>
+								<asp:Label ID="id_name_commentor" runat="server" Text='<%# Eval("CustomerId") %>' ForeColor="#202020" />
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<asp:Label ID="id_comment_desc" runat="server" Text='<%# Eval("Desc") %>' ForeColor="#202020" />
+							</td>
+						</tr>
+					</table>
+					</a>
+				</ItemTemplate>
+				<SelectedItemStyle BackColor="#738A9C" Font-Bold="True" ForeColor="White" />
+			</asp:DataList>
 		</div>
 	</div>
 

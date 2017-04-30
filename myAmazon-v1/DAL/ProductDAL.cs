@@ -216,8 +216,9 @@ namespace myAmazon_v1.DAL
 			SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
 						.ConnectionStrings["myAmazonConnectionString"].ConnectionString);
 			string cmd = "";
-			cmd = "SELECT * FROm GetProductsByUser('xavi')";
+			cmd = "SELECT * FROM GetProductsByUser('@username')";
 			SqlCommand sqlCmd = new SqlCommand(cmd, conn);
+			sqlCmd.Parameters.AddWithValue("@username", username);
 			DataTable ds = new DataTable();
 
 			try

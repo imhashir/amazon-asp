@@ -3,6 +3,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 	<div class="container">
+		<h2><b>Manage Brands</b></h2>
         <div class="col-md-1"></div>
         <div class="col-md-10">
             <asp:ListView ID="brandListView" runat="server" ItemPlaceholderID="brandPlaceHolder">

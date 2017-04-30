@@ -4,6 +4,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 	<div>
         <div class="container">
+		<h2><b>Manage Products</b></h2>
         <div class="col-md-1"></div>
         <div class="col-md-10">
             <asp:ListView ID="productListView" runat="server" ItemPlaceholderID="productPlaceHolder">
