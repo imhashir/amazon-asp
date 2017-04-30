@@ -70,6 +70,7 @@
 							<ul>
 								<li><a runat="server" href="~/AdminPanel/AddNewProduct" >Add Your Product</a></li>
 								<li><a runat="server" href="~/AdminPanel/ManageProducts" >View Your Products</a></li>
+								<li><a runat="server" href="~/RequestProduct" >Request a Product</a></li>
 							</ul>
 						</div>
                     </div>
