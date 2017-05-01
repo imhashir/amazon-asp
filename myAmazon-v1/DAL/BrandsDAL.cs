@@ -103,27 +103,28 @@ namespace myAmazon_v1.DAL
             SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
                         .ConnectionStrings["myAmazonConnectionString"].ConnectionString);
 
-			string cmd = "";
-            
-            if (isEdit)
-                cmd = "UPDATE Brand SET Name=@name, [CategoryId]=@category WHERE id=" + id.ToString();
-            else
-                cmd = "INSERT INTO Brand(Name, [CategoryId]) OUTPUT inserted.id VALUES(@name, @category)";
+			SqlCommand sqlCmd = new SqlCommand("UpdateBrand", conn);
 
-            SqlCommand sqlCmd = new SqlCommand(cmd, conn);
-            sqlCmd.Parameters.AddWithValue("@name", name);
-            sqlCmd.Parameters.AddWithValue("@category", catId);
+			sqlCmd.CommandType = CommandType.StoredProcedure;
+
+			sqlCmd.Parameters.AddWithValue("@Id", id);
+			sqlCmd.Parameters.AddWithValue("@name", name);
+			sqlCmd.Parameters.AddWithValue("@categoryId", catId);
+			sqlCmd.Parameters.AddWithValue("@updateType", isEdit);
+			SqlParameter paramId = sqlCmd.Parameters.Add("@BrandId", SqlDbType.Int);
+			paramId.Direction = ParameterDirection.Output;
+
             try
             {
                 conn.Open();
-                if (isEdit)
-                {
-                    sqlCmd.ExecuteNonQuery();
+				sqlCmd.ExecuteNonQuery();
+				if (isEdit)
+                {    
                     log += "Successfully Updated";
                 }
                 else
                 {
-                    id = (int)sqlCmd.ExecuteScalar();
+					id = (int) sqlCmd.Parameters["@BrandId"].Value;
                     log += "Successfully Inserted";
                 }
             }

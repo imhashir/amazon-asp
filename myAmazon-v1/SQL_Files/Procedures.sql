@@ -2,15 +2,13 @@ USE myAmazonV2
 GO
 
 --Insert UPDATE  Brand
-CREATE PROCEDURE UpdateBrand
+ALTER PROCEDURE UpdateBrand
 @Id INT,
 @name VARCHAR(30),
 @categoryId INT,
 @updateType BIT,     -- 0 is for INSERT, 1 is for UPDATE
-@flag INT OUTPUT,
 @BrandId INT OUTPUT
 AS BEGIN 
-SET @flag = 0
 IF @updateType = 0
 BEGIN
 INSERT INTO Brand(Name,CategoryId) OUTPUT inserted.id VALUES(@name, @categoryId)
