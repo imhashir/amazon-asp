@@ -2,6 +2,7 @@
 using myAmazon_v1.DAL;
 using myAmazon_v1.Model;
 using System.IO;
+using System.Data;
 
 namespace myAmazon_v1
 {
@@ -31,6 +32,7 @@ namespace myAmazon_v1
 					id_product_desc.Text = file.ReadToEnd();
 					file.Close();
 				}
+				populateComments();
 			}
 		}
 
@@ -53,6 +55,7 @@ namespace myAmazon_v1
 					}
 					id_log_div.InnerHtml = @"<strong>Success! </strong> Successfully Posted Review!";
 					id_log_div.Attributes["class"] = "alert alert-success";
+					populateComments();
 				} else
 				{
 					id_log_div.InnerHtml = @"<strong>Error! </strong>";
@@ -131,6 +134,24 @@ namespace myAmazon_v1
 				id_log_div.Attributes["class"] = "alert alert-danger";
 				id_log_div.InnerHtml += "User must sign in to add a product to wishlist.";
 			}
+		}
+
+		private void populateComments()
+		{
+			string log = "", path = "";
+			ProductDAL pDal = new ProductDAL();
+			DataTable table = pDal.getProductCommentsList(Request.QueryString["id"], ref(log));
+			foreach (DataRow row in table.Rows)
+			{
+				path = row["text"].ToString();
+				using (StreamReader file = new StreamReader(Server.MapPath(path)))
+				{
+					row["text"] = file.ReadToEnd();
+					file.Close();
+				}
+			}
+			CommentDataList.DataSource = table;
+			CommentDataList.DataBind();
 		}
 	}
 }

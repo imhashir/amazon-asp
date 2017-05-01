@@ -652,5 +652,30 @@ namespace myAmazon_v1.DAL
 			}
 			return request;
 		}
+
+		public DataTable getProductCommentsList (string productId, ref string log)
+		{
+			DataTable table = new DataTable();
+			SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
+						.ConnectionStrings["myAmazonConnectionString"].ConnectionString);
+			string cmd = "SELECT * FROM GetCommentsOnProduct(@pId)";
+			SqlCommand sqlCmd = new SqlCommand(cmd, conn);
+			sqlCmd.Parameters.AddWithValue("@pId", productId);
+			using (SqlDataAdapter adapter = new SqlDataAdapter(sqlCmd))
+			{
+				try
+				{
+					conn.Open();
+					adapter.Fill(table);
+					conn.Close();
+				}
+				catch (Exception ex)
+				{
+					log += ex.ToString();
+					conn.Close();
+				}
+			}
+			return table;
+		}
 	}
 }
