@@ -42,7 +42,14 @@
 			<h5><asp:Label runat="server" ID="id_product_desc"/></h5>
 		</div>
 		<div class="col-md-4" style="height:100%;">
-			<h3><u>Rate</u></h3>
+			<div class="container">
+				<div style="float:left">
+					<h3><u>Rate</u></h3>
+				</div>
+				<div style="padding-top:2em; padding-left:2em;">
+					<i>Avg Rating <b><asp:Label runat="server" ID="id_avg_rating"/></b></i>
+				</div>
+			</div><br/>
 			<asp:HiddenField ID="id_rating_input" runat="server" />  
 			<input id="input-21a" value="0" type="number" class="rating" data-symbol="*" min=0 max=5 step=1 data-size="sm" >   
 			<h3><u>Comment</u></h3>
@@ -74,5 +81,4 @@
 			</asp:DataList>
 		</div>
 	</div>
-
 </asp:Content>

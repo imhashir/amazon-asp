@@ -32,7 +32,7 @@ namespace myAmazon_v1
 					id_product_desc.Text = file.ReadToEnd();
 					file.Close();
 				}
-				populateComments();
+				populateReview();
 			}
 		}
 
@@ -55,7 +55,7 @@ namespace myAmazon_v1
 					}
 					id_log_div.InnerHtml = @"<strong>Success! </strong> Successfully Posted Review!";
 					id_log_div.Attributes["class"] = "alert alert-success";
-					populateComments();
+					populateReview();
 				} else
 				{
 					id_log_div.InnerHtml = @"<strong>Error! </strong>";
@@ -136,22 +136,42 @@ namespace myAmazon_v1
 			}
 		}
 
-		private void populateComments()
+		private void populateReview()
 		{
 			string log = "", path = "";
 			ProductDAL pDal = new ProductDAL();
 			DataTable table = pDal.getProductCommentsList(Request.QueryString["id"], ref(log));
-			foreach (DataRow row in table.Rows)
+			if(log == "")
 			{
-				path = row["text"].ToString();
-				using (StreamReader file = new StreamReader(Server.MapPath(path)))
+				foreach (DataRow row in table.Rows)
 				{
-					row["text"] = file.ReadToEnd();
-					file.Close();
+					path = row["text"].ToString();
+					using (StreamReader file = new StreamReader(Server.MapPath(path)))
+					{
+						row["text"] = file.ReadToEnd();
+						file.Close();
+					}
+				}
+				CommentDataList.DataSource = table;
+				CommentDataList.DataBind();
+				double rating = pDal.getProductRating(Request.QueryString["id"], ref (log));
+				if (log == "")
+				{
+					id_avg_rating.Text = rating.ToString();
+				} 
+				else
+				{
+					id_log_div.InnerHtml = @"<strong>Error! </strong>";
+					id_log_div.Attributes["class"] = "alert alert-danger";
+					id_log_div.InnerHtml += log;
 				}
 			}
-			CommentDataList.DataSource = table;
-			CommentDataList.DataBind();
+			else
+			{
+				id_log_div.InnerHtml = @"<strong>Error! </strong>";
+				id_log_div.Attributes["class"] = "alert alert-danger";
+				id_log_div.InnerHtml += log;
+			}
 		}
 	}
 }

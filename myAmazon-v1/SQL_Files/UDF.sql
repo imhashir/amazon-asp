@@ -16,3 +16,14 @@ JOIN Customer c ON c.Username = cmnt.CustomerId
 WHERE ProductId = @ProductId 
 
 SELECT * FROM GetCommentsOnProduct(54)
+GO
+ALTER FUNCTION GetProductRating(@ProductId INT)
+RETURNS FLOAT
+AS
+BEGIN
+DECLARE @rating AS FLOAT
+SELECT @rating = AVG(CAST(ISNULL(Rate, 0) AS FLOAT)) FROM [Rating] WHERE ProductId = @ProductId
+RETURN CAST(ROUND(@rating, 2) AS FLOAT)
+END
+
+SELECT dbo.GetProductRating(32)

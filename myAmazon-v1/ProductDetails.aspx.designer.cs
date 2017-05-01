@@ -121,6 +121,15 @@ namespace myAmazon_v1 {
         protected global::System.Web.UI.WebControls.Label id_product_desc;
         
         /// <summary>
+        /// id_avg_rating control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label id_avg_rating;
+        
+        /// <summary>
         /// id_rating_input control.
         /// </summary>
         /// <remarks>

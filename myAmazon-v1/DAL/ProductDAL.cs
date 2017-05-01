@@ -653,7 +653,7 @@ namespace myAmazon_v1.DAL
 			return request;
 		}
 
-		public DataTable getProductCommentsList (string productId, ref string log)
+		public DataTable getProductCommentsList(string productId, ref string log)
 		{
 			DataTable table = new DataTable();
 			SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
@@ -676,6 +676,30 @@ namespace myAmazon_v1.DAL
 				}
 			}
 			return table;
+		}
+
+		public double getProductRating(string productId, ref string log)
+		{
+			SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
+						.ConnectionStrings["myAmazonConnectionString"].ConnectionString);
+			string cmd = "SELECT dbo.GetProductRating(@pId)";
+			SqlCommand sqlCmd = new SqlCommand(cmd, conn);
+			sqlCmd.Parameters.AddWithValue("@pId", productId);
+			double rating = 0;
+			try
+			{
+				conn.Open();
+				rating = (double) sqlCmd.ExecuteScalar();
+			}
+			catch (Exception ex)
+			{
+				log += ex.ToString();
+			}
+			finally
+			{
+				conn.Close();
+			}
+			return rating;
 		}
 	}
 }
