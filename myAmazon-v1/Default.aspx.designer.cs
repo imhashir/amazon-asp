@@ -13,6 +13,15 @@ namespace myAmazon_v1 {
     public partial class _Default {
         
         /// <summary>
+        /// feature_p1_link control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink feature_p1_link;
+        
+        /// <summary>
         /// feature_p1 control.
         /// </summary>
         /// <remarks>
@@ -20,6 +29,15 @@ namespace myAmazon_v1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Image feature_p1;
+        
+        /// <summary>
+        /// feature_g1_link control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink feature_g1_link;
         
         /// <summary>
         /// feature_g1 control.
@@ -31,6 +49,15 @@ namespace myAmazon_v1 {
         protected global::System.Web.UI.WebControls.Image feature_g1;
         
         /// <summary>
+        /// feature_g2_link control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink feature_g2_link;
+        
+        /// <summary>
         /// feature_g2 control.
         /// </summary>
         /// <remarks>
@@ -38,6 +65,15 @@ namespace myAmazon_v1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Image feature_g2;
+        
+        /// <summary>
+        /// feature_s1_link control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink feature_s1_link;
         
         /// <summary>
         /// feature_s1 control.
@@ -49,6 +85,15 @@ namespace myAmazon_v1 {
         protected global::System.Web.UI.WebControls.Image feature_s1;
         
         /// <summary>
+        /// feature_s2_link control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink feature_s2_link;
+        
+        /// <summary>
         /// feature_s2 control.
         /// </summary>
         /// <remarks>
@@ -56,6 +101,15 @@ namespace myAmazon_v1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Image feature_s2;
+        
+        /// <summary>
+        /// feature_s3_link control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink feature_s3_link;
         
         /// <summary>
         /// feature_s3 control.

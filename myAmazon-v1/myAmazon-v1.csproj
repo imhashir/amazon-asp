@@ -364,6 +364,7 @@
     </Compile>
     <Compile Include="Model\Brand.cs" />
     <Compile Include="Model\Category.cs" />
+    <Compile Include="Model\FeaturedProduct.cs" />
     <Compile Include="Model\Product.cs" />
     <Compile Include="Model\Customer.cs" />
     <Compile Include="Model\ProductRequest.cs" />

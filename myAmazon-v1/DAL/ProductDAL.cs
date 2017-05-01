@@ -310,23 +310,23 @@ namespace myAmazon_v1.DAL
 			return ds;
 		}
 
-		public List<string> getFeaturedImagePath(int level, ref string log)
+		public List<FeaturedProduct> getFeaturedProducts(int level, ref string log)
 		{
 			SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
 						.ConnectionStrings["myAmazonConnectionString"].ConnectionString);
-			string cmd = "SELECT CoverImage FROM FeaturedDetails WHERE Level = " + level.ToString();    //FeaturedDetails is a VIEW
+			string cmd = "SELECT [ProductId], CoverImage FROM FeaturedDetails WHERE Level = " + level.ToString();    //FeaturedDetails is a VIEW
 
 			SqlCommand sqlCmd = new SqlCommand(cmd, conn);
 			DataTable ds = new DataTable();
-			SqlDataReader reader;
-			List<string> paths = new List<string>();
+			SqlDataReader reader = null;
+			List<FeaturedProduct> products = new List<FeaturedProduct>();
 
 			try
 			{
 				conn.Open();
 				reader = sqlCmd.ExecuteReader();
 				while (reader.Read()) {
-					paths.Add(reader["CoverImage"].ToString());
+					products.Add(new FeaturedProduct((int) reader["ProductId"], reader["CoverImage"].ToString()));
 				}
 			}
 			catch (Exception ex)
@@ -334,10 +334,11 @@ namespace myAmazon_v1.DAL
 				log += ex.ToString();
 			}
 			finally {
+				reader.Close();
 				conn.Close();
 			}
 
-			return paths;
+			return products;
 		}
 
 		public bool deleteFromFeaturedFeatured(string id, ref string imagePath, ref string log)
@@ -686,10 +687,13 @@ namespace myAmazon_v1.DAL
 			SqlCommand sqlCmd = new SqlCommand(cmd, conn);
 			sqlCmd.Parameters.AddWithValue("@pId", productId);
 			double rating = 0;
+			string temp;
 			try
 			{
 				conn.Open();
-				rating = (double) sqlCmd.ExecuteScalar();
+				temp = sqlCmd.ExecuteScalar().ToString();
+				if (temp != "")
+					rating = Convert.ToDouble(temp);
 			}
 			catch (Exception ex)
 			{

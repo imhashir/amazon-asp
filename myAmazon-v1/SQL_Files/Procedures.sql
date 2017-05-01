@@ -26,7 +26,7 @@ END
 GO
 
 --insert UPDATE Category 
-CREATE PROCEDURE UpdateCategory
+ALTER PROCEDURE UpdateCategory
 @Id INT,
 @name VARCHAR(30),
 @updateType BIT,     -- 0 is for INSERT, 1 is for UPDATE
