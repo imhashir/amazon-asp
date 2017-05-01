@@ -1,8 +1,4 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="True" CodeBehind="Site.master.cs" Inherits="myAmazon_v1.SiteMaster" %>
-<%
-	Response.AppendHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
-	Response.AppendHeader("Pragma", "no-cache"); // HTTP 1.0.
-	Response.AppendHeader("Expires", "0"); // Proxies. %>
 <!DOCTYPE html>
 <html lang="en">
 <head runat="server">
@@ -14,7 +10,6 @@
     <webopt:BundleReference runat="server" Path="~/Content/css" /> 
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <link href="Content/bootstrap.css" rel="stylesheet" />
-	<link href="Content/bootstrap.min.css" rel="stylesheet" />
 	<link href="Content/style-master.css" rel="stylesheet" />
     <meta name="viewport" content="width=device-width" />
     <asp:ContentPlaceHolder runat="server" ID="HeadContent" />

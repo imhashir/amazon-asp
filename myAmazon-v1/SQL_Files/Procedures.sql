@@ -131,8 +131,16 @@ BEGIN
 END
 GO
 
+CREATE PROCEDURE DeleteProduct
+@productId INT
+AS
+BEGIN
+	DELETE FROM [Product] WHERE id = @productId
+END
+GO
+
 ALTER PROCEDURE AddToFeatured
-@ProductId VARCHAR(30),
+@ProductId INT,
 @level INT,
 @image VARCHAR(50),
 @flag INT OUTPUT -- 0=Success, 1=No Space for Platinum, 2 = No Space for Gold, 3 = No Space for Silver

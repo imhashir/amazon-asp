@@ -158,9 +158,9 @@ namespace myAmazon_v1.DAL
 			bool done = true;
 			SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
 						.ConnectionStrings["myAmazonConnectionString"].ConnectionString);
-			string cmd = "DELETE FROM Product WHERE id=@productId";
-			SqlCommand sqlCmd = new SqlCommand(cmd, conn);
-			sqlCmd.Parameters.AddWithValue("productId", id);
+			SqlCommand sqlCmd = new SqlCommand("DeleteProduct", conn);
+			sqlCmd.CommandType = CommandType.StoredProcedure;
+			sqlCmd.Parameters.AddWithValue("@productId", id);
 
 			try
 			{

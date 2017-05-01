@@ -61,7 +61,10 @@ namespace myAmazon_v1.AdminPanel
 			BrandsDAL brandDal = new BrandsDAL();
 
 			if (Session["isEdit"] != null && Session["isEdit"].Equals("1"))
+			{
 				isEdit = true;
+				id = Convert.ToInt32(Session["BrandId"]);
+			}
 
 			brandDal.updateBrandInfo(id_brand_name.Text, ref (id), id_category_name.SelectedValue, isEdit, ref (log));
 

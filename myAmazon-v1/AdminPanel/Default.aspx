@@ -19,7 +19,7 @@
                     <button type="button" class="btn btn-info btn-lg" onclick="location.href = 'ManageCategories';">View Categories</button>
                     <button type="button" class="btn btn-info btn-lg" onclick="location.href = 'ManageBrands';">View Brands</button>
                     <button type="button" class="btn btn-info btn-lg" onclick="location.href = 'ManageProducts';">View Products</button>
-                    <button type="button" class="btn btn-info btn-lg" onclick="location.href = 'ManageFeaturedProduct';">Manage Featured Products</button>
+                    <button type="button" class="btn btn-info btn-lg" onclick="location.href = 'ManageFeaturedProducts';">Manage Featured Products</button>
 					<h3><b>Manage Users</b></h3>
                     <button type="button" class="btn btn-warning btn-lg" onclick="location.href = 'ManageCreditRequests';">Manage Credit Requests</button>
 					<button type="button" class="btn btn-warning btn-lg" onclick="location.href = 'ManageProductRequests';">Manage Product Requests</button>
