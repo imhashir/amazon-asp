@@ -30,10 +30,8 @@ CREATE PROCEDURE UpdateCategory
 @Id INT,
 @name VARCHAR(30),
 @updateType BIT,     -- 0 is for INSERT, 1 is for UPDATE
-@flag INT OUTPUT,
 @CategoryId INT OUTPUT
-AS BEGIN 
-SET @flag = 0
+AS BEGIN
 IF @updateType = 0
 BEGIN
 INSERT INTO Category(Name) OUTPUT inserted.id VALUES( @name)
@@ -43,7 +41,6 @@ END
 
 ELSE
 BEGIN
-
 UPDATE Category SET Name=@name  where id=@Id
 END 
 END 

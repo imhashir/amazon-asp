@@ -70,28 +70,27 @@ namespace myAmazon_v1.DAL
                         .ConnectionStrings["myAmazonConnectionString"].ConnectionString);
             string cmd;
             SqlCommand sqlCmd = null;
+			
+            sqlCmd = new SqlCommand("UpdateCategory", conn);
+			sqlCmd.CommandType = CommandType.StoredProcedure;
 
-            if (isEdit)
-                cmd = "UPDATE Category SET Name=@name WHERE id=@cid";
-            else
-                cmd = "INSERT INTO Category(Name) OUTPUT inserted.id VALUES(@name)";
-
-            sqlCmd = new SqlCommand(cmd, conn);
             sqlCmd.Parameters.AddWithValue("@name", name);
-            
-            try
-            {
+			sqlCmd.Parameters.AddWithValue("@Id", id);
+			sqlCmd.Parameters.AddWithValue("@updatetype", isEdit);
+			SqlParameter paramId = sqlCmd.Parameters.Add("@CategoryId", SqlDbType.Int);
+			paramId.Direction = ParameterDirection.Output;
+
+			try
+			{
                 conn.Open();
-                if (isEdit)
+				sqlCmd.ExecuteNonQuery();
+				if (isEdit)
                 {
-                    sqlCmd.Parameters.AddWithValue("@cid", id);
-                    sqlCmd.ExecuteNonQuery();
-                    id = Convert.ToInt32(id);
                     log += "Successfully Updated";
                 }
                 else
                 {
-                    id = (int)sqlCmd.ExecuteScalar();
+					id = (int) sqlCmd.Parameters["@CategoryId"].Value;
                     log += "Successfully Inserted";
                 }
             }
