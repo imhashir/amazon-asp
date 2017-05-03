@@ -52,7 +52,7 @@ namespace myAmazon_v1.AdminPanel
 					}
 					id_log_product.Text += log;
 				}
-				else if(Session["SignedInUser"] != null)
+				else if(Session["SignedInUser"] != null && !(bool)Session["IsAdmin"])
 				{
 					id_category_name.SelectedValue = "42";
 					id_category_name.Enabled = false;
