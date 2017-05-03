@@ -5,7 +5,7 @@ RETURNS TABLE
 AS
 RETURN SELECT * FROM ProductDetails WHERE id IN (SELECT [ProductId] FROM UserProducts WHERE CustomerId = @CustomerId)
 
-SELECT * FROm GetProductsByUser('xavi')
+SELECT * FROM GetProductsByUser('hashfast')
 
 ALTER FUNCTION GetCommentsOnProduct(@ProductId INT)
 RETURNS TABLE

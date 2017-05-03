@@ -215,23 +215,24 @@ namespace myAmazon_v1.DAL
 		{
 			SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
 						.ConnectionStrings["myAmazonConnectionString"].ConnectionString);
-			string cmd = "";
-			cmd = "SELECT * FROM GetProductsByUser('@username')";
+			string cmd = "SELECT * FROM GetProductsByUser('" + username + "')";
 			SqlCommand sqlCmd = new SqlCommand(cmd, conn);
-			sqlCmd.Parameters.AddWithValue("@username", username);
 			DataTable ds = new DataTable();
-
-			try
+			using (SqlDataAdapter adapter = new SqlDataAdapter(sqlCmd))
 			{
-				conn.Open();
-				SqlDataAdapter adapter = new SqlDataAdapter(sqlCmd);
-				adapter.Fill(ds);
-				conn.Close();
-			}
-			catch (Exception ex)
-			{
-				log += ex.ToString();
-				conn.Close();
+				try
+				{
+					conn.Open();
+					adapter.Fill(ds);
+				}
+				catch (Exception ex)
+				{
+					log += ex.ToString();
+				}
+				finally
+				{
+					conn.Close();
+				}
 			}
 			return ds;
 		}
