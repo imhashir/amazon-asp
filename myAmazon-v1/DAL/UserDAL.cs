@@ -323,11 +323,13 @@ namespace myAmazon_v1.DAL
 			double amount = 0;
 			SqlCommand sqlCmd = new SqlCommand(cmd, conn);
 			sqlCmd.Parameters.AddWithValue("@uname", username);
-
+			string temp = "";
 			try
 			{
 				conn.Open();
-				amount = (double) sqlCmd.ExecuteScalar();
+				temp = sqlCmd.ExecuteScalar().ToString();
+				if (temp != "")
+					amount = Convert.ToDouble(temp);
 			}
 			catch (Exception ex)
 			{
