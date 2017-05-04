@@ -2,13 +2,15 @@ USE myAmazonV2
 GO
 
 --Insert UPDATE  Brand
-ALTER PROCEDURE UpdateBrand
+CREATE PROCEDURE UpdateBrand
 @Id INT,
 @name VARCHAR(30),
 @categoryId INT,
 @updateType BIT,     -- 0 is for INSERT, 1 is for UPDATE
+@flag INT OUTPUT,
 @BrandId INT OUTPUT
 AS BEGIN 
+SET @flag = 0
 IF @updateType = 0
 BEGIN
 INSERT INTO Brand(Name,CategoryId) OUTPUT inserted.id VALUES(@name, @categoryId)
@@ -26,12 +28,14 @@ END
 GO
 
 --insert UPDATE Category 
-ALTER PROCEDURE UpdateCategory
+CREATE PROCEDURE UpdateCategory
 @Id INT,
 @name VARCHAR(30),
 @updateType BIT,     -- 0 is for INSERT, 1 is for UPDATE
+@flag INT OUTPUT,
 @CategoryId INT OUTPUT
-AS BEGIN
+AS BEGIN 
+SET @flag = 0
 IF @updateType = 0
 BEGIN
 INSERT INTO Category(Name) OUTPUT inserted.id VALUES( @name)
@@ -41,6 +45,7 @@ END
 
 ELSE
 BEGIN
+
 UPDATE Category SET Name=@name  where id=@Id
 END 
 END 
@@ -84,10 +89,18 @@ BEGIN
 		END 
 	ELSE
 		BEGIN
-		INSERT into [Order] (ProductId,CustomerId,DateOfOrder,Quantity) values(@productId,@username,getdate(),@quantity)-- place thing in order
-		SET @orderId = @@IDENTITY
-		UPDATE Quantity SET Stock=Stock-@quantity,Sold=Sold+@quantity  where ProductId= @productId        -- you need to UPDATE sold and in stock
-		UPDATE Accounts SET Amount=Amount-(@quantity*(Select Price from Product where id=@productId))     where    [UserName]=@username                                           
+		BEGIN TRANSACTION
+		SAVE TRANSACTION savepoint;
+		BEGIN TRY
+			INSERT into [Order] (ProductId,CustomerId,DateOfOrder,Quantity) values(@productId,@username,getdate(),@quantity)-- place thing in order
+			SET @orderId = @@IDENTITY
+			UPDATE Quantity SET Stock=Stock-@quantity,Sold=Sold+@quantity  where ProductId= @productId        -- you need to UPDATE sold and in stock
+			UPDATE Accounts SET Amount=Amount-(@quantity*(Select Price from Product where id=@productId))     where    [UserName]=@username                                           
+			COMMIT TRANSACTION
+		END TRY
+		BEGIN CATCH
+			ROLLBACK TRANSACTION savepoint;
+		END CATCH
 		SET @flag=1   --successful
 		END
 END
@@ -126,16 +139,8 @@ BEGIN
 END
 GO
 
-CREATE PROCEDURE DeleteProduct
-@productId INT
-AS
-BEGIN
-	DELETE FROM [Product] WHERE id = @productId
-END
-GO
-
 ALTER PROCEDURE AddToFeatured
-@ProductId INT,
+@ProductId VARCHAR(30),
 @level INT,
 @image VARCHAR(50),
 @flag INT OUTPUT -- 0=Success, 1=No Space for Platinum, 2 = No Space for Gold, 3 = No Space for Silver
