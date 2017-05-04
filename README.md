@@ -11,6 +11,7 @@ This is our private repository to manage our database project myAmazon.
 * View/Delete/Edit All Brands, Categories and Product.
 * Admin can Approve/Reject a Credit Request From User
 * Admin can Approve/Reject a Product request from customer and response will be sent as an email to that user
+* Home page will display Featured Products
 * Users can signin/signup
 * Users can request for required amount of credit
 * User can browse through all categories/products/brands
