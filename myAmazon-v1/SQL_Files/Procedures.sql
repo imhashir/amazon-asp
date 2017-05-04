@@ -375,16 +375,24 @@ BEGIN
 	IF @handleType = 1
 	BEGIN
 		DECLARE @amount INT
-		SELECT @amount = [Amount] FROM Requests WHERE CustomerId=@username
-		IF EXISTS (SELECT * FROM [Accounts] WHERE [UserName]=@username)
-		BEGIN
-			UPDATE [Accounts] SET [Amount] = [Amount] + @amount WHERE [UserName] = @username
-		END
-		ELSE 
-		BEGIN
-			INSERT INTO [Accounts] VALUES(@amount, @username)
-		END
-		DELETE FROM [Requests] WHERE [CustomerId] = @username
+		BEGIN TRANSACTION
+		SAVE TRANSACTION savepoint;
+		BEGIN TRY
+			SELECT @amount = [Amount] FROM Requests WHERE CustomerId=@username
+			IF EXISTS (SELECT * FROM [Accounts] WHERE [UserName]=@username)
+			BEGIN
+				UPDATE [Accounts] SET [Amount] = [Amount] + @amount WHERE [UserName] = @username
+			END
+			ELSE 
+			BEGIN
+				INSERT INTO [Accounts] VALUES(@amount, @username)
+			END
+			DELETE FROM [Requests] WHERE [CustomerId] = @username
+			COMMIT TRANSACTION;
+		END TRY
+		BEGIN CATCH
+			ROLLBACK TRANSACTION savepoint;
+		END CATCH
 	END
 	ELSE
 	BEGIN
