@@ -314,5 +314,31 @@ namespace myAmazon_v1.DAL
 			}
 			return done;
 		}
+
+		public double getCurrentCredit(string username, ref string log)
+		{
+			SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager
+						.ConnectionStrings["myAmazonConnectionString"].ConnectionString);
+			string cmd = "SELECT dbo.GetUserAccount(@uname)";
+			double amount = 0;
+			SqlCommand sqlCmd = new SqlCommand(cmd, conn);
+			sqlCmd.Parameters.AddWithValue("@uname", username);
+
+			try
+			{
+				conn.Open();
+				amount = (double) sqlCmd.ExecuteScalar();
+			}
+			catch (Exception ex)
+			{
+				log += ex.ToString();
+			}
+			finally
+			{
+				conn.Close();
+			}
+
+			return amount;
+		}
 	}
 }

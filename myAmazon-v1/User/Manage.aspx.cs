@@ -13,6 +13,16 @@ namespace myAmazon_v1.User
 				UserDAL uDal = new UserDAL();
 				Customer customer = new Customer();
 				string log = "";
+				double amount = uDal.getCurrentCredit(Session["SignedInUser"].ToString(), ref (log));
+				if(log != "")
+				{
+					id_log_div.InnerHtml = @"<strong>Error! </strong>" + log;
+					id_log_div.Attributes["class"] = "alert alert-danger";
+				}
+				else
+				{
+					id_current_account.Text = amount.ToString();
+				}
 				customer = uDal.getUserDetails(Session["SignedInUser"].ToString(), ref(log));
 				if(log != "")
 				{

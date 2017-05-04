@@ -21,9 +21,21 @@ ALTER FUNCTION GetProductRating(@ProductId INT)
 RETURNS FLOAT
 AS
 BEGIN
-DECLARE @rating AS FLOAT
-SELECT @rating = AVG(CAST(ISNULL(Rate, 0) AS FLOAT)) FROM [Rating] WHERE ProductId = @ProductId
-RETURN CAST(ROUND(@rating, 2) AS FLOAT)
+	DECLARE @rating AS FLOAT
+	SELECT @rating = AVG(CAST(ISNULL(Rate, 0) AS FLOAT)) FROM [Rating] WHERE ProductId = @ProductId
+	RETURN CAST(ROUND(@rating, 2) AS FLOAT)
 END
 
 SELECT dbo.GetProductRating(32)
+GO
+
+CREATE FUNCTION GetUserAccount(@username VARCHAR(15))
+RETURNS FLOAT
+AS
+BEGIN
+	DECLARE @amount AS FLOAT
+	SELECT @amount = [Amount] FROM [Accounts] WHERE [UserName] = @username
+	RETURN CAST(ROUND(@amount, 2) AS FLOAT)
+END
+
+SELECT dbo.GetUserAccount('hashfast')

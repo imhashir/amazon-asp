@@ -94,6 +94,15 @@ namespace myAmazon_v1.User {
         protected global::System.Web.UI.WebControls.Button id_update_info;
         
         /// <summary>
+        /// id_current_account control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label id_current_account;
+        
+        /// <summary>
         /// id_credit_value control.
         /// </summary>
         /// <remarks>
