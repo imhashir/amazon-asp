@@ -1,6 +1,6 @@
 # Amazon
 
-This is our private repository to manage our database project myAmazon.
+This is was previously a private repository to manage our database project myAmazon but it is now made public.
 
 #### Platforms Used
  - Visual Studio 2015
