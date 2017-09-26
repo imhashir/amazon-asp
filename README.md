@@ -22,6 +22,7 @@ This is was previously a private repository to manage our database project myAma
 * Create a database named myAmazonV2 with SQL Server
 * Execute SQL Files. (Schema, Procedures, Views, UDF)
 * Clone the repository and in inside your repo make these folders
+```sh
 /myAmazon-v1/BrandsData
 /myAmazon-v1/CategoriesData
 /myAmazon-v1/ProductsData
@@ -29,8 +30,11 @@ This is was previously a private repository to manage our database project myAma
 /myAmazon-v1/FeaturedData
 /myAmazon-v1/UserData
 /myAmazon-v1/Reviews
+```
 * You have to create a CS class file as:
+```sh
 /myAmazon-v1/DAL/Credentials.cs
+```
 and inside this class, write this code:
 >public static string email = "youremail@xyzmail.com";
 >public static string password = "yourpassword";
